@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Allocation } from '../../constants';
+import type { Allocations } from '../../constants';
+import { Allocation, INITIAL_ALLOCATIONS, MIXINS, PRESETS } from '../../constants';
 import { decodeAllocations, encodeAllocations } from '../../utils';
 import Graphic from '../Graphic';
 import styles from './styles.scss';
@@ -20,28 +21,41 @@ const setUrlParamProps = props => {
 
 const Editor: React.FC = () => {
   const initialUrlParamProps = getUrlParamProps();
-  const [allocations, setAllocations] = useState(initialUrlParamProps.allocations);
+  const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
+
+  const mixinAllocations = (mixin: Allocations) =>
+    setAllocations({
+      ...allocations,
+      ...mixin
+    });
+
+  const replaceAllocations = (replacement: Allocations) => {
+    setAllocations({
+      ...INITIAL_ALLOCATIONS,
+      ...replacement
+    });
+  };
 
   const onTapGroup = (groupID: string) => {
-    const nextAllocations = { ...allocations };
+    const allocationsToMixin: Allocations = {};
 
     switch (allocations[groupID]) {
       case Allocation.None:
-        nextAllocations[groupID] = Allocation.Dem;
+        allocationsToMixin[groupID] = Allocation.Dem;
         break;
       case Allocation.Dem:
-        nextAllocations[groupID] = Allocation.Rep;
+        allocationsToMixin[groupID] = Allocation.Rep;
         break;
       case Allocation.Rep:
-        nextAllocations[groupID] = Allocation.None;
+        allocationsToMixin[groupID] = Allocation.None;
         break;
       default:
         // TODO: do we need to set this, or retain the original value?
-        nextAllocations[groupID] = Allocation.None;
+        allocationsToMixin[groupID] = Allocation.None;
         break;
     }
 
-    setAllocations(nextAllocations);
+    mixinAllocations(allocationsToMixin);
   };
 
   const graphicProps = useMemo(
@@ -61,7 +75,39 @@ const Editor: React.FC = () => {
       <div className={styles.graphic}>
         <Graphic onTapGroup={onTapGroup} {...graphicProps} />
       </div>
-      <div className={styles.controls}></div>
+      <div className={styles.controls}>
+        <label>
+          Mix-ins <small>(added to the map)</small>
+        </label>
+        <div className={styles.flexRow}>
+          {Object.keys(MIXINS).map(key => {
+            const { allocations, name } = MIXINS[key];
+
+            return (
+              <button key={key} onClick={() => mixinAllocations(allocations)}>
+                {name || key}
+              </button>
+            );
+          })}
+        </div>
+        <label>
+          Presets <small>(replace the whole map)</small>
+        </label>
+        <div className={styles.flexRow}>
+          <button key="empty" onClick={() => replaceAllocations({})}>
+            Empty
+          </button>
+          {Object.keys(PRESETS).map(key => {
+            const { allocations, name } = PRESETS[key];
+
+            return (
+              <button key={key} onClick={() => replaceAllocations(allocations)}>
+                {name || key}
+              </button>
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };
