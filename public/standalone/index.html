@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Standalone</title>
+    <style>
+      html {
+        font-family: system-ui, sans-serif;
+      }
+    </style>
+    <script>
+      var features = ['Object.assign', 'Array.from', 'Symbol', 'Promise', 'fetch'];
+      if (navigator.userAgent.indexOf('Trident') > -1) {
+        document.write(
+          '<script src="https://polyfill.io/v3/polyfill.min.js?features=' + features.join('%2C') + '"></scr' + 'ipt>'
+        );
+      }
+    </script>
+    <script src="../standalone.js"></script>
+  </head>
+  <body>
+    <h2>Preset</h2>
+    <div data-mount id="ecgraphicPRESET___"></div>
+    <h2>Encoded</h2>
+    <div data-mount id="ecgraphicPENCODED___"></div>
+  </body>
+</html>

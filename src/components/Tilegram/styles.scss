@@ -1,0 +1,63 @@
+.root {
+  margin: 10px;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.svg {
+  margin: auto;
+  width: 100%;
+  // max-width: 1038px;
+  height: auto;
+  color: gray;
+  fill: transparent;
+}
+
+.delegate {
+  stroke: #fff;
+  fill: rgba(128, 128, 128, 0.5);
+  fill-opacity: 1;
+  stroke-opacity: 0.1;
+  stroke-width: 0.5;
+}
+
+.delegate[data-allocation='d'] {
+  fill: rgba(20, 103, 204, 0.8);
+}
+
+.delegate[data-allocation='r'] {
+  fill: rgba(214, 21, 21, 0.8);
+}
+
+.isInteractive .delegate {
+  cursor: pointer;
+}
+
+.states {
+  pointer-events: none;
+}
+
+.state {
+  stroke: #fff;
+  fill: none;
+  stroke-opacity: 1;
+  stroke-width: 1.5;
+  transition: fill 0.5s;
+}
+
+.labels {
+  pointer-events: none;
+}
+
+.label {
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-size: 1rem;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  fill: #fff;
+  stroke: none;
+}

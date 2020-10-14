@@ -1,0 +1,98 @@
+html {
+  box-sizing: border-box;
+}
+
+html *,
+html *::before,
+html *::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+@media (min-width: 80rem) {
+  .root {
+    flex-direction: row;
+  }
+}
+
+.graphic {
+  flex: 0 0 auto;
+  margin: 0 auto;
+  padding: 0.5rem;
+  width: 100%;
+  max-width: 57.5rem;
+}
+
+@media (min-width: 90rem) {
+  .graphic {
+    padding-right: 0;
+  }
+}
+
+.controls {
+  flex: 1 1 100%;
+  margin: 0 auto;
+  padding: 0 0.5rem;
+  width: 100%;
+  max-width: 57.5rem;
+  font-family: ABCSans;
+}
+
+@media (min-width: 90rem) {
+  .controls {
+    margin: 0 auto 0 0;
+    max-width: 28.75rem;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+}
+
+.controls label:not([class]),
+.controls summary {
+  display: table;
+  width: 100%;
+  margin: 1rem 0 0.25rem;
+  font-size: 1rem;
+}
+
+.controls label:not([class]) button,
+.controls summary button {
+  float: right;
+  font-size: 0.75rem;
+  font-family: inherit;
+}
+
+.controls label:not([class])::after,
+.controls summary::after {
+  clear: both;
+}
+
+.controls pre {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.flexRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flexRow > div {
+  width: 50%;
+}
+
+.flexRow > span {
+  padding: 0 0.5em;
+}
