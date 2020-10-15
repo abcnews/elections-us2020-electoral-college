@@ -1,26 +1,20 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import type { Allocations } from '../../constants';
 import { Allocation, INITIAL_ALLOCATIONS, MIXINS, PRESETS } from '../../constants';
-import { decodeAllocations, encodeAllocations } from '../../utils';
+import { graphicPropsToAlternatingCase, urlQueryToGraphicProps, graphicPropsToUrlQuery } from '../../utils';
 import Graphic from '../Graphic';
 import styles from './styles.scss';
 
-const getUrlParamProps = () => {
-  const [, encodedAllocations] = /[?&]allocations=([^&#]*)/i.exec(String(window.location)) || [, ''];
+const DEFAULT_GRAPHIC_PROPS = { allocations: INITIAL_ALLOCATIONS };
 
-  return {
-    allocations: decodeAllocations(encodedAllocations)
-  };
-};
-
-const setUrlParamProps = props => {
-  const encodedAllocations = encodeAllocations(props.allocations || {});
-
-  history.replaceState(props, document.title, `?allocations=${encodedAllocations}`);
+const MOUNT_LABELS_PREFIXES = {
+  'Standalone graphic': 'ecgraphic',
+  'Scrollyteller opener': 'scrollytellerNAMEecblock',
+  'Scrollyteller mark': 'mark'
 };
 
 const Editor: React.FC = () => {
-  const initialUrlParamProps = getUrlParamProps();
+  const initialUrlParamProps = urlQueryToGraphicProps(String(window.location.search)) || DEFAULT_GRAPHIC_PROPS;
   const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
 
   const mixinAllocations = (mixin: Allocations) =>
@@ -66,8 +60,20 @@ const Editor: React.FC = () => {
     [allocations]
   );
 
+  const graphicPropsAsAlternatingCase = useMemo(() => graphicPropsToAlternatingCase(graphicProps), [graphicProps]);
+
+  const mountsData = useMemo(
+    () =>
+      Object.keys(MOUNT_LABELS_PREFIXES).reduce((mountsData, label) => {
+        mountsData[label] = `#${MOUNT_LABELS_PREFIXES[label]}${graphicPropsAsAlternatingCase}`;
+
+        return mountsData;
+      }, {}),
+    [graphicProps]
+  );
+
   useEffect(() => {
-    setUrlParamProps(graphicProps);
+    history.replaceState(graphicProps, document.title, graphicPropsToUrlQuery(graphicProps));
   }, [graphicProps]);
 
   return (
@@ -107,6 +113,17 @@ const Editor: React.FC = () => {
             );
           })}
         </div>
+        <hr />
+        <label>Story markers</label>
+        {Object.keys(mountsData).map(key => (
+          <details key={key}>
+            <summary>
+              {key}
+              <button onClick={() => navigator.clipboard.writeText(mountsData[key])}>Copy to clipboard</button>
+            </summary>
+            <pre>{mountsData[key]}</pre>
+          </details>
+        ))}
       </div>
     </div>
   );
