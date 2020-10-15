@@ -142,7 +142,17 @@ const Editor: React.FC = () => {
           <details key={label}>
             <summary>
               {label}
-              <button onClick={() => navigator.clipboard.writeText(mountsData[label])}>📋</button>
+              <button onClick={() => navigator.clipboard.writeText(mountsData[label])}>
+                <svg viewBox="0 0 24 24">
+                  <g fill="none" fillRule="evenodd">
+                    <path d="M0 0h24v24H0z" />
+                    <path
+                      d="M15 13.406S5.458 11.47 3.003 19.031c0 0-.438-11.25 11.999-11.25V4.97L21 10.594l-6 5.625v-2.813z"
+                      fill="currentColor"
+                    />
+                  </g>
+                </svg>
+              </button>
             </summary>
             <pre>{mountsData[label]}</pre>
           </details>
@@ -162,13 +172,32 @@ const Editor: React.FC = () => {
               createSnapshot(name, graphicPropsAsUrlQuery);
             }}
           >
-            ➕
+            <svg viewBox="0 0 24 24">
+              <g fill="none" fillRule="evenodd">
+                <path d="M0 0h24v24H0z" />
+                <path
+                  d="M11.173 4.084h1.65v7.092h7.1v1.65h-7.1v7.09h-1.65v-7.09H4.077v-1.65h7.096V4.084z"
+                  fill="currentColor"
+                />
+              </g>
+            </svg>
           </button>
         </label>
         <ul>
           {Object.keys(snapshots).map(name => (
             <li key={name}>
-              <button onClick={() => deleteSnapshot(name)}>🗑</button> <a href={snapshots[name]}>{name}</a>
+              <button onClick={() => deleteSnapshot(name)}>
+                <svg viewBox="0 0 24 24">
+                  <g fill="none" fillRule="evenodd">
+                    <path d="M0 0h24v24H0z" />
+                    <path
+                      d="M4.218 4.36l-.031-.006 3.943-.508L8.649 2h6.87l.4 1.83 4.015.524-.066.006h.069l.415 1.609H3.648l.534-1.609h.036zm.44 2.724h14.805L18.38 22.031H5.919L4.658 7.084zm1.441 1.457l1.006 12.072h9.932l.864-12.072H6.099z"
+                      fill="currentColor"
+                    />
+                  </g>
+                </svg>
+              </button>{' '}
+              <a href={snapshots[name]}>{name}</a>
             </li>
           ))}
         </ul>
