@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { create } from 'react-test-renderer';
 import type { Allocations } from '../../constants';
 import { Allocation, INITIAL_ALLOCATIONS, MIXINS, PRESETS } from '../../constants';
 import { graphicPropsToAlternatingCase, urlQueryToGraphicProps, graphicPropsToUrlQuery } from '../../utils';
@@ -13,9 +14,31 @@ const MOUNT_LABELS_PREFIXES = {
   'Scrollyteller mark': 'mark'
 };
 
+const SNAPSHOTS_LOCALSTORAGE_KEY = 'eceditorsnapshots';
+
 const Editor: React.FC = () => {
   const initialUrlParamProps = urlQueryToGraphicProps(String(window.location.search)) || DEFAULT_GRAPHIC_PROPS;
   const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
+  const [snapshots, setSnapshots] = useState(JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}'));
+
+  const createSnapshot = (name, urlQuery) => {
+    const nextSnapshots = {
+      [name]: urlQuery,
+      ...snapshots
+    };
+
+    localStorage.setItem(SNAPSHOTS_LOCALSTORAGE_KEY, JSON.stringify(nextSnapshots));
+    setSnapshots(nextSnapshots);
+  };
+
+  const deleteSnapshot = name => {
+    const nextSnapshots = { ...snapshots };
+
+    delete nextSnapshots[name];
+
+    localStorage.setItem(SNAPSHOTS_LOCALSTORAGE_KEY, JSON.stringify(nextSnapshots));
+    setSnapshots(nextSnapshots);
+  };
 
   const mixinAllocations = (mixin: Allocations) =>
     setAllocations({
@@ -61,6 +84,7 @@ const Editor: React.FC = () => {
   );
 
   const graphicPropsAsAlternatingCase = useMemo(() => graphicPropsToAlternatingCase(graphicProps), [graphicProps]);
+  const graphicPropsAsUrlQuery = useMemo(() => graphicPropsToUrlQuery(graphicProps), [graphicProps]);
 
   const mountsData = useMemo(
     () =>
@@ -69,12 +93,12 @@ const Editor: React.FC = () => {
 
         return mountsData;
       }, {}),
-    [graphicProps]
+    [graphicPropsAsAlternatingCase]
   );
 
   useEffect(() => {
-    history.replaceState(graphicProps, document.title, graphicPropsToUrlQuery(graphicProps));
-  }, [graphicProps]);
+    history.replaceState(graphicProps, document.title, graphicPropsAsUrlQuery);
+  }, [graphicPropsAsUrlQuery]);
 
   return (
     <div className={styles.root}>
@@ -113,17 +137,41 @@ const Editor: React.FC = () => {
             );
           })}
         </div>
-        <hr />
         <label>Story markers</label>
-        {Object.keys(mountsData).map(key => (
-          <details key={key}>
+        {Object.keys(mountsData).map(label => (
+          <details key={label}>
             <summary>
-              {key}
-              <button onClick={() => navigator.clipboard.writeText(mountsData[key])}>Copy to clipboard</button>
+              {label}
+              <button onClick={() => navigator.clipboard.writeText(mountsData[label])}>📋</button>
             </summary>
-            <pre>{mountsData[key]}</pre>
+            <pre>{mountsData[label]}</pre>
           </details>
         ))}
+        <label>
+          Snapshots
+          <button
+            onClick={() => {
+              const name = prompt('What would you like to call this snapshot?');
+
+              if (!name || !name.length) {
+                return alert('No name was provided');
+              } else if (snapshots[name]) {
+                return alert(`Can't overwrite existing snapshot`);
+              }
+
+              createSnapshot(name, graphicPropsAsUrlQuery);
+            }}
+          >
+            ➕
+          </button>
+        </label>
+        <ul>
+          {Object.keys(snapshots).map(name => (
+            <li key={name}>
+              <button onClick={() => deleteSnapshot(name)}>🗑</button> <a href={snapshots[name]}>{name}</a>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

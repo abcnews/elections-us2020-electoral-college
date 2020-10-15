@@ -46,7 +46,7 @@ body {
   padding: 0 0.5rem;
   width: 100%;
   max-width: 57.5rem;
-  font-family: ABCSans;
+  font-family: ABCSans, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 @media (min-width: 80rem) {
@@ -62,19 +62,49 @@ body {
 .controls summary {
   display: table;
   width: 100%;
-  margin: 1rem 0 0.25rem;
-  font-size: 1rem;
+}
+
+.controls label:not([class]) {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1.125rem;
+  text-decoration: underline;
+}
+
+.controls summary,
+.controls ul {
+  margin: 0.25rem 0;
+  line-height: 1.75;
+}
+
+.controls ul {
+  padding: 0 0 0 1rem;
 }
 
 .controls label:not([class]) button,
-.controls summary button {
+.controls summary button,
+.controls li button {
   float: right;
+  margin: 0;
+  border: 0;
+  border-radius: 50%;
+  padding: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  background: none;
   font-size: 0.75rem;
   font-family: inherit;
+  cursor: pointer;
+}
+
+.controls label:not([class]) button:hover,
+.controls summary button:hover,
+.controls li button:hover {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .controls label:not([class])::after,
-.controls summary::after {
+.controls summary::after,
+.controls li::after {
   clear: both;
 }
 
@@ -98,6 +128,15 @@ body {
 }
 
 .flexRow button {
+  margin: 0;
+  border: 0.0625rem solid currentColor;
+  padding: 0.25rem 0.5rem;
+  background: rgba(0, 0, 0, 0.1);
   font-family: inherit;
   font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.flexRow button + button {
+  margin-left: 0.25rem;
 }
