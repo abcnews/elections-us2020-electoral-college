@@ -1,3 +1,121 @@
-.root {
-  position: relative;
+.scrollyteller {
+  background-color: inherit;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.graphic {
+  transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(100% - 2rem);
+  // height: calc(100% - 2rem);
+  max-width: 57.5rem;
+  // max-height: 43.125rem;
+  animation: enter 0.5s;
+}
+
+.scrollyteller .panel.firstPanel {
+  margin-top: 40vh;
+}
+
+.panel::before {
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.panel > * {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-top: 0;
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
+  width: 66.666667%;
+  font-size: 1.375rem;
+  line-height: 1.666666667;
+  color: #000 !important;
+}
+
+@media only screen and (max-width: 667px) {
+  .panel > * {
+    width: 83.333333%;
+    font-size: 1.125rem;
+    line-height: 1.555555556;
+  }
+}
+
+.panel > :not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
+.panel > h2,
+.panel > h3 {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 24rem;
+  max-width: 90%;
+  line-height: 1.25;
+  text-align: center;
+  text-transform: none;
+}
+
+.panel > h2 {
+  font-size: 2.25rem;
+}
+
+.panel > h3 {
+  font-size: 1.75rem;
+}
+
+.panel ul {
+  list-style: none;
+}
+
+.panel ul li {
+  margin-bottom: 0.5rem;
+  padding-left: 1em;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiIHZpZXdCb3g9IjAgMCA0IDQiPgogIDxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjQiIGZpbGw9IiM2NjY2NjYiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPgo8L3N2Zz4K);
+  background-position: 0 0.65em;
+  background-repeat: no-repeat;
+  line-height: 1.556;
+}
+
+.panel a:link,
+.panel a:hover,
+.panel a:active,
+.panel a:visited {
+  color: inherit !important;
+  text-decoration: underline !important;
+  text-decoration-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.panel a:hover,
+.panel a:active {
+  text-decoration-color: #fff !important;
+}
+
+@media only screen and (min-width: 668px) and (max-width: 1022px) {
+  .panel {
+    width: 42rem;
+  }
+}
+
+@media only screen and (min-width: 1023px) {
+  .panel :nth-of-type(2)[data-align='left'],
+  .panel :nth-of-type(2)[data-align='right'] {
+    margin-top: 40vh;
+  }
+}
+
+[class*='u-richtext'][class*='u-richtext'] > h3 {
+  padding-top: 2rem;
+  font-family: 'ABCSerif', sans-serif;
+  text-align: center;
 }
