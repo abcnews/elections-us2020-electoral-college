@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { create } from 'react-test-renderer';
 import type { Allocations } from '../../constants';
 import { Allocation, INITIAL_ALLOCATIONS, MIXINS, PRESETS } from '../../constants';
 import { graphicPropsToAlternatingCase, urlQueryToGraphicProps, graphicPropsToUrlQuery } from '../../utils';
@@ -8,11 +7,15 @@ import styles from './styles.scss';
 
 const DEFAULT_GRAPHIC_PROPS = { allocations: INITIAL_ALLOCATIONS };
 
-const MOUNT_LABELS_PREFIXES = {
-  'Standalone graphic': 'ecgraphic',
-  'Scrollyteller opener': 'scrollytellerNAMEecblock',
-  'Scrollyteller mark': 'mark'
-};
+const STORY_MARKERS = [
+  { label: 'Standalone graphic', prefix: 'ecgraphic' },
+  {
+    label: 'Scrollyteller opener',
+    note: `If you're placing multiple scrollytellers in a single story, each must have a unique NAME.`,
+    prefix: 'scrollytellerNAMEecblock'
+  },
+  { label: 'Scrollyteller mark', prefix: 'mark' }
+];
 
 const SNAPSHOTS_LOCALSTORAGE_KEY = 'eceditorsnapshots';
 
@@ -86,13 +89,13 @@ const Editor: React.FC = () => {
   const graphicPropsAsAlternatingCase = useMemo(() => graphicPropsToAlternatingCase(graphicProps), [graphicProps]);
   const graphicPropsAsUrlQuery = useMemo(() => graphicPropsToUrlQuery(graphicProps), [graphicProps]);
 
-  const mountsData = useMemo(
+  const markersData = useMemo(
     () =>
-      Object.keys(MOUNT_LABELS_PREFIXES).reduce((mountsData, label) => {
-        mountsData[label] = `#${MOUNT_LABELS_PREFIXES[label]}${graphicPropsAsAlternatingCase}`;
-
-        return mountsData;
-      }, {}),
+      STORY_MARKERS.map(({ label, note, prefix }) => ({
+        label,
+        note,
+        text: `#${prefix}${graphicPropsAsAlternatingCase}`
+      })),
     [graphicPropsAsAlternatingCase]
   );
 
@@ -138,11 +141,11 @@ const Editor: React.FC = () => {
           })}
         </div>
         <label>Story markers</label>
-        {Object.keys(mountsData).map(label => (
+        {markersData.map(({ label, note, text }) => (
           <details key={label}>
             <summary>
               {label}
-              <button onClick={() => navigator.clipboard.writeText(mountsData[label])}>
+              <button onClick={() => navigator.clipboard.writeText(text)}>
                 <svg viewBox="0 0 24 24">
                   <g fill="none" fillRule="evenodd">
                     <path d="M0 0h24v24H0z" />
@@ -154,7 +157,8 @@ const Editor: React.FC = () => {
                 </svg>
               </button>
             </summary>
-            <pre>{mountsData[label]}</pre>
+            <pre>{text}</pre>
+            {note && <small style={{ color: 'red' }}>{`Note: ${note}`}</small>}
           </details>
         ))}
         <label>
