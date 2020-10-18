@@ -1,25 +1,25 @@
 import React from 'react';
-import type { Allocations } from '../../constants';
+import type { TilegramProps } from '../Tilegram';
 import Tilegram from '../Tilegram';
 import styles from './styles.scss';
 
-export interface GraphicProps {
-  allocations?: Allocations;
-  onTapGroup?: (groupID: string) => void;
-}
+export type GraphicProps = {
+  title?: string;
+} & TilegramProps;
 
 export type PossiblyEncodedGraphicProps =
   | {
       allocations: string;
+      walls: string;
     }
   | GraphicProps;
 
 const Graphic: React.FC<GraphicProps> = props => {
-  const { allocations, onTapGroup } = props;
+  const { title, ...tilegramProps } = props;
 
   return (
-    <div className={styles.root}>
-      <Tilegram allocations={allocations} onTapGroup={onTapGroup} />
+    <div className={styles.root} title={title}>
+      <Tilegram {...tilegramProps} />
     </div>
   );
 };

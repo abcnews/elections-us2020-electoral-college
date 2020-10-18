@@ -17,6 +17,15 @@
   fill: transparent;
 }
 
+.delegates {
+  pointer-events: none;
+}
+
+/* TappableLayer.Delegates */
+.root[data-tappable='0'] .delegates {
+  pointer-events: all;
+}
+
 .delegate {
   stroke: #fff;
   fill: rgba(128, 128, 128, 0.5);
@@ -33,12 +42,17 @@
   fill: rgba(214, 21, 21, 0.8);
 }
 
-.isInteractive .delegate {
+.isInteractive[data-tappable='0'] .delegate {
   cursor: pointer;
 }
 
 .states {
   pointer-events: none;
+}
+
+/* TappableLayer.States */
+.root[data-tappable='1'] .states {
+  pointer-events: all;
 }
 
 .state {
@@ -47,6 +61,28 @@
   stroke-opacity: 1;
   stroke-width: 1.5;
   transition: fill 0.5s;
+}
+
+.state[data-wall='y'],
+.state[data-wall='d'],
+.state[data-wall='r'] {
+  stroke-width: 3;
+}
+
+.state[data-wall='y'] {
+  stroke: #000;
+}
+
+.state[data-wall='d'] {
+  stroke: rgba(20, 103, 204, 0.8);
+}
+
+.state[data-wall='r'] {
+  stroke: rgba(214, 21, 21, 0.8);
+}
+
+.isInteractive[data-tappable='1'] .state {
+  cursor: pointer;
 }
 
 .labels {

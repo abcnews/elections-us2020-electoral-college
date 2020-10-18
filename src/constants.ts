@@ -366,9 +366,103 @@ export const INITIAL_ALLOCATIONS = GROUP_IDS.reduce((allocations, groupID) => {
   return allocations;
 }, {});
 
+export enum StateID {
+  AK,
+  AL,
+  AR,
+  AZ,
+  CA,
+  CO,
+  CT,
+  DC,
+  DE,
+  FL,
+  GA,
+  HI,
+  IA,
+  ID,
+  IL,
+  IN,
+  KS,
+  KY,
+  LA,
+  MA,
+  MD,
+  ME,
+  MI,
+  MN,
+  MO,
+  MS,
+  MT,
+  NC,
+  ND,
+  NE,
+  NH,
+  NJ,
+  NM,
+  NV,
+  NY,
+  OH,
+  OK,
+  OR,
+  PA,
+  RI,
+  SC,
+  SD,
+  TN,
+  TX,
+  UT,
+  VA,
+  VT,
+  WA,
+  WI,
+  WV,
+  WY
+}
+
+export const STATE_IDS = Object.keys(StateID).filter(key => typeof StateID[key] === 'number');
+
+export type State = {
+  id: StateID;
+  name: string;
+};
+
+export const STATES: State[] = GROUPS.filter(({ id }) => {
+  const [, index] = String(id).split('_');
+
+  return index == null || index === '0';
+}).map(({ id, name }) => {
+  const stateID = String(id).split('_')[0] as unknown;
+
+  return {
+    id: stateID as StateID,
+    name: name.split('(')[0]
+  };
+});
+
+export enum Wall {
+  No = 'n',
+  Yes = 'y',
+  Dem = 'd',
+  Rep = 'r'
+}
+
+export const WALLS: string[] = Object.keys(Wall).map(x => Wall[x]);
+
+export interface Walls {
+  [key: string]: Wall;
+}
+
+export const INITIAL_WALLS = STATE_IDS.reduce((walls, stateID) => {
+  walls[stateID] = Wall.No;
+
+  return walls;
+}, {});
+
 export type Preset = {
   name?: string;
   allocations: Allocations;
+  walls: Walls;
 };
 
 export type Presets = {
@@ -395,7 +489,8 @@ export const MIXINS: Presets = {
       RI: Allocation.Dem,
       VT: Allocation.Dem,
       WA: Allocation.Dem
-    }
+    },
+    walls: {}
   },
   saferep: {
     name: 'Safe Republican',
@@ -420,7 +515,8 @@ export const MIXINS: Presets = {
       TX: Allocation.Rep,
       WV: Allocation.Rep,
       WY: Allocation.Rep
-    }
+    },
+    walls: {}
   }
 };
 
@@ -429,7 +525,8 @@ MIXINS.safe = {
   allocations: {
     ...MIXINS.safedem.allocations,
     ...MIXINS.saferep.allocations
-  }
+  },
+  walls: {}
 };
 
 export const PRESETS: Presets = {
@@ -492,7 +589,8 @@ export const PRESETS: Presets = {
       WI: Allocation.Dem,
       WV: Allocation.Rep,
       WY: Allocation.Rep
-    }
+    },
+    walls: {}
   },
   2016: {
     allocations: {
@@ -552,6 +650,7 @@ export const PRESETS: Presets = {
       WI: Allocation.Rep,
       WV: Allocation.Rep,
       WY: Allocation.Rep
-    }
+    },
+    walls: {}
   }
 };

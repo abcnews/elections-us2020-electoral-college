@@ -58,13 +58,13 @@ body {
   }
 }
 
-.controls label:not([class]),
+.controls > label:not([class]),
 .controls summary {
   display: table;
   width: 100%;
 }
 
-.controls label:not([class]) {
+.controls > label:not([class]) {
   margin: 1.5rem 0 0.5rem;
   font-size: 1.125rem;
   text-decoration: underline;
@@ -84,7 +84,7 @@ body {
   content: 'None';
 }
 
-.controls label:not([class]) button,
+.controls > label:not([class]) button,
 .controls summary button,
 .controls li button {
   float: right;
@@ -97,7 +97,7 @@ body {
   cursor: pointer;
 }
 
-.controls label:not([class]) button:hover,
+.controls > label:not([class]) button:hover,
 .controls summary button:hover,
 .controls li button:hover {
   background: rgba(0, 0, 0, 0.1);
@@ -109,7 +109,7 @@ body {
   vertical-align: bottom;
 }
 
-.controls label:not([class])::after,
+.controls > label:not([class])::after,
 .controls summary::after,
 .controls li::after {
   clear: both;

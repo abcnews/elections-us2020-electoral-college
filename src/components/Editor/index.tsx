@@ -1,11 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import type { Allocations } from '../../constants';
-import { Allocation, INITIAL_ALLOCATIONS, MIXINS, PRESETS } from '../../constants';
+import { Allocations, INITIAL_WALLS, Walls } from '../../constants';
+import { Allocation, Wall, INITIAL_ALLOCATIONS, MIXINS, PRESETS } from '../../constants';
 import { graphicPropsToAlternatingCase, urlQueryToGraphicProps, graphicPropsToUrlQuery } from '../../utils';
 import Graphic from '../Graphic';
+import { TappableLayer } from '../Tilegram';
 import styles from './styles.scss';
 
-const DEFAULT_GRAPHIC_PROPS = { allocations: INITIAL_ALLOCATIONS };
+const DEFAULT_GRAPHIC_PROPS = {
+  allocations: INITIAL_ALLOCATIONS,
+  walls: INITIAL_WALLS,
+  tappableLayer: TappableLayer.Delegates
+};
 
 const STORY_MARKERS = [
   { label: 'Standalone graphic', prefix: 'ecgraphic' },
@@ -20,11 +25,17 @@ const STORY_MARKERS = [
 const SNAPSHOTS_LOCALSTORAGE_KEY = 'eceditorsnapshots';
 
 const Editor: React.FC = () => {
-  const initialUrlParamProps = urlQueryToGraphicProps(String(window.location.search)) || DEFAULT_GRAPHIC_PROPS;
+  const initialUrlParamProps = {
+    ...DEFAULT_GRAPHIC_PROPS,
+    ...urlQueryToGraphicProps(String(window.location.search))
+  };
+  console.log(initialUrlParamProps);
   const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
+  const [walls, setWalls] = useState<Walls>(initialUrlParamProps.walls);
+  const [tappableLayer, setTappableLayer] = useState(initialUrlParamProps.tappableLayer);
   const [snapshots, setSnapshots] = useState(JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}'));
 
-  const createSnapshot = (name, urlQuery) => {
+  const createSnapshot = (name: string, urlQuery: string) => {
     const nextSnapshots = {
       [name]: urlQuery,
       ...snapshots
@@ -34,7 +45,7 @@ const Editor: React.FC = () => {
     setSnapshots(nextSnapshots);
   };
 
-  const deleteSnapshot = name => {
+  const deleteSnapshot = (name: string) => {
     const nextSnapshots = { ...snapshots };
 
     delete nextSnapshots[name];
@@ -78,12 +89,45 @@ const Editor: React.FC = () => {
     mixinAllocations(allocationsToMixin);
   };
 
+  const mixinWalls = (mixin: Walls) =>
+    setWalls({
+      ...walls,
+      ...mixin
+    });
+
+  const onTapState = (stateID: string) => {
+    const wallsToMixin: Walls = {};
+
+    switch (walls[stateID]) {
+      case Wall.No:
+        wallsToMixin[stateID] = Wall.Yes;
+        break;
+      case Wall.Yes:
+        wallsToMixin[stateID] = Wall.Dem;
+        break;
+      case Wall.Dem:
+        wallsToMixin[stateID] = Wall.Rep;
+        break;
+      case Wall.Rep:
+        wallsToMixin[stateID] = Wall.No;
+        break;
+      default:
+        // TODO: do we need to set this, or retain the original value?
+        wallsToMixin[stateID] = Wall.No;
+        break;
+    }
+
+    mixinWalls(wallsToMixin);
+  };
+
   const graphicProps = useMemo(
     () => ({
       ...initialUrlParamProps,
-      allocations
+      allocations,
+      walls,
+      tappableLayer
     }),
-    [allocations]
+    [allocations, walls, tappableLayer]
   );
 
   const graphicPropsAsAlternatingCase = useMemo(() => graphicPropsToAlternatingCase(graphicProps), [graphicProps]);
@@ -106,9 +150,41 @@ const Editor: React.FC = () => {
   return (
     <div className={styles.root}>
       <div className={styles.graphic}>
-        <Graphic onTapGroup={onTapGroup} {...graphicProps} />
+        <Graphic
+          tappableLayer={TappableLayer.States}
+          onTapGroup={onTapGroup}
+          onTapState={onTapState}
+          {...graphicProps}
+        />
       </div>
       <div className={styles.controls}>
+        <label>Active layer</label>
+        <div className={styles.flexRow}>
+          <span>
+            <label>
+              <input
+                type="radio"
+                name="tappableDelegates"
+                value={TappableLayer.Delegates}
+                checked={TappableLayer.Delegates === tappableLayer}
+                onChange={() => setTappableLayer(TappableLayer.Delegates)}
+              ></input>
+              Fills
+            </label>
+          </span>
+          <span>
+            <label>
+              <input
+                type="radio"
+                name="tappableStates"
+                value={TappableLayer.States}
+                checked={TappableLayer.States === tappableLayer}
+                onChange={() => setTappableLayer(TappableLayer.States)}
+              ></input>
+              Strokes
+            </label>
+          </span>
+        </div>
         <label>
           Mix-ins <small>(added to the map)</small>
         </label>
@@ -161,7 +237,7 @@ const Editor: React.FC = () => {
             {note && <small style={{ color: 'red' }}>{`Note: ${note}`}</small>}
           </details>
         ))}
-        <label>
+        <label htmlFor="definitely-not-the-add-button">
           Snapshots
           <button
             onClick={() => {

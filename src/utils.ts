@@ -1,6 +1,16 @@
 import * as acto from '@abcnews/alternating-case-to-object';
-import { ALLOCATIONS, Allocations, Group } from './constants';
-import { Allocation, GroupID, GROUP_IDS } from './constants';
+import {
+  Allocation,
+  Allocations,
+  ALLOCATIONS,
+  GROUP_IDS,
+  Group,
+  GroupID,
+  STATE_IDS,
+  Wall,
+  Walls,
+  WALLS
+} from './constants';
 
 export const votesForGroups = (groups: Group[]) => {
   return groups.reduce((memo, group) => {
@@ -14,36 +24,58 @@ export const getGroupIDForDelegateID = (delegateID: string) => {
   return `${stateID}${GroupID[stateID] != null ? '' : `_${Math.max(0, parseInt(delegateIndex) - 2)}`}`;
 };
 
-export const decodeAllocations = (encodedAllocations: string): Allocations => {
-  encodedAllocations =
-    encodedAllocations.length === GROUP_IDS.length ? encodedAllocations : Allocation.None.repeat(GROUP_IDS.length);
+function decode<Dict>(code: string, keys: string[], possibleValues: string[], defaultValue: string): Dict {
+  code = code && code.length === keys.length ? code : defaultValue.repeat(keys.length);
 
-  return GROUP_IDS.reduce((allocations, id, index) => {
-    const allocation = encodedAllocations[index];
-    allocations[id] = ALLOCATIONS.indexOf(allocation) > -1 ? allocation : Allocation.None;
-    return allocations;
-  }, {});
-};
+  return keys.reduce((dict, key, index) => {
+    const value = code[index];
+
+    dict[key] = possibleValues.indexOf(value) > -1 ? value : defaultValue;
+
+    return dict;
+  }, {} as Dict);
+}
+
+function encode<Dict>(dict: Dict, keys: string[], possibleValues: string[], defaultValue: string): string {
+  return keys.reduce(
+    (memo, key) => (memo += dict && possibleValues.indexOf(dict[key]) > -1 ? dict[key] : defaultValue),
+    ''
+  );
+}
+
+export const decodeAllocations = (code: string): Allocations =>
+  decode<Allocations>(code, GROUP_IDS, ALLOCATIONS, Allocation.None);
 
 export const encodeAllocations = (allocations: Allocations): string =>
-  GROUP_IDS.reduce((memo, id) => (memo += allocations[id] || Allocation.None), '');
+  encode<Allocations>(allocations, GROUP_IDS, ALLOCATIONS, Allocation.None);
+
+export const decodeWalls = (code: string): Walls => decode<Walls>(code, STATE_IDS, WALLS, Wall.No);
+
+export const encodeWalls = (walls: Walls): string => encode<Walls>(walls, STATE_IDS, WALLS, Wall.No);
 
 export const alternatingCaseToGraphicProps = (alternatingCase: string) => {
   const graphicProps = acto(alternatingCase);
 
   graphicProps.allocations = decodeAllocations(graphicProps.allocations);
+  graphicProps.walls = decodeWalls(graphicProps.walls);
 
   return graphicProps;
 };
 
 export const graphicPropsToAlternatingCase = (graphicProps): string =>
   Object.keys(graphicProps).reduce((alternatingCase, key) => {
+    if (key === 'tappableLayer') {
+      return alternatingCase;
+    }
+
     const value = graphicProps[key];
 
     alternatingCase += key.toUpperCase();
 
     if (key === 'allocations') {
       alternatingCase += encodeAllocations(value);
+    } else if (key === 'walls') {
+      alternatingCase += encodeWalls(value);
     } else if (typeof value === 'boolean') {
       alternatingCase += value ? 'true' : 'false';
     } else {
@@ -64,6 +96,11 @@ export const urlQueryToGraphicProps = (urlQuery: string) => {
   );
 
   graphicProps.allocations = decodeAllocations(graphicProps.allocations);
+  graphicProps.walls = decodeWalls(graphicProps.walls);
+
+  if (typeof graphicProps.tappableLayer === 'string') {
+    graphicProps.tappableLayer = +graphicProps.tappableLayer;
+  }
 
   return graphicProps;
 };
@@ -76,6 +113,8 @@ export const graphicPropsToUrlQuery = (graphicProps): string =>
 
     if (key === 'allocations') {
       urlQuery += encodeAllocations(value);
+    } else if (key === 'walls') {
+      urlQuery += encodeWalls(value);
     } else if (typeof value === 'boolean') {
       urlQuery += value ? 'true' : 'false';
     } else {
