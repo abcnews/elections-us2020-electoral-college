@@ -25,6 +25,7 @@ export const getGroupIDForDelegateID = (delegateID: string) => {
 };
 
 function decode<Dict>(code: string, keys: string[], possibleValues: string[], defaultValue: string): Dict {
+  code = typeof code === 'string' ? code.replace(/(\w)(\d+)/g, (_, char, repeated) => char.repeat(+repeated)) : code;
   code = code && code.length === keys.length ? code : defaultValue.repeat(keys.length);
 
   return keys.reduce((dict, key, index) => {
@@ -37,10 +38,21 @@ function decode<Dict>(code: string, keys: string[], possibleValues: string[], de
 }
 
 function encode<Dict>(dict: Dict, keys: string[], possibleValues: string[], defaultValue: string): string {
-  return keys.reduce(
-    (memo, key) => (memo += dict && possibleValues.indexOf(dict[key]) > -1 ? dict[key] : defaultValue),
-    ''
-  );
+  return keys
+    .reduce((memo: [string, number][], key, index) => {
+      const value = possibleValues.indexOf(dict[key]) > -1 ? dict[key] : defaultValue;
+
+      if (index === 0 || value !== memo[memo.length - 1][0]) {
+        memo.push([value, 1]);
+      } else {
+        memo[memo.length - 1][1]++;
+      }
+
+      return memo;
+    }, [])
+    .reduce((memo, [char, repeated]) => {
+      return (memo += repeated === 1 ? char : char + String(repeated));
+    }, '');
 }
 
 export const decodeAllocations = (code: string): Allocations =>
