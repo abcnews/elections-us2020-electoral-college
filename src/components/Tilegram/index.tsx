@@ -34,7 +34,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
   };
 
   const onTapStateShape = (event: React.MouseEvent<SVGElement>) => {
-    if (onTapState && tappableLayer === TappableLayer.States && event.target instanceof SVGPathElement) {
+    if (onTapState && tappableLayer === TappableLayer.States && event.target instanceof SVGPolygonElement) {
       const stateID = event.target.dataset.state;
 
       if (stateID) {
@@ -102,12 +102,18 @@ const Tilegram: React.FC<TilegramProps> = props => {
               return memo.concat(
                 STATES_SHAPES[key].map((points, index) => (
                   <g key={`${key}_${index}`}>
+                    <polygon
+                      key={`${key}_${index}_target`}
+                      className={styles.stateTarget}
+                      data-state={stateID}
+                      data-has-allocation={hasAllocation}
+                      points={points}
+                    ></polygon>
                     <path
                       id={`${key}_${index}_path`}
                       data-wall={wall}
-                      data-state={stateID}
                       data-has-allocation={hasAllocation}
-                      className={styles.state}
+                      className={styles.stateWall}
                       d={`M${points}z`}
                       clipPath={`url(#${key}_${index}_clip)`}
                     >

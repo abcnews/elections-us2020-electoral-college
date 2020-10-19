@@ -71,39 +71,44 @@
   pointer-events: all;
 }
 
-.state {
+.stateTarget {
+  stroke: none;
+  fill: none;
+}
+
+.isInteractive[data-tappable='1'] .stateTarget:not([data-has-allocation]) {
+  cursor: pointer;
+}
+
+.stateWall {
   stroke: rgba(128, 128, 128, 0.25);
   fill: none;
   stroke-width: 1.5;
   // transition: stroke 0.5s, stroke-width 0.5s;
 }
 
-.state[data-wall='y'],
-.state[data-wall='d'],
-.state[data-wall='r'] {
+.stateWall[data-wall='y'],
+.stateWall[data-wall='d'],
+.stateWall[data-wall='r'] {
   stroke-width: 5.5;
 }
 
-.state[data-wall='y'] {
+.stateWall[data-wall='y'] {
   stroke: #000;
 }
 
-.state[data-wall='d'] {
+.stateWall[data-wall='d'] {
   stroke: rgb(56, 127, 175);
 }
 
-.state[data-wall='r'] {
+.stateWall[data-wall='r'] {
   stroke: rgb(189, 26, 40);
 }
 
-.state[data-has-allocation],
-.state[data-has-allocation] {
+.stateWall[data-has-allocation],
+.stateWall[data-has-allocation] {
   stroke-width: 2.5;
   stroke: #fff;
-}
-
-.isInteractive[data-tappable='1'] .state:not([data-has-allocation]) {
-  cursor: pointer;
 }
 
 .labels {
