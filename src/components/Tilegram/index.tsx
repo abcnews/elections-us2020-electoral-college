@@ -95,9 +95,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
               const wall = walls ? walls[stateID] : Wall.No;
               const hasAllocation = getGroupIDsForStateID(stateID).some(
                 groupID => allocations && allocations[groupID] !== Allocation.None
-              )
-                ? ''
-                : undefined;
+              );
 
               return memo.concat(
                 STATES_SHAPES[key].map((points, index) => (
@@ -105,7 +103,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
                     <path
                       id={`${key}_${index}_path`}
                       data-wall={wall}
-                      data-has-allocation={hasAllocation}
+                      data-has-allocation={hasAllocation ? '' : undefined}
                       className={styles.stateWall}
                       d={`M${points}z`}
                       clipPath={`url(#${key}_${index}_clip)`}
@@ -130,13 +128,20 @@ const Tilegram: React.FC<TilegramProps> = props => {
           <g className={styles.labels}>
             {Object.keys(STATES_LABELS).map(key => {
               const [x, y] = STATES_LABELS[key];
-              const stateAllocation = allocations ? allocations[key] || allocations[key + '_0'] : Allocation.None;
+              const allocationsForState = getGroupIDsForStateID(key).map(groupID =>
+                allocations ? allocations[groupID] : Allocation.None
+              );
+              const hasMostDefinitiveAllocated =
+                allocationsForState.filter(allocation => allocation === Allocation.Dem || allocation === Allocation.Rep)
+                  .length *
+                  2 >
+                allocationsForState.length;
 
               return (
                 <text
                   key={key}
                   data-state={key}
-                  data-state-allocation={stateAllocation}
+                  data-most-definitively-allocated={hasMostDefinitiveAllocated ? '' : undefined}
                   className={styles.label}
                   x={x}
                   y={y}

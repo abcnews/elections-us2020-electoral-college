@@ -130,12 +130,11 @@
   text-anchor: middle;
   dominant-baseline: middle;
   font-size: 1rem;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-  fill: #fff;
+  fill: #000;
   stroke: none;
 }
 
-.label[data-state-allocation='n'] {
-  fill: #000;
-  text-shadow: none;
+.label[data-most-definitively-allocated] {
+  fill: #fff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
