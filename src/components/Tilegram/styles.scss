@@ -38,20 +38,24 @@
 }
 
 .delegate {
-  stroke: #fff;
-  fill: rgba(128, 128, 128, 0.5);
-  fill-opacity: 1;
-  stroke-opacity: 0.1;
-  stroke-width: 0.5;
+  stroke: none;
+  fill: #fff;
+  stroke-width: 1.5;
   // transition: fill 0.5s;
 }
 
+.delegate[data-allocation='d'],
+.delegate[data-allocation='r'] {
+  stroke: rgba(255, 255, 255, 0.25);
+}
+
 .delegate[data-allocation='d'] {
-  fill: rgba(20, 103, 204, 0.8);
+  // fill: rgba(20, 103, 204, 0.8);
+  fill: rgb(56, 127, 175);
 }
 
 .delegate[data-allocation='r'] {
-  fill: rgba(214, 21, 21, 0.8);
+  fill: rgb(189, 26, 40);
 }
 
 .isInteractive[data-tappable='0'] .delegate {
@@ -68,7 +72,7 @@
 }
 
 .state {
-  stroke: #fff;
+  stroke: rgba(128, 128, 128, 0.25);
   fill: none;
   stroke-width: 1.5;
   transition: stroke 0.5s, stroke-width 0.5s;
@@ -85,11 +89,11 @@
 }
 
 .state[data-wall='d'] {
-  stroke: rgb(20, 103, 204);
+  stroke: rgb(56, 127, 175);
 }
 
 .state[data-wall='r'] {
-  stroke: rgb(214, 21, 21);
+  stroke: rgb(189, 26, 40);
 }
 
 .isInteractive[data-tappable='1'] .state {
@@ -107,4 +111,9 @@
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
   fill: #fff;
   stroke: none;
+}
+
+.label[data-state-allocation='n'] {
+  fill: #000;
+  text-shadow: none;
 }

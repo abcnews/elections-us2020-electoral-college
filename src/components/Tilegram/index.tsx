@@ -118,9 +118,17 @@ const Tilegram: React.FC<TilegramProps> = props => {
           <g className={styles.labels}>
             {Object.keys(STATES_LABELS).map(key => {
               const [x, y] = STATES_LABELS[key];
+              const stateAllocation = allocations ? allocations[key] || allocations[key + '_0'] : Allocation.None;
 
               return (
-                <text key={key} data-state={key} className={styles.label} x={x} y={y}>
+                <text
+                  key={key}
+                  data-state={key}
+                  data-state-allocation={stateAllocation}
+                  className={styles.label}
+                  x={x}
+                  y={y}
+                >
                   {key}
                 </text>
               );
