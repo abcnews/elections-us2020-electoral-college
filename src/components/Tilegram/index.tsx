@@ -93,6 +93,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
             {Object.keys(STATES_SHAPES).reduce((memo, key) => {
               const stateID = key;
               const wall = walls ? walls[stateID] : Wall.No;
+              const stateAllocation = allocations ? allocations[key] || allocations[key + '_0'] : Allocation.None;
 
               return memo.concat(
                 STATES_SHAPES[key].map((points, index) => (
@@ -101,6 +102,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
                       id={`${key}_${index}_path`}
                       data-wall={wall}
                       data-state={stateID}
+                      data-state-allocation={stateAllocation}
                       className={styles.state}
                       d={`M${points}z`}
                       clipPath={`url(#${key}_${index}_clip)`}

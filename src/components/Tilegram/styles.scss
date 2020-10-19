@@ -96,6 +96,12 @@
   stroke: rgb(189, 26, 40);
 }
 
+.state[data-state-allocation='d'],
+.state[data-state-allocation='r'] {
+  stroke-width: 2.5;
+  stroke: #fff;
+}
+
 .isInteractive[data-tappable='1'] .state {
   cursor: pointer;
 }
