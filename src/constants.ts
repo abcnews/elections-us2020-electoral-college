@@ -351,6 +351,9 @@ export const GROUPS: Group[] = [
 export enum Allocation {
   None = 'n',
   Dem = 'd',
+  LikelyDem = 's',
+  Tossup = 'u',
+  LikelyRep = 'e',
   Rep = 'r'
 }
 

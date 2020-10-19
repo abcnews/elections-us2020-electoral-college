@@ -11,7 +11,7 @@
 .svg {
   margin: auto;
   width: 100%;
-  // max-width: 1038px;
+  // max-width: 1042px;
   height: auto;
   color: gray;
   fill: transparent;
@@ -50,12 +50,23 @@
 }
 
 .delegate[data-allocation='d'] {
-  // fill: rgba(20, 103, 204, 0.8);
-  fill: rgb(56, 127, 175);
+  fill: rgb(52, 127, 178);
+}
+
+.delegate[data-allocation='s'] {
+  fill: rgb(193, 216, 231);
+}
+
+.delegate[data-allocation='u'] {
+  fill: rgb(204, 204, 204);
+}
+
+.delegate[data-allocation='e'] {
+  fill: rgb(235, 184, 187);
 }
 
 .delegate[data-allocation='r'] {
-  fill: rgb(189, 26, 40);
+  fill: rgb(191, 22, 34);
 }
 
 .isInteractive[data-tappable='0'] .delegate {
@@ -98,11 +109,11 @@
 }
 
 .stateWall[data-wall='d'] {
-  stroke: rgb(56, 127, 175);
+  stroke: rgb(52, 127, 178);
 }
 
 .stateWall[data-wall='r'] {
-  stroke: rgb(189, 26, 40);
+  stroke: rgb(191, 22, 34);
 }
 
 .stateWall[data-has-allocation],

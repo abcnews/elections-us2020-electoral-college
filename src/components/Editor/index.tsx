@@ -97,6 +97,15 @@ const Editor: React.FC = () => {
         allocationsToMixin[groupID] = Allocation.Dem;
         break;
       case Allocation.Dem:
+        allocationsToMixin[groupID] = Allocation.LikelyDem;
+        break;
+      case Allocation.LikelyDem:
+        allocationsToMixin[groupID] = Allocation.Tossup;
+        break;
+      case Allocation.Tossup:
+        allocationsToMixin[groupID] = Allocation.LikelyRep;
+        break;
+      case Allocation.LikelyRep:
         allocationsToMixin[groupID] = Allocation.Rep;
         break;
       case Allocation.Rep:
