@@ -24,6 +24,10 @@ export const getGroupIDForDelegateID = (delegateID: string) => {
   return `${stateID}${GroupID[stateID] != null ? '' : `_${Math.max(0, parseInt(delegateIndex) - 2)}`}`;
 };
 
+export const getGroupIDsForStateID = (stateID: string) => {
+  return GROUP_IDS.filter(groupID => groupID.indexOf(stateID) === 0);
+};
+
 function decode<Dict>(code: string, keys: string[], possibleValues: string[], defaultValue: string): Dict {
   code = typeof code === 'string' ? code.replace(/(\w)(\d+)/g, (_, char, repeated) => char.repeat(+repeated)) : code;
   code = code && code.length === keys.length ? code : defaultValue.repeat(keys.length);

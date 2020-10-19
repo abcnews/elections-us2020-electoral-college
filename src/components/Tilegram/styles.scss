@@ -96,13 +96,13 @@
   stroke: rgb(189, 26, 40);
 }
 
-.state[data-state-allocation='d'],
-.state[data-state-allocation='r'] {
+.state[data-has-allocation],
+.state[data-has-allocation] {
   stroke-width: 2.5;
   stroke: #fff;
 }
 
-.isInteractive[data-tappable='1'] .state {
+.isInteractive[data-tappable='1'] .state:not([data-has-allocation]) {
   cursor: pointer;
 }
 

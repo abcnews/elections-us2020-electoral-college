@@ -1,6 +1,6 @@
 import React from 'react';
 import { Allocation, Allocations, Wall, Walls, GroupID, GROUPS, StateID, STATES } from '../../constants';
-import { getGroupIDForDelegateID } from '../../utils';
+import { getGroupIDForDelegateID, getGroupIDsForStateID } from '../../utils';
 import { DELEGATES_HEXES, STATES_LABELS, STATES_SHAPES, LANDMASS_PROPS } from './data';
 import styles from './styles.scss';
 
@@ -93,7 +93,11 @@ const Tilegram: React.FC<TilegramProps> = props => {
             {Object.keys(STATES_SHAPES).reduce((memo, key) => {
               const stateID = key;
               const wall = walls ? walls[stateID] : Wall.No;
-              const stateAllocation = allocations ? allocations[key] || allocations[key + '_0'] : Allocation.None;
+              const hasAllocation = getGroupIDsForStateID(stateID).some(
+                groupID => allocations && allocations[groupID] !== Allocation.None
+              )
+                ? ''
+                : undefined;
 
               return memo.concat(
                 STATES_SHAPES[key].map((points, index) => (
@@ -102,7 +106,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
                       id={`${key}_${index}_path`}
                       data-wall={wall}
                       data-state={stateID}
-                      data-state-allocation={stateAllocation}
+                      data-has-allocation={hasAllocation}
                       className={styles.state}
                       d={`M${points}z`}
                       clipPath={`url(#${key}_${index}_clip)`}

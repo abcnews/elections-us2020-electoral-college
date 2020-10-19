@@ -1,7 +1,20 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Allocations, INITIAL_WALLS, Walls } from '../../constants';
-import { Allocation, Wall, INITIAL_ALLOCATIONS, MIXINS, PRESETS } from '../../constants';
-import { graphicPropsToAlternatingCase, urlQueryToGraphicProps, graphicPropsToUrlQuery } from '../../utils';
+import {
+  Allocation,
+  Allocations,
+  INITIAL_ALLOCATIONS,
+  Wall,
+  Walls,
+  INITIAL_WALLS,
+  MIXINS,
+  PRESETS
+} from '../../constants';
+import {
+  getGroupIDsForStateID,
+  graphicPropsToAlternatingCase,
+  urlQueryToGraphicProps,
+  graphicPropsToUrlQuery
+} from '../../utils';
 import Graphic, { GraphicProps } from '../Graphic';
 import { TappableLayer } from '../Tilegram';
 import styles from './styles.scss';
@@ -77,6 +90,7 @@ const Editor: React.FC = () => {
 
   const onTapGroup = (groupID: string) => {
     const allocationsToMixin: Allocations = {};
+    const wallsToMixin: Walls = {};
 
     switch (allocations[groupID]) {
       case Allocation.None:
@@ -94,11 +108,25 @@ const Editor: React.FC = () => {
         break;
     }
 
-    mixinGraphicProps({ allocations: allocationsToMixin });
+    // Clear the respective wall if we just changed any of its state's electors
+    const [stateID] = groupID.split('_');
+
+    wallsToMixin[stateID] = Wall.No;
+
+    mixinGraphicProps({ allocations: allocationsToMixin, walls: wallsToMixin });
   };
 
   const onTapState = (stateID: string) => {
     const wallsToMixin: Walls = {};
+
+    // Don't allow state toggling while any of that state's electors are currently allocated
+    const hasAllocation = getGroupIDsForStateID(stateID).some(
+      groupID => allocations && allocations[groupID] !== Allocation.None
+    );
+
+    if (hasAllocation) {
+      return;
+    }
 
     switch (walls[stateID]) {
       case Wall.No:
