@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Allocations, INITIAL_WALLS, Walls } from '../../constants';
 import { Allocation, Wall, INITIAL_ALLOCATIONS, MIXINS, PRESETS } from '../../constants';
 import { graphicPropsToAlternatingCase, urlQueryToGraphicProps, graphicPropsToUrlQuery } from '../../utils';
-import Graphic from '../Graphic';
+import Graphic, { GraphicProps } from '../Graphic';
 import { TappableLayer } from '../Tilegram';
 import styles from './styles.scss';
 
@@ -53,16 +53,25 @@ const Editor: React.FC = () => {
     setSnapshots(nextSnapshots);
   };
 
-  const mixinAllocations = (mixin: Allocations) =>
+  const mixinGraphicProps = (mixin: GraphicProps) => {
     setAllocations({
       ...allocations,
-      ...mixin
+      ...mixin.allocations
     });
+    setWalls({
+      ...walls,
+      ...mixin.walls
+    });
+  };
 
-  const replaceAllocations = (replacement: Allocations) => {
+  const replaceGraphicProps = (replacement: GraphicProps) => {
     setAllocations({
       ...INITIAL_ALLOCATIONS,
-      ...replacement
+      ...replacement.allocations
+    });
+    setWalls({
+      ...INITIAL_WALLS,
+      ...replacement.walls
     });
   };
 
@@ -85,14 +94,8 @@ const Editor: React.FC = () => {
         break;
     }
 
-    mixinAllocations(allocationsToMixin);
+    mixinGraphicProps({ allocations: allocationsToMixin });
   };
-
-  const mixinWalls = (mixin: Walls) =>
-    setWalls({
-      ...walls,
-      ...mixin
-    });
 
   const onTapState = (stateID: string) => {
     const wallsToMixin: Walls = {};
@@ -116,7 +119,7 @@ const Editor: React.FC = () => {
         break;
     }
 
-    mixinWalls(wallsToMixin);
+    mixinGraphicProps({ walls: wallsToMixin });
   };
 
   const graphicProps = useMemo(
@@ -189,10 +192,10 @@ const Editor: React.FC = () => {
         </label>
         <div className={styles.flexRow}>
           {Object.keys(MIXINS).map(key => {
-            const { allocations, name } = MIXINS[key];
+            const { name, ...graphicProps } = MIXINS[key];
 
             return (
-              <button key={key} onClick={() => mixinAllocations(allocations)}>
+              <button key={key} onClick={() => mixinGraphicProps(graphicProps)}>
                 {name || key}
               </button>
             );
@@ -202,14 +205,14 @@ const Editor: React.FC = () => {
           Presets <small>(replace the whole map)</small>
         </label>
         <div className={styles.flexRow}>
-          <button key="empty" onClick={() => replaceAllocations({})}>
+          <button key="empty" onClick={() => replaceGraphicProps({})}>
             Empty
           </button>
           {Object.keys(PRESETS).map(key => {
-            const { allocations, name } = PRESETS[key];
+            const { name, ...graphicProps } = PRESETS[key];
 
             return (
-              <button key={key} onClick={() => replaceAllocations(allocations)}>
+              <button key={key} onClick={() => replaceGraphicProps(graphicProps)}>
                 {name || key}
               </button>
             );
