@@ -32,6 +32,7 @@
   fill-opacity: 1;
   stroke-opacity: 0.1;
   stroke-width: 0.5;
+  // transition: fill 0.5s;
 }
 
 .delegate[data-allocation='d'] {
@@ -58,15 +59,14 @@
 .state {
   stroke: #fff;
   fill: none;
-  stroke-opacity: 1;
   stroke-width: 1.5;
-  transition: fill 0.5s;
+  transition: stroke 0.5s, stroke-width 0.5s;
 }
 
 .state[data-wall='y'],
 .state[data-wall='d'],
 .state[data-wall='r'] {
-  stroke-width: 3;
+  stroke-width: 5.5;
 }
 
 .state[data-wall='y'] {
@@ -74,11 +74,11 @@
 }
 
 .state[data-wall='d'] {
-  stroke: rgba(20, 103, 204, 0.8);
+  stroke: rgb(20, 103, 204);
 }
 
 .state[data-wall='r'] {
-  stroke: rgba(214, 21, 21, 0.8);
+  stroke: rgb(214, 21, 21);
 }
 
 .isInteractive[data-tappable='1'] .state {

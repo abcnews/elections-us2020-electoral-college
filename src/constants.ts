@@ -432,7 +432,7 @@ export const STATES: State[] = GROUPS.filter(({ id }) => {
 
   return index == null || index === '0';
 }).map(({ id, name }) => {
-  const stateID = String(id).split('_')[0] as unknown;
+  const stateID = +String(id).split('_')[0] as unknown;
 
   return {
     id: stateID as StateID,

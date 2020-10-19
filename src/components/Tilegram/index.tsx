@@ -1,9 +1,10 @@
 import React from 'react';
-import { Allocation, Allocations, Wall, Walls } from '../../constants';
-import { GroupID, GROUPS } from '../../constants';
+import { Allocation, Allocations, Wall, Walls, GroupID, GROUPS, StateID, STATES } from '../../constants';
 import { getGroupIDForDelegateID } from '../../utils';
 import { DELEGATES_HEXES, STATES_LABELS, STATES_SHAPES, SVG_PROPS } from './data';
 import styles from './styles.scss';
+
+// inner stroke methods: https://stackoverflow.com/questions/7241393/can-you-control-how-an-svgs-stroke-width-is-drawn
 
 export enum TappableLayer {
   Delegates,
@@ -33,7 +34,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
   };
 
   const onTapStateShape = (event: React.MouseEvent<SVGElement>) => {
-    if (onTapState && tappableLayer === TappableLayer.States && event.target instanceof SVGPolygonElement) {
+    if (onTapState && tappableLayer === TappableLayer.States && event.target instanceof SVGPathElement) {
       const stateID = event.target.dataset.state;
 
       if (stateID) {
@@ -41,8 +42,6 @@ const Tilegram: React.FC<TilegramProps> = props => {
       }
     }
   };
-
-  // TODO: onClick handlers / pointer-events need to be managed by tappable prop
 
   return (
     <div className={`${styles.root}${isInteractive ? ` ${styles.isInteractive}` : ''}`} data-tappable={tappableLayer}>
@@ -68,17 +67,26 @@ const Tilegram: React.FC<TilegramProps> = props => {
         </g>
         <g className={styles.states} onClick={onTapStateShape}>
           {Object.keys(STATES_SHAPES).reduce((memo, key) => {
-            const wall = walls ? walls[key] : Wall.No;
+            const stateID = key;
+            const wall = walls ? walls[stateID] : Wall.No;
 
             return memo.concat(
               STATES_SHAPES[key].map((points, index) => (
-                <polygon
-                  key={`${key}_${index}`}
-                  data-wall={wall}
-                  data-state={key}
-                  className={styles.state}
-                  points={points}
-                ></polygon>
+                <g key={`${key}_${index}`}>
+                  <path
+                    id={`${key}_${index}_path`}
+                    data-wall={wall}
+                    data-state={stateID}
+                    className={styles.state}
+                    d={`M${points}z`}
+                    clipPath={`url(#${key}_${index}_clip)`}
+                  >
+                    <title>{STATES.find(({ id }) => id === StateID[stateID])?.name}</title>
+                  </path>
+                  <clipPath id={`${key}_${index}_clip`}>
+                    <use xlinkHref={`#${key}_${index}_path`} />
+                  </clipPath>
+                </g>
               ))
             );
           }, [])}

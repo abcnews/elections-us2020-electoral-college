@@ -29,7 +29,6 @@ const Editor: React.FC = () => {
     ...DEFAULT_GRAPHIC_PROPS,
     ...urlQueryToGraphicProps(String(window.location.search))
   };
-  console.log(initialUrlParamProps);
   const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
   const [walls, setWalls] = useState<Walls>(initialUrlParamProps.walls);
   const [tappableLayer, setTappableLayer] = useState(initialUrlParamProps.tappableLayer);
@@ -169,7 +168,7 @@ const Editor: React.FC = () => {
                 checked={TappableLayer.Delegates === tappableLayer}
                 onChange={() => setTappableLayer(TappableLayer.Delegates)}
               ></input>
-              Fills
+              Delegates (fills)
             </label>
           </span>
           <span>
@@ -181,7 +180,7 @@ const Editor: React.FC = () => {
                 checked={TappableLayer.States === tappableLayer}
                 onChange={() => setTappableLayer(TappableLayer.States)}
               ></input>
-              Strokes
+              States (outlines)
             </label>
           </span>
         </div>
