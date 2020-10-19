@@ -1,7 +1,8 @@
-export const SVG_PROPS = {
+export const LANDMASS_PROPS = {
   viewBox: '0 0 1038 754',
   width: 1038,
-  height: 754
+  height: 754,
+  margin: 2
 };
 
 export const DELEGATES_HEXES = {
