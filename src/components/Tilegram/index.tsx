@@ -102,13 +102,6 @@ const Tilegram: React.FC<TilegramProps> = props => {
               return memo.concat(
                 STATES_SHAPES[key].map((points, index) => (
                   <g key={`${key}_${index}`}>
-                    <polygon
-                      key={`${key}_${index}_target`}
-                      className={styles.stateTarget}
-                      data-state={stateID}
-                      data-has-allocation={hasAllocation}
-                      points={points}
-                    ></polygon>
                     <path
                       id={`${key}_${index}_path`}
                       data-wall={wall}
@@ -122,6 +115,13 @@ const Tilegram: React.FC<TilegramProps> = props => {
                     <clipPath id={`${key}_${index}_clip`}>
                       <use xlinkHref={`#${key}_${index}_path`} />
                     </clipPath>
+                    <polygon
+                      key={`${key}_${index}_target`}
+                      className={styles.stateTarget}
+                      data-state={stateID}
+                      data-has-allocation={hasAllocation}
+                      points={points}
+                    ></polygon>
                   </g>
                 ))
               );
