@@ -1,7 +1,7 @@
 import React from 'react';
 import { Allocation, Allocations, Wall, Walls, GroupID, GROUPS, StateID, STATES } from '../../constants';
 import { getGroupIDsForStateID, getGroupIDForStateIDAndDelegateIndex } from '../../utils';
-import { STATES_DELEGATE_HEXES, STATES_LABELS, STATES_SHAPES, LANDMASS_PROPS } from './data';
+import { COUNTRY_PATHS, STATES_DELEGATE_HEXES, STATES_LABELS, STATES_SHAPES, LANDMASS_PROPS } from './data';
 import styles from './styles.scss';
 
 // inner stroke methods: https://stackoverflow.com/questions/7241393/can-you-control-how-an-svgs-stroke-width-is-drawn
@@ -56,19 +56,10 @@ const Tilegram: React.FC<TilegramProps> = props => {
     <div className={`${styles.root}${isInteractive ? ` ${styles.isInteractive}` : ''}`} data-tappable={tappableLayer}>
       <svg className={styles.svg} {...svgAttrs}>
         <g transform={`translate(${LANDMASS_PROPS.margin} ${LANDMASS_PROPS.margin})`}>
-          <g className={styles.shoreline}>
-            {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, key) => {
-              return memo.concat(
-                STATES_SHAPES[key].map((points, index) => <polygon key={`${key}_${index}`} points={points}></polygon>)
-              );
-            }, [])}
-          </g>
-          <g className={styles.landmass}>
-            {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, key) => {
-              return memo.concat(
-                STATES_SHAPES[key].map((points, index) => <polygon key={`${key}_${index}`} points={points}></polygon>)
-              );
-            }, [])}
+          <g className={styles.country}>
+            {COUNTRY_PATHS.map((d, index) => (
+              <path key={`${d}_${index}`} d={d}></path>
+            ))}
           </g>
           <g className={styles.delegates} onClick={onTapDelegateHex}>
             {Object.keys(STATES_DELEGATE_HEXES).reduce<JSX.Element[]>(
