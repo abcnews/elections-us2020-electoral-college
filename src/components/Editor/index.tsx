@@ -19,7 +19,15 @@ import type { GraphicProps } from '../Graphic';
 import Graphic from '../Graphic';
 import graphicStyles from '../Graphic/styles.scss';
 import { TappableLayer } from '../Tilegram';
+import tilegramStyles from '../Tilegram/styles.scss';
+import totalsStyles from '../Totals/styles.scss';
 import styles from './styles.scss';
+
+const COMPONENTS_STYLES = {
+  Graphic: graphicStyles,
+  Totals: totalsStyles,
+  Tilegram: tilegramStyles
+};
 
 const DEFAULT_GRAPHIC_PROPS = {
   allocations: INITIAL_ALLOCATIONS,
@@ -188,7 +196,7 @@ const Editor: React.FC = () => {
     () =>
       `https://fallback-automation.drzax.now.sh/api?url=${encodeURIComponent(
         String(document.location.href).split('?')[0] + graphicPropsAsUrlQuery
-      )}&selector=.${encodeURIComponent(graphicStyles.root)}&width=`,
+      )}&width=600&selector=.`,
     [graphicPropsAsUrlQuery]
   );
 
@@ -330,15 +338,16 @@ const Editor: React.FC = () => {
             </li>
           ))}
         </ul>
-        <label>Rasterisation</label>
+        <label>Static image downloads</label>
         <ul>
-          {[300, 600, 900].map(width => (
-            <li key={width}>
+          {Object.keys(COMPONENTS_STYLES).map(key => (
+            <li key={key}>
               <a
-                href={`${fallbackAutomationBaseURL}${width}`}
-                download={`fallback-${width}_${graphicPropsAsAlternatingCase}.png`}
+                href={`${fallbackAutomationBaseURL}${encodeURIComponent(COMPONENTS_STYLES[key].root)}`}
+                download={`fallback-${key}-${graphicPropsAsAlternatingCase}.png`}
+                target="_blank"
               >
-                {`Download ${width}px-wide image`}
+                {key}
               </a>
             </li>
           ))}
