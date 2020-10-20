@@ -129,7 +129,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
                 allocations ? allocations[groupID] : Allocation.None
               );
               const hasMostDefinitiveAllocated =
-                allocationsForState.filter(allocation => allocation === Allocation.Dem || allocation === Allocation.Rep)
+                allocationsForState.filter(allocation => allocation === Allocation.Dem || allocation === Allocation.GOP)
                   .length *
                   2 >
                 allocationsForState.length;

@@ -14,11 +14,11 @@ const Totals: React.FC<TotalsProps> = props => {
   return (
     <div className={styles.root}>
       {[
-        `Democrats: ${voteCounts[Allocation.Dem]}`,
-        `Democrats (likely): ${voteCounts[Allocation.LikelyDem]}`,
+        `Dem.: ${voteCounts[Allocation.Dem]}`,
+        `Likely Dem.: ${voteCounts[Allocation.LikelyDem]}`,
         `Tossup: ${voteCounts[Allocation.Tossup]}`,
-        `Republicans (likely): ${voteCounts[Allocation.LikelyRep]}`,
-        `Republicans: ${voteCounts[Allocation.Rep]}`,
+        `Likely GOP: ${voteCounts[Allocation.LikelyGOP]}`,
+        `GOP: ${voteCounts[Allocation.GOP]}`,
         `Unallocated: ${voteCounts[Allocation.None]}`
       ].join('; ')}
     </div>

@@ -113,12 +113,12 @@ const Editor: React.FC = () => {
         allocationsToMixin[groupID] = Allocation.Tossup;
         break;
       case Allocation.Tossup:
-        allocationsToMixin[groupID] = Allocation.LikelyRep;
+        allocationsToMixin[groupID] = Allocation.LikelyGOP;
         break;
-      case Allocation.LikelyRep:
-        allocationsToMixin[groupID] = Allocation.Rep;
+      case Allocation.LikelyGOP:
+        allocationsToMixin[groupID] = Allocation.GOP;
         break;
-      case Allocation.Rep:
+      case Allocation.GOP:
         allocationsToMixin[groupID] = Allocation.None;
         break;
       default:
@@ -155,9 +155,9 @@ const Editor: React.FC = () => {
         wallsToMixin[stateID] = Wall.Dem;
         break;
       case Wall.Dem:
-        wallsToMixin[stateID] = Wall.Rep;
+        wallsToMixin[stateID] = Wall.GOP;
         break;
-      case Wall.Rep:
+      case Wall.GOP:
         wallsToMixin[stateID] = Wall.No;
         break;
       default:
