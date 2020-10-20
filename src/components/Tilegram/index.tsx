@@ -1,7 +1,7 @@
 import React from 'react';
 import { Allocation, Allocations, Wall, Walls, GroupID, GROUPS, StateID, STATES } from '../../constants';
-import { getGroupIDForDelegateID, getGroupIDsForStateID } from '../../utils';
-import { DELEGATES_HEXES, STATES_LABELS, STATES_SHAPES, LANDMASS_PROPS } from './data';
+import { getGroupIDsForStateID, getGroupIDForStateIDAndDelegateIndex } from '../../utils';
+import { STATES_DELEGATE_HEXES, STATES_LABELS, STATES_SHAPES, LANDMASS_PROPS } from './data';
 import styles from './styles.scss';
 
 // inner stroke methods: https://stackoverflow.com/questions/7241393/can-you-control-how-an-svgs-stroke-width-is-drawn
@@ -57,64 +57,70 @@ const Tilegram: React.FC<TilegramProps> = props => {
       <svg className={styles.svg} {...svgAttrs}>
         <g transform={`translate(${LANDMASS_PROPS.margin} ${LANDMASS_PROPS.margin})`}>
           <g className={styles.shoreline}>
-            {Object.keys(STATES_SHAPES).reduce((memo, key, index) => {
+            {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, key) => {
               return memo.concat(
                 STATES_SHAPES[key].map((points, index) => <polygon key={`${key}_${index}`} points={points}></polygon>)
               );
             }, [])}
           </g>
           <g className={styles.landmass}>
-            {Object.keys(STATES_SHAPES).reduce((memo, key, index) => {
+            {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, key) => {
               return memo.concat(
                 STATES_SHAPES[key].map((points, index) => <polygon key={`${key}_${index}`} points={points}></polygon>)
               );
             }, [])}
           </g>
           <g className={styles.delegates} onClick={onTapDelegateHex}>
-            {Object.keys(DELEGATES_HEXES).map(key => {
-              const groupID = getGroupIDForDelegateID(key);
-              const allocation = allocations ? allocations[groupID] : Allocation.None;
+            {Object.keys(STATES_DELEGATE_HEXES).reduce<JSX.Element[]>(
+              (memo, stateID) =>
+                memo.concat(
+                  STATES_DELEGATE_HEXES[stateID].map((points, index) => {
+                    const groupID = getGroupIDForStateIDAndDelegateIndex(stateID, index);
+                    const allocation = allocations ? allocations[groupID] : Allocation.None;
+                    const delegateID = `${stateID}-${index + 1}`;
 
-              return (
-                <polygon
-                  key={key}
-                  data-allocation={allocation}
-                  data-group={groupID}
-                  data-delegate={key}
-                  className={styles.delegate}
-                  points={DELEGATES_HEXES[key]}
-                >
-                  <title>{GROUPS.find(({ id }) => id === GroupID[groupID])?.name}</title>
-                </polygon>
-              );
-            })}
+                    return (
+                      <polygon
+                        key={delegateID}
+                        data-allocation={allocation}
+                        data-group={groupID}
+                        data-delegate={delegateID}
+                        className={styles.delegate}
+                        points={points}
+                      >
+                        <title>{GROUPS.find(({ id }) => id === GroupID[groupID])?.name}</title>
+                      </polygon>
+                    );
+                  })
+                ),
+              []
+            )}
           </g>
           <g className={styles.states} onClick={onTapStateShape}>
-            {Object.keys(STATES_SHAPES).reduce((memo, key) => {
-              const stateID = key;
+            {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, stateID) => {
               const wall = walls ? walls[stateID] : Wall.No;
               const hasAllocation = getGroupIDsForStateID(stateID).some(
                 groupID => allocations && allocations[groupID] !== Allocation.None
               );
 
               return memo.concat(
-                STATES_SHAPES[key].map((points, index) => (
-                  <g key={`${key}_${index}`}>
+                STATES_SHAPES[stateID].map((points, index) => (
+                  <g key={`${stateID}_${index}`}>
                     <path
-                      id={`${key}_${index}_path`}
+                      id={`${stateID}_${index}_path`}
                       data-wall={wall}
                       data-has-allocation={hasAllocation ? '' : undefined}
                       className={styles.stateWall}
                       d={`M${points}z`}
-                      clipPath={`url(#${key}_${index}_clip)`}
+                      clipPath={`url(#${stateID}_${index}_clip)`}
                     >
                       <title>{STATES.find(({ id }) => id === StateID[stateID])?.name}</title>
                     </path>
-                    <clipPath id={`${key}_${index}_clip`}>
-                      <use xlinkHref={`#${key}_${index}_path`} />
+                    <clipPath id={`${stateID}_${index}_clip`}>
+                      <use xlinkHref={`#${stateID}_${index}_path`} />
                     </clipPath>
                     <polygon
-                      key={`${key}_${index}_target`}
+                      key={`${stateID}_${index}_target`}
                       className={styles.stateTarget}
                       data-state={stateID}
                       data-has-allocation={hasAllocation}

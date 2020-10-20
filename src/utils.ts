@@ -18,10 +18,8 @@ export const votesForGroups = (groups: Group[]) => {
   }, 0);
 };
 
-export const getGroupIDForDelegateID = (delegateID: string) => {
-  const [stateID, delegateIndex] = delegateID.split('-');
-
-  return `${stateID}${GroupID[stateID] != null ? '' : `_${Math.max(0, parseInt(delegateIndex) - 2)}`}`;
+export const getGroupIDForStateIDAndDelegateIndex = (stateID: string, delegateIndex: number) => {
+  return `${stateID}${GroupID[stateID] != null ? '' : `_${Math.max(0, delegateIndex - 1)}`}`;
 };
 
 export const getGroupIDsForStateID = (stateID: string) => {
