@@ -3,9 +3,10 @@ import {
   Allocation,
   Allocations,
   ALLOCATIONS,
-  GROUP_IDS,
   Group,
   GroupID,
+  GROUP_IDS,
+  GROUPS,
   STATE_IDS,
   Wall,
   Walls,
@@ -24,6 +25,17 @@ export const getGroupIDForStateIDAndDelegateIndex = (stateID: string, delegateIn
 
 export const getGroupIDsForStateID = (stateID: string) => {
   return GROUP_IDS.filter(groupID => groupID.indexOf(stateID) === 0);
+};
+
+export const getVoteCountsForAllocations = (allocations: Allocations): { [key: string]: number } => {
+  return ALLOCATIONS.reduce((memo, allocation) => {
+    memo[allocation] = GROUPS.filter(({ id }) => allocations[GroupID[id]] === allocation).reduce(
+      (memo, { votes }) => memo + votes,
+      0
+    );
+
+    return memo;
+  }, {});
 };
 
 function decode<Dict>(code: string, keys: string[], possibleValues: string[], defaultValue: string): Dict {

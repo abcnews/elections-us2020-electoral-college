@@ -359,9 +359,9 @@ export enum Allocation {
 
 export const ALLOCATIONS: string[] = Object.keys(Allocation).map(x => Allocation[x]);
 
-export interface Allocations {
+export type Allocations = {
   [key: string]: Allocation;
-}
+};
 
 export const INITIAL_ALLOCATIONS = GROUP_IDS.reduce((allocations, groupID) => {
   allocations[groupID] = Allocation.None;
@@ -452,9 +452,9 @@ export enum Wall {
 
 export const WALLS: string[] = Object.keys(Wall).map(x => Wall[x]);
 
-export interface Walls {
+export type Walls = {
   [key: string]: Wall;
-}
+};
 
 export const INITIAL_WALLS = STATE_IDS.reduce((walls, stateID) => {
   walls[stateID] = Wall.No;

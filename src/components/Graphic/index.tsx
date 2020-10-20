@@ -1,6 +1,7 @@
 import React from 'react';
 import type { TilegramProps } from '../Tilegram';
 import Tilegram from '../Tilegram';
+import Totals from '../Totals';
 import styles from './styles.scss';
 
 export type GraphicProps = {
@@ -15,11 +16,14 @@ export type PossiblyEncodedGraphicProps =
   | GraphicProps;
 
 const Graphic: React.FC<GraphicProps> = props => {
-  const { title, ...tilegramProps } = props;
+  const { title, allocations, ...otherTilegramProps } = props;
 
   return (
     <div className={styles.root} title={title}>
-      <Tilegram {...tilegramProps} />
+      <header>
+        <Totals allocations={allocations} />
+      </header>
+      <Tilegram allocations={allocations} {...otherTilegramProps} />
     </div>
   );
 };

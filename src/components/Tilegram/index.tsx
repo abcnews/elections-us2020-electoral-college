@@ -11,13 +11,13 @@ export enum TappableLayer {
   States
 }
 
-export interface TilegramProps {
+export type TilegramProps = {
   allocations?: Allocations;
   walls?: Walls;
   tappableLayer?: TappableLayer;
   onTapGroup?: (groupID: string) => void;
   onTapState?: (stateID: string) => void;
-}
+};
 
 const Tilegram: React.FC<TilegramProps> = props => {
   const { allocations, walls, tappableLayer, onTapGroup, onTapState } = props;
