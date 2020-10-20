@@ -15,7 +15,9 @@ import {
   urlQueryToGraphicProps,
   graphicPropsToUrlQuery
 } from '../../utils';
-import Graphic, { GraphicProps } from '../Graphic';
+import type { GraphicProps } from '../Graphic';
+import Graphic from '../Graphic';
+import graphicStyles from '../Graphic/styles.scss';
 import { TappableLayer } from '../Tilegram';
 import styles from './styles.scss';
 
@@ -182,6 +184,14 @@ const Editor: React.FC = () => {
     [graphicPropsAsAlternatingCase]
   );
 
+  const fallbackAutomationBaseURL = useMemo(
+    () =>
+      `https://fallback-automation.drzax.now.sh/api?url=${encodeURIComponent(
+        String(document.location.href).split('?')[0] + graphicPropsAsUrlQuery
+      )}&selector=.${encodeURIComponent(graphicStyles.root)}&width=`,
+    [graphicPropsAsUrlQuery]
+  );
+
   useEffect(() => {
     history.replaceState(graphicProps, document.title, graphicPropsAsUrlQuery);
   }, [graphicPropsAsUrlQuery]);
@@ -317,6 +327,19 @@ const Editor: React.FC = () => {
                 </svg>
               </button>{' '}
               <a href={snapshots[name]}>{name}</a>
+            </li>
+          ))}
+        </ul>
+        <label>Rasterisation</label>
+        <ul>
+          {[300, 600, 900].map(width => (
+            <li key={width}>
+              <a
+                href={`${fallbackAutomationBaseURL}${width}`}
+                download={`fallback-${width}_${graphicPropsAsAlternatingCase}.png`}
+              >
+                {`Download ${width}px-wide image`}
+              </a>
             </li>
           ))}
         </ul>
