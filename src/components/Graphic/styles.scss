@@ -12,6 +12,17 @@
   font-family: ABCSans, system-ui, sans-serif;
 }
 
+[data-mount][id^='ecgraphic'] > .root {
+  border: 0.0625rem solid #ccc;
+  padding: 0.5rem;
+}
+
+@media (min-width: 668px) {
+  [data-mount][id^='ecgraphic'] > .root {
+    padding: 1rem;
+  }
+}
+
 .root > header {
   margin-bottom: 1rem;
 }

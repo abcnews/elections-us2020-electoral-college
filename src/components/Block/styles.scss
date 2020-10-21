@@ -1,5 +1,7 @@
+@import '../../constants.scss';
+
 .scrollyteller {
-  background-color: inherit;
+  background-color: $color_BG;
 }
 
 @keyframes enter {
