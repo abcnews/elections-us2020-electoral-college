@@ -4,7 +4,8 @@ $heightBar: 2.5rem;
 
 .root {
   position: relative;
-  padding: 2.5rem 0 $heightBar / 2;
+  overflow: hidden;
+  padding: $heightBar / 5 * 4 0 $heightBar / 2;
 }
 
 .track {
@@ -12,7 +13,6 @@ $heightBar: 2.5rem;
   margin: 0 auto;
   width: calc(100% - #{$heightBar * 3.5});
   height: $heightBar;
-  background-color: $color_Tossup;
 }
 
 .bar {
@@ -21,17 +21,8 @@ $heightBar: 2.5rem;
   left: 0;
   width: 100%;
   height: 100%;
-  transition: transform 0.25s;
-}
-
-.bar[data-allocation='#{$Allocation_GOP}'],
-.bar[data-allocation='#{$Allocation_LikelyGOP}'] {
-  transform-origin: 0 0;
-}
-
-.bar[data-allocation='#{$Allocation_Dem}'],
-.bar[data-allocation='#{$Allocation_LikelyDem}'] {
-  transform-origin: 100% 0;
+  background-color: $color_Tossup;
+  transition: transform $transformDuration;
 }
 
 .bar[data-allocation='#{$Allocation_GOP}'] {
@@ -50,29 +41,75 @@ $heightBar: 2.5rem;
   background-color: $color_LikelyDem;
 }
 
-.win {
+.edge {
   position: absolute;
-  top: -0.5rem;
-  left: 50%;
-  border-left: 1px dashed currentColor;
-  width: 1px;
+  top: 0;
+  width: 0.125rem;
+  height: 100%;
+  background-color: $color_BG;
+}
+
+.bar[data-allocation='#{$Allocation_GOP}'] .edge,
+.bar[data-allocation='#{$Allocation_LikelyGOP}'] .edge {
+  right: -0.0625rem;
+}
+
+.bar[data-allocation='#{$Allocation_Dem}'] .edge,
+.bar[data-allocation='#{$Allocation_LikelyDem}'] .edge {
+  left: -0.0625rem;
+}
+
+.label {
+  transform: translate(-50%, -1rem);
+  z-index: 1;
+  position: absolute;
+  top: -0.125rem;
+  left: 0;
+  background-color: #fff;
+  line-height: 1;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.0625rem;
+  white-space: nowrap;
+  transition: transform $transformDuration;
+}
+
+.label[data-votes='0'] {
+  display: none;
+}
+
+.root[data-is-mostly-allocated] .bar[data-allocation='#{$Allocation_GOP}'] .label {
+  transform: translate(-125%, -1rem);
+}
+
+.root[data-is-mostly-allocated] .bar[data-allocation='#{$Allocation_Dem}'] .label {
+  transform: translate(25%, -1rem);
+}
+
+.winLine {
+  position: absolute;
+  bottom: -0.5rem;
+  left: calc(50% - 0.03125rem);
+  border-left: 0.0625rem dashed currentColor;
+  width: 0;
   height: calc(100% + 1rem);
 }
 
-.winLabel {
-  transform: translate(-50%, -1rem);
-  position: absolute;
+.winLine ~ .winLine {
+  bottom: 0;
+  height: 100%;
+}
+
+.winLine .label {
   top: -0.5rem;
-  left: 0;
   font-size: 0.75rem;
-  text-transform: uppercase;
-  white-space: nowrap;
 }
 
 .icon {
+  z-index: 1;
   position: absolute;
   top: $heightBar * -0.5;
-  border: 0.125rem solid #fff;
+  border: 0.125rem solid $color_BG;
   border-radius: 50%;
   width: $heightBar * 2;
   height: $heightBar * 2;
@@ -90,4 +127,23 @@ $heightBar: 2.5rem;
   right: $heightBar * -1.75;
   background-color: rgb(16, 58, 135);
   background-image: url(dem.svg);
+}
+
+.track::before,
+.track::after {
+  content: '';
+  position: absolute;
+  width: $heightBar;
+  height: 100%;
+  background-color: $color_BG;
+}
+
+.track::before {
+  z-index: 1;
+  left: $heightBar * -1.75;
+}
+
+.track::after {
+  z-index: 0;
+  right: $heightBar * -1.75;
 }

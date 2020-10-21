@@ -14,7 +14,7 @@
 .country path {
   stroke: #000;
   stroke-width: 5.5;
-  fill: $color_None;
+  fill: $color_BG;
 }
 
 .delegates {
@@ -30,7 +30,7 @@
   stroke: none;
   fill: $color_None;
   stroke-width: 1.5;
-  // transition: fill 0.5s;
+  // transition: fill $transformDuration;
 }
 
 .delegate[data-allocation='#{$Allocation_Dem}'],
@@ -84,7 +84,7 @@
   stroke: rgba(128, 128, 128, 0.25);
   fill: none;
   stroke-width: 1.5;
-  // transition: stroke 0.5s, stroke-width 0.5s;
+  // transition: stroke $transformDuration, stroke-width $transformDuration;
 }
 
 .stateWall[data-wall='#{$Wall_Yes}'],
@@ -108,7 +108,7 @@
 .stateWall[data-has-allocation],
 .stateWall[data-has-allocation] {
   stroke-width: 2.5;
-  stroke: #fff;
+  stroke: $color_BG;
 }
 
 .labels {
@@ -119,11 +119,10 @@
   text-anchor: middle;
   dominant-baseline: middle;
   font-size: 1rem;
-  fill: #000;
   stroke: none;
 }
 
 .label[data-most-definitively-allocated] {
-  fill: #fff;
+  fill: $color_BG;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
 }
