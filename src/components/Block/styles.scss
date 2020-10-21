@@ -1,7 +1,7 @@
 @import '../../constants.scss';
 
 .scrollyteller {
-  background-color: $color_BG;
+  background-color: inherit;
 }
 
 @keyframes enter {
@@ -19,9 +19,8 @@
   top: 50%;
   left: 50%;
   width: calc(100% - 2rem);
-  // height: calc(100% - 2rem);
   max-width: 57.5rem;
-  // max-height: 43.125rem;
+  box-shadow: 0 0 5vmin 5vmin #fff;
   animation: enter 0.5s;
 }
 
