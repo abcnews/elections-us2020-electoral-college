@@ -217,7 +217,7 @@ const Editor: React.FC = () => {
                 checked={TappableLayer.Delegates === tappableLayer}
                 onChange={() => setTappableLayer(TappableLayer.Delegates)}
               ></input>
-              Delegates (vote assignment)
+              Assigned delegates
             </label>
           </span>
           <span>
@@ -229,7 +229,7 @@ const Editor: React.FC = () => {
                 checked={TappableLayer.States === tappableLayer}
                 onChange={() => setTappableLayer(TappableLayer.States)}
               ></input>
-              States (focus toggles)
+              Focused states
             </label>
           </span>
         </div>
