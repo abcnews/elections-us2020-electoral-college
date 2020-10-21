@@ -132,25 +132,6 @@ const Editor: React.FC = () => {
       return;
     }
 
-    switch (focuses[stateID]) {
-      case Focus.No:
-        focusesToMixin[stateID] = Focus.Yes;
-        break;
-      case Focus.Yes:
-        focusesToMixin[stateID] = Focus.Dem;
-        break;
-      case Focus.Dem:
-        focusesToMixin[stateID] = Focus.GOP;
-        break;
-      case Focus.GOP:
-        focusesToMixin[stateID] = Focus.No;
-        break;
-      default:
-        // TODO: do we need to set this, or retain the original value?
-        focusesToMixin[stateID] = Focus.No;
-        break;
-    }
-
     const focus = focuses[stateID];
     const focusIndex = FOCUSES.indexOf(focus);
 
