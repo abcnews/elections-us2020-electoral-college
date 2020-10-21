@@ -102,7 +102,6 @@ const Editor: React.FC = () => {
 
   const onTapGroup = (groupID: string) => {
     const allocationsToMixin: Allocations = {};
-    const focusesToMixin: Focuses = {};
 
     const allocation = allocations[groupID];
     const allocationIndex = ALLOCATIONS.indexOf(allocation);
@@ -112,25 +111,11 @@ const Editor: React.FC = () => {
       allocationIndex === ALLOCATIONS.length - 1 ? 0 : allocationIndex + 1
     ] as Allocation;
 
-    // Clear the respective focus if we just changed any of its state's electors
-    const [stateID] = groupID.split('_');
-
-    focusesToMixin[stateID] = Focus.No;
-
-    mixinGraphicProps({ allocations: allocationsToMixin, focuses: focusesToMixin });
+    mixinGraphicProps({ allocations: allocationsToMixin });
   };
 
   const onTapState = (stateID: string) => {
     const focusesToMixin: Focuses = {};
-
-    // Don't allow state toggling while any of that state's electors are currently allocated
-    const hasAllocation = getGroupIDsForStateID(stateID).some(
-      groupID => allocations && allocations[groupID] !== Allocation.None
-    );
-
-    if (hasAllocation) {
-      return;
-    }
 
     const focus = focuses[stateID];
     const focusIndex = FOCUSES.indexOf(focus);
