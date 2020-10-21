@@ -2,9 +2,11 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   Allocation,
   Allocations,
+  ALLOCATIONS,
   INITIAL_ALLOCATIONS,
   Wall,
   Walls,
+  WALLS,
   INITIAL_WALLS,
   MIXINS,
   PRESETS
@@ -102,30 +104,13 @@ const Editor: React.FC = () => {
     const allocationsToMixin: Allocations = {};
     const wallsToMixin: Walls = {};
 
-    switch (allocations[groupID]) {
-      case Allocation.None:
-        allocationsToMixin[groupID] = Allocation.Dem;
-        break;
-      case Allocation.Dem:
-        allocationsToMixin[groupID] = Allocation.LikelyDem;
-        break;
-      case Allocation.LikelyDem:
-        allocationsToMixin[groupID] = Allocation.Tossup;
-        break;
-      case Allocation.Tossup:
-        allocationsToMixin[groupID] = Allocation.LikelyGOP;
-        break;
-      case Allocation.LikelyGOP:
-        allocationsToMixin[groupID] = Allocation.GOP;
-        break;
-      case Allocation.GOP:
-        allocationsToMixin[groupID] = Allocation.None;
-        break;
-      default:
-        // TODO: do we need to set this, or retain the original value?
-        allocationsToMixin[groupID] = Allocation.None;
-        break;
-    }
+    const allocation = allocations[groupID];
+    const allocationIndex = ALLOCATIONS.indexOf(allocation);
+
+    // Cycle to the next Allocation in the enum (or the first if we don't recognise it)
+    allocationsToMixin[groupID] = ALLOCATIONS[
+      allocationIndex === ALLOCATIONS.length - 1 ? 0 : allocationIndex + 1
+    ] as Allocation;
 
     // Clear the respective wall if we just changed any of its state's electors
     const [stateID] = groupID.split('_');
@@ -165,6 +150,12 @@ const Editor: React.FC = () => {
         wallsToMixin[stateID] = Wall.No;
         break;
     }
+
+    const wall = walls[stateID];
+    const wallIndex = WALLS.indexOf(wall);
+
+    // Cycle to the next Wall in the enum (or the first if we don't recognise it)
+    wallsToMixin[stateID] = WALLS[wallIndex === WALLS.length - 1 ? 0 : wallIndex + 1] as Wall;
 
     mixinGraphicProps({ walls: wallsToMixin });
   };
