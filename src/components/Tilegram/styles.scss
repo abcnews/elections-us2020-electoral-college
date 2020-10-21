@@ -14,7 +14,7 @@
 .country path {
   stroke: #000;
   stroke-width: 5.5;
-  fill: $colorNone;
+  fill: $color_None;
 }
 
 .delegates {
@@ -28,34 +28,34 @@
 
 .delegate {
   stroke: none;
-  fill: $colorNone;
+  fill: $color_None;
   stroke-width: 1.5;
   // transition: fill 0.5s;
 }
 
-.delegate[data-allocation='d'],
-.delegate[data-allocation='r'] {
+.delegate[data-allocation='#{$Allocation_Dem}'],
+.delegate[data-allocation='#{$Allocation_GOP}'] {
   stroke: rgba(255, 255, 255, 0.25);
 }
 
-.delegate[data-allocation='d'] {
-  fill: $colorDem;
+.delegate[data-allocation='#{$Allocation_Dem}'] {
+  fill: $color_Dem;
 }
 
-.delegate[data-allocation='s'] {
-  fill: $colorLikelyDem;
+.delegate[data-allocation='#{$Allocation_LikelyDem}'] {
+  fill: $color_LikelyDem;
 }
 
-.delegate[data-allocation='u'] {
-  fill: $colorTossup;
+.delegate[data-allocation='#{$Allocation_Tossup}'] {
+  fill: $color_Tossup;
 }
 
-.delegate[data-allocation='e'] {
-  fill: $colorLikelyGOP;
+.delegate[data-allocation='#{$Allocation_LikelyGOP}'] {
+  fill: $color_LikelyGOP;
 }
 
-.delegate[data-allocation='r'] {
-  fill: $colorGOP;
+.delegate[data-allocation='#{$Allocation_GOP}'] {
+  fill: $color_GOP;
 }
 
 .isInteractive[data-tappable='0'] .delegate {
@@ -87,21 +87,21 @@
   // transition: stroke 0.5s, stroke-width 0.5s;
 }
 
-.stateWall[data-wall='y'],
-.stateWall[data-wall='d'],
-.stateWall[data-wall='r'] {
+.stateWall[data-wall='#{$Wall_Yes}'],
+.stateWall[data-wall='#{$Wall_Dem}'],
+.stateWall[data-wall='#{$Wall_GOP}'] {
   stroke-width: 5.5;
 }
 
-.stateWall[data-wall='y'] {
+.stateWall[data-wall='#{$Wall_Yes}'] {
   stroke: #000;
 }
 
-.stateWall[data-wall='d'] {
+.stateWall[data-wall='#{$Wall_Dem}'] {
   stroke: rgb(52, 127, 178);
 }
 
-.stateWall[data-wall='r'] {
+.stateWall[data-wall='#{$Wall_GOP}'] {
   stroke: rgb(191, 22, 34);
 }
 

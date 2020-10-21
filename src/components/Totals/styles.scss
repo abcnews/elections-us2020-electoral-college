@@ -12,7 +12,7 @@ $heightBar: 2.5rem;
   margin: 0 auto;
   width: calc(100% - #{$heightBar * 3.5});
   height: $heightBar;
-  background-color: $colorTossup;
+  background-color: $color_Tossup;
 }
 
 .bar {
@@ -24,30 +24,30 @@ $heightBar: 2.5rem;
   transition: transform 0.25s;
 }
 
-.bar[data-allocation='r'],
-.bar[data-allocation='e'] {
+.bar[data-allocation='#{$Allocation_GOP}'],
+.bar[data-allocation='#{$Allocation_LikelyGOP}'] {
   transform-origin: 0 0;
 }
 
-.bar[data-allocation='d'],
-.bar[data-allocation='s'] {
+.bar[data-allocation='#{$Allocation_Dem}'],
+.bar[data-allocation='#{$Allocation_LikelyDem}'] {
   transform-origin: 100% 0;
 }
 
-.bar[data-allocation='r'] {
-  background-color: $colorGOP;
+.bar[data-allocation='#{$Allocation_GOP}'] {
+  background-color: $color_GOP;
 }
 
-.bar[data-allocation='d'] {
-  background-color: $colorDem;
+.bar[data-allocation='#{$Allocation_Dem}'] {
+  background-color: $color_Dem;
 }
 
-.bar[data-allocation='e'] {
-  background-color: $colorLikelyGOP;
+.bar[data-allocation='#{$Allocation_LikelyGOP}'] {
+  background-color: $color_LikelyGOP;
 }
 
-.bar[data-allocation='s'] {
-  background-color: $colorLikelyDem;
+.bar[data-allocation='#{$Allocation_LikelyDem}'] {
+  background-color: $color_LikelyDem;
 }
 
 .win {
@@ -80,13 +80,13 @@ $heightBar: 2.5rem;
   background-position: 50% 33%;
 }
 
-.icon[data-allocation='r'] {
+.icon[data-allocation='#{$Allocation_GOP}'] {
   left: $heightBar * -1.75;
   background-color: rgb(2112, 45, 51);
   background-image: url(gop.svg);
 }
 
-.icon[data-allocation='d'] {
+.icon[data-allocation='#{$Allocation_Dem}'] {
   right: $heightBar * -1.75;
   background-color: rgb(16, 58, 135);
   background-image: url(dem.svg);

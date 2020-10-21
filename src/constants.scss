@@ -1,6 +1,21 @@
-$colorNone: #fff;
-$colorDem: rgb(52, 127, 178);
-$colorLikelyDem: rgb(193, 216, 231);
-$colorTossup: rgb(204, 204, 204);
-$colorLikelyGOP: rgb(235, 184, 187);
-$colorGOP: rgb(191, 22, 34);
+// Allocation enum
+$Allocation_None: 'n';
+$Allocation_Dem: 'd';
+$Allocation_LikelyDem: 's';
+$Allocation_Tossup: 'u';
+$Allocation_LikelyGOP: 'e';
+$Allocation_GOP: 'r';
+
+// Wall enum
+$Wall_No: 'n';
+$Wall_Yes: 'y';
+$Wall_Dem: 'd';
+$Wall_GOP: 'r';
+
+// Theming
+$color_None: #fff;
+$color_Dem: rgb(52, 127, 178);
+$color_LikelyDem: rgb(193, 216, 231);
+$color_Tossup: rgb(204, 204, 204);
+$color_LikelyGOP: rgb(235, 184, 187);
+$color_GOP: rgb(191, 22, 34);
