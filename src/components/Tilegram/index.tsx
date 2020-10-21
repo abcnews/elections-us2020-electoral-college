@@ -1,5 +1,5 @@
 import React from 'react';
-import { Allocation, Allocations, Wall, Walls, GroupID, GROUPS, StateID, STATES } from '../../constants';
+import { Allocation, Allocations, Focus, Focuses, GroupID, GROUPS, StateID, STATES } from '../../constants';
 import { getGroupIDsForStateID, getGroupIDForStateIDAndDelegateIndex } from '../../utils';
 import { COUNTRY_PATHS, STATES_DELEGATE_HEXES, STATES_LABELS, STATES_SHAPES, HEXGRID_PROPS } from './data';
 import styles from './styles.scss';
@@ -13,14 +13,14 @@ export enum TappableLayer {
 
 export type TilegramProps = {
   allocations?: Allocations;
-  walls?: Walls;
+  focuses?: Focuses;
   tappableLayer?: TappableLayer;
   onTapGroup?: (groupID: string) => void;
   onTapState?: (stateID: string) => void;
 };
 
 const Tilegram: React.FC<TilegramProps> = props => {
-  const { allocations, walls, tappableLayer, onTapGroup, onTapState } = props;
+  const { allocations, focuses, tappableLayer, onTapGroup, onTapState } = props;
   const isInteractive = !!onTapGroup;
 
   const onTapDelegateHex = (event: React.MouseEvent<SVGElement>) => {
@@ -89,7 +89,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
           </g>
           <g className={styles.states} onClick={onTapStateShape}>
             {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, stateID) => {
-              const wall = walls ? walls[stateID] : Wall.No;
+              const focus = focuses ? focuses[stateID] : Focus.No;
               const hasAllocation = getGroupIDsForStateID(stateID).some(
                 groupID => allocations && allocations[groupID] !== Allocation.None
               );
@@ -99,9 +99,9 @@ const Tilegram: React.FC<TilegramProps> = props => {
                   <g key={`${stateID}_${index}`}>
                     <path
                       id={`${stateID}_${index}_path`}
-                      data-wall={wall}
+                      data-focus={focus}
                       data-has-allocation={hasAllocation ? '' : undefined}
-                      className={styles.stateWall}
+                      className={styles.stateFocus}
                       d={`M${points}z`}
                       clipPath={`url(#${stateID}_${index}_clip)`}
                     >

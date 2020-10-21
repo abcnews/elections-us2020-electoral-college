@@ -443,29 +443,29 @@ export const STATES: State[] = GROUPS.filter(({ id }) => {
   };
 });
 
-export enum Wall {
+export enum Focus {
   No = 'n',
   Yes = 'y',
   Dem = 'd',
   GOP = 'r'
 }
 
-export const WALLS: string[] = Object.keys(Wall).map(x => Wall[x]);
+export const FOCUSES: string[] = Object.keys(Focus).map(x => Focus[x]);
 
-export type Walls = {
-  [key: string]: Wall;
+export type Focuses = {
+  [key: string]: Focus;
 };
 
-export const INITIAL_WALLS = STATE_IDS.reduce((walls, stateID) => {
-  walls[stateID] = Wall.No;
+export const INITIAL_FOCUSES = STATE_IDS.reduce((focuses, stateID) => {
+  focuses[stateID] = Focus.No;
 
-  return walls;
+  return focuses;
 }, {});
 
 export type Preset = {
   name?: string;
   allocations: Allocations;
-  walls: Walls;
+  focuses: Focuses;
 };
 
 export type Presets = {
@@ -493,7 +493,7 @@ export const MIXINS: Presets = {
       VT: Allocation.Dem,
       WA: Allocation.Dem
     },
-    walls: {}
+    focuses: {}
   },
   safegop: {
     name: 'Safe GOP',
@@ -519,7 +519,7 @@ export const MIXINS: Presets = {
       WV: Allocation.GOP,
       WY: Allocation.GOP
     },
-    walls: {}
+    focuses: {}
   }
 };
 
@@ -529,7 +529,7 @@ MIXINS.safe = {
     ...MIXINS.safedem.allocations,
     ...MIXINS.safegop.allocations
   },
-  walls: {}
+  focuses: {}
 };
 
 export const PRESETS: Presets = {
@@ -593,7 +593,7 @@ export const PRESETS: Presets = {
       WV: Allocation.GOP,
       WY: Allocation.GOP
     },
-    walls: {}
+    focuses: {}
   },
   2016: {
     allocations: {
@@ -654,6 +654,6 @@ export const PRESETS: Presets = {
       WV: Allocation.GOP,
       WY: Allocation.GOP
     },
-    walls: {}
+    focuses: {}
   }
 };

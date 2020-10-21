@@ -8,9 +8,9 @@ import {
   GROUP_IDS,
   GROUPS,
   STATE_IDS,
-  Wall,
-  Walls,
-  WALLS
+  Focus,
+  Focuses,
+  FOCUSES
 } from './constants';
 
 export const votesForGroups = (groups: Group[]) => {
@@ -75,15 +75,15 @@ export const decodeAllocations = (code: string): Allocations =>
 export const encodeAllocations = (allocations: Allocations): string =>
   encode<Allocations>(allocations, GROUP_IDS, ALLOCATIONS, Allocation.None);
 
-export const decodeWalls = (code: string): Walls => decode<Walls>(code, STATE_IDS, WALLS, Wall.No);
+export const decodeFocuses = (code: string): Focuses => decode<Focuses>(code, STATE_IDS, FOCUSES, Focus.No);
 
-export const encodeWalls = (walls: Walls): string => encode<Walls>(walls, STATE_IDS, WALLS, Wall.No);
+export const encodeFocuses = (focuses: Focuses): string => encode<Focuses>(focuses, STATE_IDS, FOCUSES, Focus.No);
 
 export const alternatingCaseToGraphicProps = (alternatingCase: string) => {
   const graphicProps = acto(alternatingCase);
 
   graphicProps.allocations = decodeAllocations(graphicProps.allocations);
-  graphicProps.walls = decodeWalls(graphicProps.walls);
+  graphicProps.focuses = decodeFocuses(graphicProps.focuses);
 
   return graphicProps;
 };
@@ -100,8 +100,8 @@ export const graphicPropsToAlternatingCase = (graphicProps): string =>
 
     if (key === 'allocations') {
       alternatingCase += encodeAllocations(value);
-    } else if (key === 'walls') {
-      alternatingCase += encodeWalls(value);
+    } else if (key === 'focuses') {
+      alternatingCase += encodeFocuses(value);
     } else if (typeof value === 'boolean') {
       alternatingCase += value ? 'true' : 'false';
     } else {
@@ -122,7 +122,7 @@ export const urlQueryToGraphicProps = (urlQuery: string) => {
   );
 
   graphicProps.allocations = decodeAllocations(graphicProps.allocations);
-  graphicProps.walls = decodeWalls(graphicProps.walls);
+  graphicProps.focuses = decodeFocuses(graphicProps.focuses);
 
   if (typeof graphicProps.tappableLayer === 'string') {
     graphicProps.tappableLayer = +graphicProps.tappableLayer;
@@ -139,8 +139,8 @@ export const graphicPropsToUrlQuery = (graphicProps): string =>
 
     if (key === 'allocations') {
       urlQuery += encodeAllocations(value);
-    } else if (key === 'walls') {
-      urlQuery += encodeWalls(value);
+    } else if (key === 'focuses') {
+      urlQuery += encodeFocuses(value);
     } else if (typeof value === 'boolean') {
       urlQuery += value ? 'true' : 'false';
     } else {

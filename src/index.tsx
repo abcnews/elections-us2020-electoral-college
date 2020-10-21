@@ -2,7 +2,7 @@ import { getMountValue, isMount, selectMounts } from '@abcnews/mount-utils';
 import { loadScrollyteller, ScrollytellerDefinition } from '@abcnews/scrollyteller';
 import React from 'react';
 import { render } from 'react-dom';
-import { alternatingCaseToGraphicProps, decodeAllocations, decodeWalls } from './utils';
+import { alternatingCaseToGraphicProps, decodeAllocations, decodeFocuses } from './utils';
 import Block from './components/Block';
 import type { PossiblyEncodedGraphicProps } from './components/Graphic';
 import Graphic from './components/Graphic';
@@ -41,7 +41,7 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
         scrollytellerDefinition = loadScrollyteller(name, 'u-full');
         scrollytellerDefinition.panels.forEach(({ data }) => {
           data.allocations = decodeAllocations((data.allocations as string) || '');
-          data.walls = decodeWalls((data.walls as string) || '');
+          data.focuses = decodeFocuses((data.focuses as string) || '');
         });
       } catch (err) {
         return reject(err);

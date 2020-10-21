@@ -11,7 +11,7 @@ export type GraphicProps = {
 export type PossiblyEncodedGraphicProps =
   | {
       allocations: string;
-      walls: string;
+      focuses: string;
     }
   | GraphicProps;
 

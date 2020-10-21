@@ -4,10 +4,10 @@ import {
   Allocations,
   ALLOCATIONS,
   INITIAL_ALLOCATIONS,
-  Wall,
-  Walls,
-  WALLS,
-  INITIAL_WALLS,
+  Focus,
+  Focuses,
+  FOCUSES,
+  INITIAL_FOCUSES,
   MIXINS,
   PRESETS
 } from '../../constants';
@@ -33,7 +33,7 @@ const COMPONENTS_STYLES = {
 
 const DEFAULT_GRAPHIC_PROPS = {
   allocations: INITIAL_ALLOCATIONS,
-  walls: INITIAL_WALLS,
+  focuses: INITIAL_FOCUSES,
   tappableLayer: TappableLayer.Delegates
 };
 
@@ -55,7 +55,7 @@ const Editor: React.FC = () => {
     ...urlQueryToGraphicProps(String(window.location.search))
   };
   const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
-  const [walls, setWalls] = useState<Walls>(initialUrlParamProps.walls);
+  const [focuses, setFocuses] = useState<Focuses>(initialUrlParamProps.focuses);
   const [tappableLayer, setTappableLayer] = useState(initialUrlParamProps.tappableLayer);
   const [snapshots, setSnapshots] = useState(JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}'));
 
@@ -83,9 +83,9 @@ const Editor: React.FC = () => {
       ...allocations,
       ...mixin.allocations
     });
-    setWalls({
-      ...walls,
-      ...mixin.walls
+    setFocuses({
+      ...focuses,
+      ...mixin.focuses
     });
   };
 
@@ -94,15 +94,15 @@ const Editor: React.FC = () => {
       ...INITIAL_ALLOCATIONS,
       ...replacement.allocations
     });
-    setWalls({
-      ...INITIAL_WALLS,
-      ...replacement.walls
+    setFocuses({
+      ...INITIAL_FOCUSES,
+      ...replacement.focuses
     });
   };
 
   const onTapGroup = (groupID: string) => {
     const allocationsToMixin: Allocations = {};
-    const wallsToMixin: Walls = {};
+    const focusesToMixin: Focuses = {};
 
     const allocation = allocations[groupID];
     const allocationIndex = ALLOCATIONS.indexOf(allocation);
@@ -112,16 +112,16 @@ const Editor: React.FC = () => {
       allocationIndex === ALLOCATIONS.length - 1 ? 0 : allocationIndex + 1
     ] as Allocation;
 
-    // Clear the respective wall if we just changed any of its state's electors
+    // Clear the respective focus if we just changed any of its state's electors
     const [stateID] = groupID.split('_');
 
-    wallsToMixin[stateID] = Wall.No;
+    focusesToMixin[stateID] = Focus.No;
 
-    mixinGraphicProps({ allocations: allocationsToMixin, walls: wallsToMixin });
+    mixinGraphicProps({ allocations: allocationsToMixin, focuses: focusesToMixin });
   };
 
   const onTapState = (stateID: string) => {
-    const wallsToMixin: Walls = {};
+    const focusesToMixin: Focuses = {};
 
     // Don't allow state toggling while any of that state's electors are currently allocated
     const hasAllocation = getGroupIDsForStateID(stateID).some(
@@ -132,42 +132,42 @@ const Editor: React.FC = () => {
       return;
     }
 
-    switch (walls[stateID]) {
-      case Wall.No:
-        wallsToMixin[stateID] = Wall.Yes;
+    switch (focuses[stateID]) {
+      case Focus.No:
+        focusesToMixin[stateID] = Focus.Yes;
         break;
-      case Wall.Yes:
-        wallsToMixin[stateID] = Wall.Dem;
+      case Focus.Yes:
+        focusesToMixin[stateID] = Focus.Dem;
         break;
-      case Wall.Dem:
-        wallsToMixin[stateID] = Wall.GOP;
+      case Focus.Dem:
+        focusesToMixin[stateID] = Focus.GOP;
         break;
-      case Wall.GOP:
-        wallsToMixin[stateID] = Wall.No;
+      case Focus.GOP:
+        focusesToMixin[stateID] = Focus.No;
         break;
       default:
         // TODO: do we need to set this, or retain the original value?
-        wallsToMixin[stateID] = Wall.No;
+        focusesToMixin[stateID] = Focus.No;
         break;
     }
 
-    const wall = walls[stateID];
-    const wallIndex = WALLS.indexOf(wall);
+    const focus = focuses[stateID];
+    const focusIndex = FOCUSES.indexOf(focus);
 
-    // Cycle to the next Wall in the enum (or the first if we don't recognise it)
-    wallsToMixin[stateID] = WALLS[wallIndex === WALLS.length - 1 ? 0 : wallIndex + 1] as Wall;
+    // Cycle to the next Focus in the enum (or the first if we don't recognise it)
+    focusesToMixin[stateID] = FOCUSES[focusIndex === FOCUSES.length - 1 ? 0 : focusIndex + 1] as Focus;
 
-    mixinGraphicProps({ walls: wallsToMixin });
+    mixinGraphicProps({ focuses: focusesToMixin });
   };
 
   const graphicProps = useMemo(
     () => ({
       ...initialUrlParamProps,
       allocations,
-      walls,
+      focuses,
       tappableLayer
     }),
-    [allocations, walls, tappableLayer]
+    [allocations, focuses, tappableLayer]
   );
 
   const graphicPropsAsAlternatingCase = useMemo(() => graphicPropsToAlternatingCase(graphicProps), [graphicProps]);
@@ -217,7 +217,7 @@ const Editor: React.FC = () => {
                 checked={TappableLayer.Delegates === tappableLayer}
                 onChange={() => setTappableLayer(TappableLayer.Delegates)}
               ></input>
-              Delegates (fills)
+              Delegates (vote assignment)
             </label>
           </span>
           <span>
@@ -229,7 +229,7 @@ const Editor: React.FC = () => {
                 checked={TappableLayer.States === tappableLayer}
                 onChange={() => setTappableLayer(TappableLayer.States)}
               ></input>
-              States (outlines)
+              States (focus toggles)
             </label>
           </span>
         </div>
