@@ -323,6 +323,21 @@ const Editor: React.FC = () => {
         <ul>
           {Object.keys(snapshots).map(name => (
             <li key={name}>
+              <button
+                onClick={() =>
+                  navigator.clipboard.writeText(String(window.location.href).split('?')[0] + snapshots[name])
+                }
+              >
+                <svg viewBox="0 0 24 24">
+                  <g fill="none" fillRule="evenodd">
+                    <path d="M0 0h24v24H0z" />
+                    <path
+                      d="M15 13.406S5.458 11.47 3.003 19.031c0 0-.438-11.25 11.999-11.25V4.97L21 10.594l-6 5.625v-2.813z"
+                      fill="currentColor"
+                    />
+                  </g>
+                </svg>
+              </button>
               <button onClick={() => deleteSnapshot(name)}>
                 <svg viewBox="0 0 24 24">
                   <g fill="none" fillRule="evenodd">
@@ -334,7 +349,15 @@ const Editor: React.FC = () => {
                   </g>
                 </svg>
               </button>{' '}
-              <a href={snapshots[name]}>{name}</a>
+              <a
+                href={snapshots[name]}
+                onClick={event => {
+                  event.preventDefault();
+                  replaceGraphicProps(urlQueryToGraphicProps(snapshots[name]));
+                }}
+              >
+                {name}
+              </a>
             </li>
           ))}
         </ul>
@@ -345,7 +368,6 @@ const Editor: React.FC = () => {
               <a
                 href={`${fallbackAutomationBaseURL}${encodeURIComponent(COMPONENTS_STYLES[key].root)}`}
                 download={`fallback-${key}-${graphicPropsAsAlternatingCase}.png`}
-                target="_blank"
               >
                 {key}
               </a>
