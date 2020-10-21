@@ -1,5 +1,13 @@
 @import '../../constants.scss';
 
+// TappableLayer enum
+$TappableLayer_Delegates: 0;
+$TappableLayer_States: 1;
+
+// Focus management
+$opacityUnfocused: 0.125;
+$focusChangeTransitionDuration: 0.25s;
+
 .root {
   position: relative;
 }
@@ -11,9 +19,22 @@
   vertical-align: bottom;
 }
 
-.country path {
+.countryOuter {
+  transition: opacity $focusChangeTransitionDuration;
+}
+
+.root[data-has-focuses] .countryOuter {
+  opacity: $opacityUnfocused;
+}
+
+.countryOuter path {
   stroke: #000;
   stroke-width: 5.5;
+  fill: none;
+}
+
+.countryInner path {
+  stroke: none;
   fill: $color_BG;
 }
 
@@ -21,8 +42,7 @@
   pointer-events: none;
 }
 
-/* TappableLayer.Delegates */
-.root[data-tappable='0'] .delegates {
+.root[data-tappable='#{$TappableLayer_Delegates}'] .delegates {
   pointer-events: all;
 }
 
@@ -30,12 +50,17 @@
   stroke: none;
   fill: $color_None;
   stroke-width: 1.5;
-  // transition: fill $transformDuration;
+  // transition: fill $transitionDuration;
+  transition: opacity $focusChangeTransitionDuration;
+}
+
+.root[data-has-focuses] .delegate[data-focus='#{$Focus_No}'] {
+  opacity: $opacityUnfocused;
 }
 
 .delegate[data-allocation='#{$Allocation_Dem}'],
 .delegate[data-allocation='#{$Allocation_GOP}'] {
-  stroke: rgba(255, 255, 255, 0.25);
+  stroke: rgba(255, 255, 255, 0.125);
 }
 
 .delegate[data-allocation='#{$Allocation_Dem}'] {
@@ -58,7 +83,7 @@
   fill: $color_GOP;
 }
 
-.isInteractive[data-tappable='0'] .delegate {
+.root[data-is-interactive][data-tappable='#{$TappableLayer_Delegates}'] .delegate {
   cursor: pointer;
 }
 
@@ -66,9 +91,16 @@
   pointer-events: none;
 }
 
-/* TappableLayer.States */
-.root[data-tappable='1'] .states {
+.root[data-tappable='#{$TappableLayer_States}'] .states {
   pointer-events: all;
+}
+
+.state {
+  transition: opacity $focusChangeTransitionDuration;
+}
+
+.root[data-has-focuses] .state[data-focus='#{$Focus_No}'] {
+  opacity: $opacityUnfocused * 2;
 }
 
 .stateTarget {
@@ -76,7 +108,7 @@
   fill: none;
 }
 
-.isInteractive[data-tappable='1'] .stateTarget:not([data-has-allocation]) {
+.root[data-is-interactive][data-tappable='#{$TappableLayer_States}'] .stateTarget {
   cursor: pointer;
 }
 
@@ -84,7 +116,7 @@
   stroke: rgba(128, 128, 128, 0.25);
   fill: none;
   stroke-width: 1.5;
-  // transition: stroke $transformDuration, stroke-width $transformDuration;
+  // transition: stroke $focusChangeTransitionDuration, stroke-width $focusChangeTransitionDuration;
 }
 
 .stateFocus[data-focus='#{$Focus_Yes}'],
@@ -120,6 +152,11 @@
   dominant-baseline: middle;
   font-size: 1rem;
   stroke: none;
+  transition: opacity $focusChangeTransitionDuration;
+}
+
+.root[data-has-focuses] .label[data-focus='#{$Focus_No}'] {
+  opacity: $opacityUnfocused;
 }
 
 .label[data-most-definitively-allocated] {

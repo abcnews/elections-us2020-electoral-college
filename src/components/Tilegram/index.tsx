@@ -22,6 +22,7 @@ export type TilegramProps = {
 const Tilegram: React.FC<TilegramProps> = props => {
   const { allocations, focuses, tappableLayer, onTapGroup, onTapState } = props;
   const isInteractive = !!onTapGroup;
+  const hasFocuses = focuses && Object.keys(focuses).some(key => focuses[key] !== Focus.No);
 
   const onTapDelegateHex = (event: React.MouseEvent<SVGElement>) => {
     if (onTapGroup && tappableLayer === TappableLayer.Delegates && event.target instanceof SVGPolygonElement) {
@@ -53,39 +54,50 @@ const Tilegram: React.FC<TilegramProps> = props => {
   };
 
   return (
-    <div className={`${styles.root}${isInteractive ? ` ${styles.isInteractive}` : ''}`} data-tappable={tappableLayer}>
+    <div
+      className={styles.root}
+      data-has-focuses={hasFocuses ? '' : undefined}
+      data-is-interactive={isInteractive ? '' : undefined}
+      data-tappable={tappableLayer}
+    >
       <svg className={styles.svg} {...svgAttrs}>
         <g transform={`translate(${HEXGRID_PROPS.margin} ${HEXGRID_PROPS.margin})`}>
-          <g className={styles.country}>
+          <g className={styles.countryOuter}>
+            {COUNTRY_PATHS.map((d, index) => (
+              <path key={`${d}_${index}`} d={d}></path>
+            ))}
+          </g>
+          <g className={styles.countryInner}>
             {COUNTRY_PATHS.map((d, index) => (
               <path key={`${d}_${index}`} d={d}></path>
             ))}
           </g>
           <g className={styles.delegates} onClick={onTapDelegateHex}>
-            {Object.keys(STATES_DELEGATE_HEXES).reduce<JSX.Element[]>(
-              (memo, stateID) =>
-                memo.concat(
-                  STATES_DELEGATE_HEXES[stateID].map((points, index) => {
-                    const groupID = getGroupIDForStateIDAndDelegateIndex(stateID, index);
-                    const allocation = allocations ? allocations[groupID] : Allocation.None;
-                    const delegateID = `${stateID}-${index + 1}`;
+            {Object.keys(STATES_DELEGATE_HEXES).reduce<JSX.Element[]>((memo, stateID) => {
+              const focus = focuses ? focuses[stateID] : Focus.No;
 
-                    return (
-                      <polygon
-                        key={delegateID}
-                        data-allocation={allocation}
-                        data-group={groupID}
-                        data-delegate={delegateID}
-                        className={styles.delegate}
-                        points={points}
-                      >
-                        <title>{GROUPS.find(({ id }) => id === GroupID[groupID])?.name}</title>
-                      </polygon>
-                    );
-                  })
-                ),
-              []
-            )}
+              return memo.concat(
+                STATES_DELEGATE_HEXES[stateID].map((points, index) => {
+                  const groupID = getGroupIDForStateIDAndDelegateIndex(stateID, index);
+                  const allocation = allocations ? allocations[groupID] : Allocation.None;
+                  const delegateID = `${stateID}-${index + 1}`;
+
+                  return (
+                    <polygon
+                      key={delegateID}
+                      className={styles.delegate}
+                      data-focus={focus}
+                      data-allocation={allocation}
+                      data-group={groupID}
+                      data-delegate={delegateID}
+                      points={points}
+                    >
+                      <title>{GROUPS.find(({ id }) => id === GroupID[groupID])?.name}</title>
+                    </polygon>
+                  );
+                })
+              );
+            }, [])}
           </g>
           <g className={styles.states} onClick={onTapStateShape}>
             {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, stateID) => {
@@ -96,7 +108,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
 
               return memo.concat(
                 STATES_SHAPES[stateID].map((points, index) => (
-                  <g key={`${stateID}_${index}`}>
+                  <g key={`${stateID}_${index}`} className={styles.state} data-focus={focus}>
                     <path
                       id={`${stateID}_${index}_path`}
                       data-focus={focus}
@@ -114,7 +126,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
                       key={`${stateID}_${index}_target`}
                       className={styles.stateTarget}
                       data-state={stateID}
-                      data-has-allocation={hasAllocation}
+                      data-has-allocation={hasAllocation ? '' : undefined}
                       points={points}
                     ></polygon>
                   </g>
@@ -123,9 +135,10 @@ const Tilegram: React.FC<TilegramProps> = props => {
             }, [])}
           </g>
           <g className={styles.labels}>
-            {Object.keys(STATES_LABELS).map(key => {
-              const [x, y] = STATES_LABELS[key];
-              const allocationsForState = getGroupIDsForStateID(key).map(groupID =>
+            {Object.keys(STATES_LABELS).map(stateID => {
+              const focus = focuses ? focuses[stateID] : Focus.No;
+              const [x, y] = STATES_LABELS[stateID];
+              const allocationsForState = getGroupIDsForStateID(stateID).map(groupID =>
                 allocations ? allocations[groupID] : Allocation.None
               );
               const hasMostDefinitiveAllocated =
@@ -136,14 +149,15 @@ const Tilegram: React.FC<TilegramProps> = props => {
 
               return (
                 <text
-                  key={key}
-                  data-state={key}
-                  data-most-definitively-allocated={hasMostDefinitiveAllocated ? '' : undefined}
+                  key={stateID}
                   className={styles.label}
+                  data-focus={focus}
+                  data-state={stateID}
+                  data-most-definitively-allocated={hasMostDefinitiveAllocated ? '' : undefined}
                   x={x}
                   y={y}
                 >
-                  {key}
+                  {stateID}
                 </text>
               );
             })}

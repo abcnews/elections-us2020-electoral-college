@@ -22,7 +22,7 @@ $heightBar: 2.5rem;
   width: 100%;
   height: 100%;
   background-color: $color_Tossup;
-  transition: transform $transformDuration;
+  transition: transform $transitionDuration;
 }
 
 .bar[data-allocation='#{$Allocation_GOP}'] {
@@ -71,7 +71,7 @@ $heightBar: 2.5rem;
   text-transform: uppercase;
   letter-spacing: 0.0625rem;
   white-space: nowrap;
-  transition: transform $transformDuration;
+  transition: transform $transitionDuration;
 }
 
 .label[data-votes='0'] {
