@@ -1,26 +1,20 @@
+@import '../../constants.scss';
+
 .root {
-  margin: 10px;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  position: relative;
 }
 
 .svg {
   margin: auto;
   width: 100%;
   height: auto;
-  color: gray;
-  fill: transparent;
   vertical-align: bottom;
 }
 
 .country path {
   stroke: #000;
   stroke-width: 5.5;
-  fill: #fff;
+  fill: $colorNone;
 }
 
 .delegates {
@@ -34,7 +28,7 @@
 
 .delegate {
   stroke: none;
-  fill: #fff;
+  fill: $colorNone;
   stroke-width: 1.5;
   // transition: fill 0.5s;
 }
@@ -45,23 +39,23 @@
 }
 
 .delegate[data-allocation='d'] {
-  fill: rgb(52, 127, 178);
+  fill: $colorDem;
 }
 
 .delegate[data-allocation='s'] {
-  fill: rgb(193, 216, 231);
+  fill: $colorLikelyDem;
 }
 
 .delegate[data-allocation='u'] {
-  fill: rgb(204, 204, 204);
+  fill: $colorTossup;
 }
 
 .delegate[data-allocation='e'] {
-  fill: rgb(235, 184, 187);
+  fill: $colorLikelyGOP;
 }
 
 .delegate[data-allocation='r'] {
-  fill: rgb(191, 22, 34);
+  fill: $colorGOP;
 }
 
 .isInteractive[data-tappable='0'] .delegate {
