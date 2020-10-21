@@ -48,6 +48,8 @@ const Totals: React.FC<TotalsProps> = props => {
         <div className={styles.win}>
           <div className={styles.winLabel}>270 to win</div>
         </div>
+        <div className={styles.icon} data-allocation={Allocation.Dem}></div>
+        <div className={styles.icon} data-allocation={Allocation.GOP}></div>
       </div>
     </div>
   );
