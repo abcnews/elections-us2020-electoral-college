@@ -28,6 +28,10 @@ export const getGroupIDsForStateID = (stateID: string) => {
   return GROUP_IDS.filter(groupID => groupID.indexOf(stateID) === 0);
 };
 
+export const getStateIDForGroupID = (groupID: string) => {
+  return groupID.split('_')[0];
+};
+
 export const getVoteCountsForAllocations = (allocations: Allocations): { [key: string]: number } => {
   return ALLOCATIONS.reduce((memo, allocation) => {
     memo[allocation] = GROUPS.filter(({ id }) => allocations[GroupID[id]] === allocation).reduce(
@@ -39,16 +43,33 @@ export const getVoteCountsForAllocations = (allocations: Allocations): { [key: s
   }, {});
 };
 
-const determineIfAllocationIsDefinitive = (allocation: Allocation) =>
+export const getStateAllocations = (stateID: string, allocations: Allocations) => {
+  const stateGroupIDs = getGroupIDsForStateID(stateID);
+
+  return stateGroupIDs.map(groupID => allocations[groupID]);
+};
+
+export const determineIfAllocationIsMade = (allocation: Allocation) => allocation !== Allocation.None;
+
+export const determineIfAllocationIsDefinitive = (allocation: Allocation) =>
   allocation === Allocation.Dem || allocation === Allocation.GOP;
 
-export const determineIfMostStateAllocationsAreDefinitive = (stateID: string, allocations: Allocations) => {
-  const stateGroupIDs = getGroupIDsForStateID(stateID);
-  const stateAllocations = stateGroupIDs.map(groupID => allocations[groupID]);
-  const definitiveStateAllocations = stateAllocations.filter(determineIfAllocationIsDefinitive);
+export const determineIfMostStateAllocationsMeetCondition = (
+  stateID: string,
+  allocations: Allocations,
+  condition: (allocation: Allocation) => boolean
+) => {
+  const stateAllocations = getStateAllocations(stateID, allocations);
+  const stateAllocationsThatMeetCondition = stateAllocations.filter(condition);
 
-  return definitiveStateAllocations.length * 2 > stateAllocations.length;
+  return stateAllocationsThatMeetCondition.length * 2 > stateAllocations.length;
 };
+
+export const determineIfMostStateAllocationsAreMade = (stateID: string, allocations: Allocations) =>
+  determineIfMostStateAllocationsMeetCondition(stateID, allocations, determineIfAllocationIsMade);
+
+export const determineIfMostStateAllocationsAreDefinitive = (stateID: string, allocations: Allocations) =>
+  determineIfMostStateAllocationsMeetCondition(stateID, allocations, determineIfAllocationIsDefinitive);
 
 function decode<Dict>(code: string, keys: string[], possibleValues: string[], defaultValue: string): Dict {
   code = typeof code === 'string' ? code.replace(/(\w)(\d+)/g, (_, char, repeated) => char.repeat(+repeated)) : code;

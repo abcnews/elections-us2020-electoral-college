@@ -12,10 +12,11 @@ import {
   PRESETS
 } from '../../constants';
 import {
-  getGroupIDsForStateID,
+  determineIfMostStateAllocationsAreMade,
   graphicPropsToAlternatingCase,
   urlQueryToGraphicProps,
-  graphicPropsToUrlQuery
+  graphicPropsToUrlQuery,
+  getStateIDForGroupID
 } from '../../utils';
 import type { GraphicProps } from '../Graphic';
 import Graphic from '../Graphic';
@@ -102,6 +103,7 @@ const Editor: React.FC = () => {
 
   const onTapGroup = (groupID: string) => {
     const allocationsToMixin: Allocations = {};
+    const focusesToMixin: Focuses = {};
 
     const allocation = allocations[groupID];
     const allocationIndex = ALLOCATIONS.indexOf(allocation);
@@ -111,17 +113,33 @@ const Editor: React.FC = () => {
       allocationIndex === ALLOCATIONS.length - 1 ? 0 : allocationIndex + 1
     ] as Allocation;
 
-    mixinGraphicProps({ allocations: allocationsToMixin });
+    // If the next allocation is non-None and the current state has any non-No focus, make it a Yes
+    if (allocationsToMixin[groupID] !== Allocation.None) {
+      const stateID = getStateIDForGroupID(groupID);
+      const focus = focuses[stateID];
+
+      if (focuses[stateID] !== Focus.No) {
+        focusesToMixin[stateID] = Focus.Yes;
+      }
+    }
+
+    mixinGraphicProps({ allocations: allocationsToMixin, focuses: focusesToMixin });
   };
 
   const onTapState = (stateID: string) => {
     const focusesToMixin: Focuses = {};
 
     const focus = focuses[stateID];
-    const focusIndex = FOCUSES.indexOf(focus);
 
-    // Cycle to the next Focus in the enum (or the first if we don't recognise it)
-    focusesToMixin[stateID] = FOCUSES[focusIndex === FOCUSES.length - 1 ? 0 : focusIndex + 1] as Focus;
+    if (determineIfMostStateAllocationsAreMade(stateID, allocations)) {
+      // Toggle between No and Yes (casting others to Yes)
+      focusesToMixin[stateID] = focus === Focus.No ? Focus.Yes : Focus.No;
+    } else {
+      // Cycle to the next Focus in the enum (or the first if we don't recognise it)
+      const focusIndex = FOCUSES.indexOf(focus);
+
+      focusesToMixin[stateID] = FOCUSES[focusIndex === FOCUSES.length - 1 ? 0 : focusIndex + 1] as Focus;
+    }
 
     mixinGraphicProps({ focuses: focusesToMixin });
   };

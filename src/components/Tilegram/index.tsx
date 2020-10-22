@@ -1,9 +1,11 @@
 import React from 'react';
 import { Allocation, Allocations, Focus, Focuses, GroupID, GROUPS, StateID, STATES } from '../../constants';
 import {
+  determineIfAllocationIsMade,
   determineIfMostStateAllocationsAreDefinitive,
+  getGroupIDForStateIDAndDelegateIndex,
   getGroupIDsForStateID,
-  getGroupIDForStateIDAndDelegateIndex
+  getStateAllocations
 } from '../../utils';
 import { COUNTRY_PATHS, STATES_DELEGATE_HEXES, STATES_LABELS, STATES_SHAPES, HEXGRID_PROPS } from './data';
 import styles from './styles.scss';
@@ -106,9 +108,8 @@ const Tilegram: React.FC<TilegramProps> = props => {
           <g className={styles.states} onClick={onTapStateShape}>
             {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, stateID) => {
               const focus = focuses ? focuses[stateID] : Focus.No;
-              const hasAllocation = getGroupIDsForStateID(stateID).some(
-                groupID => allocations && allocations[groupID] !== Allocation.None
-              );
+              const hasAllocation =
+                allocations && getStateAllocations(stateID, allocations).some(determineIfAllocationIsMade);
 
               return memo.concat(
                 STATES_SHAPES[stateID].map((points, index) => (
