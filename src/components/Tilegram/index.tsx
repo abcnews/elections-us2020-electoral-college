@@ -25,7 +25,6 @@ export type TilegramProps = {
 };
 
 const Tilegram: React.FC<TilegramProps> = props => {
-  const componentID = useMemo(() => `${styles.root}__${Math.floor(Math.random() * 1e5)}`, []);
   const { allocations, focuses, tappableLayer, onTapGroup, onTapState } = props;
   const isInteractive = !!onTapGroup;
   const hasFocuses = focuses && Object.keys(focuses).some(key => focuses[key] !== Focus.No);
