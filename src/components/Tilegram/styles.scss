@@ -49,7 +49,6 @@ $focusChangeTransitionDuration: 0.25s;
 .delegate {
   stroke: none;
   fill: $color_None;
-  stroke-width: 1.5;
   // transition: fill $transitionDuration;
   transition: opacity $focusChangeTransitionDuration;
 }
@@ -58,10 +57,11 @@ $focusChangeTransitionDuration: 0.25s;
   opacity: $opacityUnfocused;
 }
 
-.delegate[data-allocation='#{$Allocation_Dem}'],
-.delegate[data-allocation='#{$Allocation_GOP}'] {
-  stroke: rgba(255, 255, 255, 0.125);
-}
+// .delegate[data-allocation='#{$Allocation_Dem}'],
+// .delegate[data-allocation='#{$Allocation_GOP}'] {
+//   stroke: rgba(255, 255, 255, 0.125);
+//   stroke-width: 1.5;
+// }
 
 .delegate[data-allocation='#{$Allocation_Dem}'] {
   fill: $color_Dem;
@@ -116,7 +116,7 @@ $focusChangeTransitionDuration: 0.25s;
   stroke: rgba(128, 128, 128, 0.25);
   fill: none;
   stroke-width: 1.5;
-  // transition: stroke $focusChangeTransitionDuration, stroke-width $focusChangeTransitionDuration;
+  transition: stroke $focusChangeTransitionDuration, stroke-width $focusChangeTransitionDuration;
 }
 
 .stateFocus[data-focus='#{$Focus_Yes}'],
@@ -137,10 +137,16 @@ $focusChangeTransitionDuration: 0.25s;
   stroke: rgb(191, 22, 34);
 }
 
-.stateFocus[data-has-allocation],
 .stateFocus[data-has-allocation] {
   stroke-width: 2.5;
   stroke: $color_BG;
+}
+
+.stateFocus[data-focus='#{$Focus_Yes}'][data-has-allocation],
+.stateFocus[data-focus='#{$Focus_Dem}'][data-has-allocation],
+.stateFocus[data-focus='#{$Focus_GOP}'][data-has-allocation] {
+  stroke-width: 0;
+  stroke: none;
 }
 
 .labels {
