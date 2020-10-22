@@ -10,12 +10,10 @@ $focusChangeTransitionDuration: 0.25s;
 
 @mixin fadedOut {
   opacity: $opacityUnfocused;
-  // filter: url(#Tilegram__fadedOut);
 }
 
 @mixin fadedOutTransitionable {
   transition: opacity $focusChangeTransitionDuration;
-  // transition: opacity $focusChangeTransitionDuration;
 }
 
 .root {

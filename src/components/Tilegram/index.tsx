@@ -67,19 +67,6 @@ const Tilegram: React.FC<TilegramProps> = props => {
       data-tappable={tappableLayer}
     >
       <svg className={styles.svg} {...svgAttrs}>
-        <defs>
-          <filter id="Tilegram__fadedOut">
-            <feColorMatrix
-              type="matrix"
-              values={matrix(`
-                2   0     0     0     0
-                0     2   0     0     0
-                0     0     2   0     0
-                0     0     0     0.0625 0
-              `)}
-            />
-          </filter>
-        </defs>
         <g transform={`translate(${HEXGRID_PROPS.margin} ${HEXGRID_PROPS.margin})`}>
           <g className={styles.countryOuter}>
             {COUNTRY_PATHS.map((d, index) => (
@@ -179,7 +166,5 @@ const Tilegram: React.FC<TilegramProps> = props => {
     </div>
   );
 };
-
-const matrix = (m: string) => m.replace(/\s+/g, ' ');
 
 export default Tilegram;
