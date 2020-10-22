@@ -1,6 +1,10 @@
 import React from 'react';
 import { Allocation, Allocations, Focus, Focuses, GroupID, GROUPS, StateID, STATES } from '../../constants';
-import { getGroupIDsForStateID, getGroupIDForStateIDAndDelegateIndex } from '../../utils';
+import {
+  determineIfMostStateAllocationsAreDefinitive,
+  getGroupIDsForStateID,
+  getGroupIDForStateIDAndDelegateIndex
+} from '../../utils';
 import { COUNTRY_PATHS, STATES_DELEGATE_HEXES, STATES_LABELS, STATES_SHAPES, HEXGRID_PROPS } from './data';
 import styles from './styles.scss';
 
@@ -138,14 +142,6 @@ const Tilegram: React.FC<TilegramProps> = props => {
             {Object.keys(STATES_LABELS).map(stateID => {
               const focus = focuses ? focuses[stateID] : Focus.No;
               const [x, y] = STATES_LABELS[stateID];
-              const allocationsForState = getGroupIDsForStateID(stateID).map(groupID =>
-                allocations ? allocations[groupID] : Allocation.None
-              );
-              const hasMostDefinitiveAllocated =
-                allocationsForState.filter(allocation => allocation === Allocation.Dem || allocation === Allocation.GOP)
-                  .length *
-                  2 >
-                allocationsForState.length;
 
               return (
                 <text
@@ -153,7 +149,9 @@ const Tilegram: React.FC<TilegramProps> = props => {
                   className={styles.label}
                   data-focus={focus}
                   data-state={stateID}
-                  data-most-definitively-allocated={hasMostDefinitiveAllocated ? '' : undefined}
+                  data-most-definitively-allocated={
+                    allocations && determineIfMostStateAllocationsAreDefinitive(stateID, allocations) ? '' : undefined
+                  }
                   x={x}
                   y={y}
                 >

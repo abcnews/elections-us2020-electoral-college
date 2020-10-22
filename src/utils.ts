@@ -10,7 +10,8 @@ import {
   STATE_IDS,
   Focus,
   Focuses,
-  FOCUSES
+  FOCUSES,
+  StateID
 } from './constants';
 
 export const votesForGroups = (groups: Group[]) => {
@@ -36,6 +37,17 @@ export const getVoteCountsForAllocations = (allocations: Allocations): { [key: s
 
     return memo;
   }, {});
+};
+
+const determineIfAllocationIsDefinitive = (allocation: Allocation) =>
+  allocation === Allocation.Dem || allocation === Allocation.GOP;
+
+export const determineIfMostStateAllocationsAreDefinitive = (stateID: string, allocations: Allocations) => {
+  const stateGroupIDs = getGroupIDsForStateID(stateID);
+  const stateAllocations = stateGroupIDs.map(groupID => allocations[groupID]);
+  const definitiveStateAllocations = stateAllocations.filter(determineIfAllocationIsDefinitive);
+
+  return definitiveStateAllocations.length * 2 > stateAllocations.length;
 };
 
 function decode<Dict>(code: string, keys: string[], possibleValues: string[], defaultValue: string): Dict {
