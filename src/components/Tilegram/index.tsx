@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Allocation, Allocations, Focus, Focuses, GroupID, GROUPS, StateID, STATES } from '../../constants';
 import {
   determineIfAllocationIsMade,
   determineIfMostStateAllocationsAreDefinitive,
   getGroupIDForStateIDAndDelegateIndex,
-  getGroupIDsForStateID,
   getStateAllocations
 } from '../../utils';
 import { COUNTRY_PATHS, STATES_DELEGATE_HEXES, STATES_LABELS, STATES_SHAPES, HEXGRID_PROPS } from './data';
@@ -26,6 +25,7 @@ export type TilegramProps = {
 };
 
 const Tilegram: React.FC<TilegramProps> = props => {
+  const componentID = useMemo(() => `${styles.root}__${Math.floor(Math.random() * 1e5)}`, []);
   const { allocations, focuses, tappableLayer, onTapGroup, onTapState } = props;
   const isInteractive = !!onTapGroup;
   const hasFocuses = focuses && Object.keys(focuses).some(key => focuses[key] !== Focus.No);
@@ -67,6 +67,19 @@ const Tilegram: React.FC<TilegramProps> = props => {
       data-tappable={tappableLayer}
     >
       <svg className={styles.svg} {...svgAttrs}>
+        <defs>
+          <filter id="Tilegram__fadedOut">
+            <feColorMatrix
+              type="matrix"
+              values={matrix(`
+                2   0     0     0     0
+                0     2   0     0     0
+                0     0     2   0     0
+                0     0     0     0.0625 0
+              `)}
+            />
+          </filter>
+        </defs>
         <g transform={`translate(${HEXGRID_PROPS.margin} ${HEXGRID_PROPS.margin})`}>
           <g className={styles.countryOuter}>
             {COUNTRY_PATHS.map((d, index) => (
@@ -166,5 +179,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
     </div>
   );
 };
+
+const matrix = (m: string) => m.replace(/\s+/g, ' ');
 
 export default Tilegram;

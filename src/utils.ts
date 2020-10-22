@@ -54,22 +54,28 @@ export const determineIfAllocationIsMade = (allocation: Allocation) => allocatio
 export const determineIfAllocationIsDefinitive = (allocation: Allocation) =>
   allocation === Allocation.Dem || allocation === Allocation.GOP;
 
-export const determineIfMostStateAllocationsMeetCondition = (
+export const determineIfProportionOfStateAllocationsMeetCondition = (
+  proportion: number,
   stateID: string,
   allocations: Allocations,
   condition: (allocation: Allocation) => boolean
 ) => {
+  proportion = Math.max(0, Math.min(proportion, 1));
+
   const stateAllocations = getStateAllocations(stateID, allocations);
   const stateAllocationsThatMeetCondition = stateAllocations.filter(condition);
 
-  return stateAllocationsThatMeetCondition.length * 2 > stateAllocations.length;
+  return stateAllocationsThatMeetCondition.length / stateAllocations.length > proportion;
 };
 
+export const determineIfAnyStateAllocationsAreMade = (stateID: string, allocations: Allocations) =>
+  determineIfProportionOfStateAllocationsMeetCondition(0, stateID, allocations, determineIfAllocationIsMade);
+
 export const determineIfMostStateAllocationsAreMade = (stateID: string, allocations: Allocations) =>
-  determineIfMostStateAllocationsMeetCondition(stateID, allocations, determineIfAllocationIsMade);
+  determineIfProportionOfStateAllocationsMeetCondition(0.5, stateID, allocations, determineIfAllocationIsMade);
 
 export const determineIfMostStateAllocationsAreDefinitive = (stateID: string, allocations: Allocations) =>
-  determineIfMostStateAllocationsMeetCondition(stateID, allocations, determineIfAllocationIsDefinitive);
+  determineIfProportionOfStateAllocationsMeetCondition(0.5, stateID, allocations, determineIfAllocationIsDefinitive);
 
 function decode<Dict>(code: string, keys: string[], possibleValues: string[], defaultValue: string): Dict {
   code = typeof code === 'string' ? code.replace(/(\w)(\d+)/g, (_, char, repeated) => char.repeat(+repeated)) : code;

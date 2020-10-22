@@ -12,7 +12,7 @@ import {
   PRESETS
 } from '../../constants';
 import {
-  determineIfMostStateAllocationsAreMade,
+  determineIfAnyStateAllocationsAreMade,
   graphicPropsToAlternatingCase,
   urlQueryToGraphicProps,
   graphicPropsToUrlQuery,
@@ -130,7 +130,7 @@ const Editor: React.FC = () => {
 
     const focus = focuses[stateID];
 
-    if (determineIfMostStateAllocationsAreMade(stateID, allocations)) {
+    if (determineIfAnyStateAllocationsAreMade(stateID, allocations)) {
       // Toggle between No and Yes (casting others to Yes)
       focusesToMixin[stateID] = focus === Focus.No ? Focus.Yes : Focus.No;
     } else {

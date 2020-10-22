@@ -8,6 +8,16 @@ $TappableLayer_States: 1;
 $opacityUnfocused: 0.125;
 $focusChangeTransitionDuration: 0.25s;
 
+@mixin fadedOut {
+  opacity: $opacityUnfocused;
+  // filter: url(#Tilegram__fadedOut);
+}
+
+@mixin fadedOutTransitionable {
+  transition: opacity $focusChangeTransitionDuration;
+  // transition: opacity $focusChangeTransitionDuration;
+}
+
 .root {
   position: relative;
 }
@@ -20,11 +30,11 @@ $focusChangeTransitionDuration: 0.25s;
 }
 
 .countryOuter {
-  transition: opacity $focusChangeTransitionDuration;
+  @include fadedOutTransitionable;
 }
 
 .root[data-has-focuses] .countryOuter {
-  opacity: $opacityUnfocused;
+  @include fadedOut;
 }
 
 .countryOuter path {
@@ -54,11 +64,11 @@ $focusChangeTransitionDuration: 0.25s;
   // stroke: currentColor;
   // stroke-width: 1px;
   // transition: color $transitionDuration;
-  transition: opacity $focusChangeTransitionDuration;
+  @include fadedOutTransitionable;
 }
 
 .root[data-has-focuses] .delegate[data-focus='#{$Focus_No}'] {
-  opacity: $opacityUnfocused;
+  @include fadedOut;
   // stroke: none;
 }
 
@@ -95,11 +105,11 @@ $focusChangeTransitionDuration: 0.25s;
 }
 
 .state {
-  transition: opacity $focusChangeTransitionDuration;
+  @include fadedOutTransitionable;
 }
 
 .root[data-has-focuses] .state[data-focus='#{$Focus_No}'] {
-  opacity: $opacityUnfocused * 2;
+  @include fadedOut;
 }
 
 .stateTarget {
@@ -157,7 +167,7 @@ $focusChangeTransitionDuration: 0.25s;
   font-size: 1rem;
   fill: $color_Text;
   stroke: none;
-  transition: opacity $focusChangeTransitionDuration;
+  @include fadedOutTransitionable;
 }
 
 .label[data-most-definitively-allocated] {
@@ -166,7 +176,7 @@ $focusChangeTransitionDuration: 0.25s;
 }
 
 .root[data-has-focuses] .label[data-focus='#{$Focus_No}'] {
-  opacity: $opacityUnfocused;
+  @include fadedOut;
   fill: $color_Text;
   text-shadow: none;
 }
