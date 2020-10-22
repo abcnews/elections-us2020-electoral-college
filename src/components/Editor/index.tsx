@@ -116,7 +116,6 @@ const Editor: React.FC = () => {
     // If the next allocation is non-None and the current state has any non-No focus, make it a Yes
     if (allocationsToMixin[groupID] !== Allocation.None) {
       const stateID = getStateIDForGroupID(groupID);
-      const focus = focuses[stateID];
 
       if (focuses[stateID] !== Focus.No) {
         focusesToMixin[stateID] = Focus.Yes;

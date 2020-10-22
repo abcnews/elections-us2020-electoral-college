@@ -47,40 +47,39 @@ $focusChangeTransitionDuration: 0.25s;
 }
 
 .delegate {
+  color: $color_None;
+  fill: currentColor;
   stroke: none;
-  fill: $color_None;
-  // transition: fill $transitionDuration;
+  /* stroke is just to cover polygon's hairline edge visible on Firefox */
+  // stroke: currentColor;
+  // stroke-width: 1px;
+  // transition: color $transitionDuration;
   transition: opacity $focusChangeTransitionDuration;
 }
 
 .root[data-has-focuses] .delegate[data-focus='#{$Focus_No}'] {
   opacity: $opacityUnfocused;
+  // stroke: none;
 }
 
-// .delegate[data-allocation='#{$Allocation_Dem}'],
-// .delegate[data-allocation='#{$Allocation_GOP}'] {
-//   stroke: rgba(255, 255, 255, 0.125);
-//   stroke-width: 1.5;
-// }
-
 .delegate[data-allocation='#{$Allocation_Dem}'] {
-  fill: $color_Dem;
+  color: $color_Dem;
 }
 
 .delegate[data-allocation='#{$Allocation_LikelyDem}'] {
-  fill: $color_LikelyDem;
+  color: $color_LikelyDem;
 }
 
 .delegate[data-allocation='#{$Allocation_Tossup}'] {
-  fill: $color_Tossup;
+  color: $color_Tossup;
 }
 
 .delegate[data-allocation='#{$Allocation_LikelyGOP}'] {
-  fill: $color_LikelyGOP;
+  color: $color_LikelyGOP;
 }
 
 .delegate[data-allocation='#{$Allocation_GOP}'] {
-  fill: $color_GOP;
+  color: $color_GOP;
 }
 
 .root[data-is-interactive][data-tappable='#{$TappableLayer_Delegates}'] .delegate {
@@ -116,7 +115,6 @@ $focusChangeTransitionDuration: 0.25s;
   stroke: rgba(128, 128, 128, 0.25);
   fill: none;
   stroke-width: 1.5;
-  transition: stroke $focusChangeTransitionDuration, stroke-width $focusChangeTransitionDuration;
 }
 
 .stateFocus[data-focus='#{$Focus_Yes}'],
@@ -159,7 +157,7 @@ $focusChangeTransitionDuration: 0.25s;
   font-size: 1rem;
   fill: $color_Text;
   stroke: none;
-  transition: opacity $focusChangeTransitionDuration, fill $focusChangeTransitionDuration;
+  transition: opacity $focusChangeTransitionDuration;
 }
 
 .label[data-most-definitively-allocated] {
