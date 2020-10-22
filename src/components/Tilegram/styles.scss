@@ -151,15 +151,18 @@ $focusChangeTransitionDuration: 0.25s;
   text-anchor: middle;
   dominant-baseline: middle;
   font-size: 1rem;
+  fill: $color_Text;
   stroke: none;
-  transition: opacity $focusChangeTransitionDuration;
-}
-
-.root[data-has-focuses] .label[data-focus='#{$Focus_No}'] {
-  opacity: $opacityUnfocused;
+  transition: opacity $focusChangeTransitionDuration, fill $focusChangeTransitionDuration;
 }
 
 .label[data-most-definitively-allocated] {
   fill: $color_BG;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.root[data-has-focuses] .label[data-focus='#{$Focus_No}'] {
+  opacity: $opacityUnfocused;
+  fill: $color_Text;
+  text-shadow: none;
 }
