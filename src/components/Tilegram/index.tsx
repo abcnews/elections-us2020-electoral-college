@@ -1,6 +1,7 @@
 import React from 'react';
 import { Allocation, Allocations, Focus, Focuses, GroupID, GROUPS, PRESETS, StateID, STATES } from '../../constants';
 import {
+  determineIfAllocationIsDefinitive,
   determineIfAllocationIsMade,
   determineIfMostStateAllocationsAreDefinitive,
   getGroupIDForStateIDAndDelegateIndex,
@@ -132,8 +133,12 @@ const Tilegram: React.FC<TilegramProps> = props => {
           <g className={styles.states} onClick={onTapStateShape}>
             {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, stateID) => {
               const focus = focuses ? focuses[stateID] : Focus.No;
-              const hasAllocation =
-                allocations && getStateAllocations(stateID, allocations).some(determineIfAllocationIsMade);
+              const stateAllocations = allocations && getStateAllocations(stateID, allocations);
+              const hasAllocation = stateAllocations && stateAllocations.some(determineIfAllocationIsMade);
+              const hasDefinitiveAllocation =
+                stateAllocations && stateAllocations.some(determineIfAllocationIsDefinitive);
+              const stateRelativeMainAllocation =
+                relativeAllocations && getStateAllocations(stateID, relativeAllocations)[0];
 
               return memo.concat(
                 STATES_SHAPES[stateID].map((points, index) => (
@@ -147,6 +152,8 @@ const Tilegram: React.FC<TilegramProps> = props => {
                       id={`${stateID}_${index}_path`}
                       data-focus={focus}
                       data-has-allocation={hasAllocation ? '' : undefined}
+                      data-has-definitive-allocation={hasDefinitiveAllocation ? '' : undefined}
+                      data-relative-main-allocation={stateRelativeMainAllocation || undefined}
                       className={styles.stateFocus}
                       d={`M${points}z`}
                     >

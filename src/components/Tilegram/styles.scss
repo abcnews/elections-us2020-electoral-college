@@ -136,11 +136,11 @@ $focusChangeTransitionDuration: 0.25s;
 }
 
 .delegateAllocation[data-relative-allocation='#{$Allocation_GOP}'][data-allocation='#{$Allocation_Dem}'] {
-  animation: flippedGOPToDem 1.5s ease-in-out 0.5s 1 both;
+  animation: flippedGOPToDem 1s ease-in 0.125s 1 both;
 }
 
 .delegateAllocation[data-relative-allocation='#{$Allocation_Dem}'][data-allocation='#{$Allocation_GOP}'] {
-  animation: flippedDemToGOP 1.5s ease-in-out 0.5s 1 both;
+  animation: flippedDemToGOP 1s ease-in 0.125s 1 both;
 }
 
 .delegateTarget {
@@ -174,32 +174,25 @@ $focusChangeTransitionDuration: 0.25s;
   stroke-width: 1.5;
 }
 
-.stateFocus[data-focus='#{$Focus_Yes}'],
-.stateFocus[data-focus='#{$Focus_Dem}'],
-.stateFocus[data-focus='#{$Focus_GOP}'] {
-  stroke-width: 5.5;
-}
-
-.stateFocus[data-focus='#{$Focus_Yes}'] {
-  stroke: #000;
-}
-
-.stateFocus[data-focus='#{$Focus_Dem}'] {
-  stroke: rgb(52, 127, 178);
-}
-
-.stateFocus[data-focus='#{$Focus_GOP}'] {
-  stroke: rgb(191, 22, 34);
-}
-
 .stateFocus[data-has-allocation] {
   stroke-width: 2.5;
   stroke: $color_BG;
 }
 
-.stateFocus[data-focus='#{$Focus_Yes}'][data-has-allocation],
-.stateFocus[data-focus='#{$Focus_Dem}'][data-has-allocation],
-.stateFocus[data-focus='#{$Focus_GOP}'][data-has-allocation] {
+.stateFocus[data-focus='#{$Focus_Yes}'] {
+  stroke: $color_Yes;
+  stroke-width: 5.5;
+}
+
+.stateFocus[data-focus='#{$Focus_Yes}'][data-relative-main-allocation='#{$Allocation_Dem}'] {
+  stroke: $color_Dem;
+}
+
+.stateFocus[data-focus='#{$Focus_Yes}'][data-relative-main-allocation='#{$Allocation_GOP}'] {
+  stroke: $color_GOP;
+}
+
+.stateFocus[data-focus='#{$Focus_Yes}'][data-has-definitive-allocation] {
   stroke-width: 0;
   stroke: none;
 }

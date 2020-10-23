@@ -9,8 +9,6 @@ $Allocation_GOP: 'r';
 // Focus enum
 $Focus_No: 'n';
 $Focus_Yes: 'y';
-$Focus_Dem: 'd';
-$Focus_GOP: 'r';
 
 // Theming
 $color_Text: #000;
@@ -18,8 +16,10 @@ $color_BG: #fff;
 $color_None: $color_BG;
 $color_Dem: #006dbd;
 $color_LikelyDem: #bdd4ef;
-$color_Tossup: #ccc;
+$color_Tossup: #b3b3b3;
 $color_LikelyGOP: #eaaeae;
 $color_GOP: #c21718;
+$color_No: $color_BG;
+$color_Yes: $color_Text;
 
 $transitionDuration: 0.75s;

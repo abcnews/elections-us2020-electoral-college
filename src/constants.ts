@@ -445,9 +445,7 @@ export const STATES: State[] = GROUPS.filter(({ id }) => {
 
 export enum Focus {
   No = 'n',
-  Yes = 'y',
-  Dem = 'd',
-  GOP = 'r'
+  Yes = 'y'
 }
 
 export const FOCUSES: string[] = Object.keys(Focus).map(x => Focus[x]);
