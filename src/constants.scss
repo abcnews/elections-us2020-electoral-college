@@ -11,15 +11,19 @@ $Focus_No: 'n';
 $Focus_Yes: 'y';
 
 // Theming
-$color_Text: #000;
-$color_BG: #fff;
-$color_None: $color_BG;
+$color_Black: #000;
+$color_Grey: #b3b3b3;
+$color_White: #fff;
+$color_Text: $color_Black;
+$color_BG: $color_White;
+$color_None: $color_White;
 $color_Dem: #006dbd;
 $color_LikelyDem: #bdd4ef;
-$color_Tossup: #b3b3b3;
+$color_Tossup: $color_Grey;
 $color_LikelyGOP: #eaaeae;
 $color_GOP: #c21718;
-$color_No: $color_BG;
-$color_Yes: $color_Text;
+$color_No: $color_White;
+$color_Yes: $color_Black;
 
+// Transitioning
 $transitionDuration: 0.75s;

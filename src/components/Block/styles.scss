@@ -20,7 +20,7 @@
   left: 50%;
   width: calc(100% - 2rem);
   max-width: 57.5rem;
-  box-shadow: 0 0 5vmin 5vmin #fff;
+  box-shadow: 0 0 5vmin 5vmin $color_BG;
   animation: enter 0.5s;
 }
 

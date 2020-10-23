@@ -36,8 +36,8 @@ $focusChangeTransitionDuration: 0.25s;
 }
 
 .countryOuter path {
-  stroke: #000;
-  stroke-width: 5.5;
+  stroke: $color_Grey;
+  stroke-width: 1.5;
   fill: none;
 }
 
@@ -169,8 +169,8 @@ $focusChangeTransitionDuration: 0.25s;
 }
 
 .stateFocus {
-  stroke: rgba(128, 128, 128, 0.25);
   fill: none;
+  stroke: $color_Grey;
   stroke-width: 1.5;
 }
 
