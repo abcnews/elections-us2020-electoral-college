@@ -119,13 +119,13 @@ $heightBar: 2.5rem;
 
 .icon[data-allocation='#{$Allocation_GOP}'] {
   left: $heightBar * -1.75;
-  background-color: rgb(2112, 45, 51);
+  background-color: $color_GOP;
   background-image: url(gop.svg);
 }
 
 .icon[data-allocation='#{$Allocation_Dem}'] {
   right: $heightBar * -1.75;
-  background-color: rgb(16, 58, 135);
+  background-color: $color_Dem;
   background-image: url(dem.svg);
 }
 
