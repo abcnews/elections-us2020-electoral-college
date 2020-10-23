@@ -518,20 +518,15 @@ export const MIXINS: Presets = {
       WY: Allocation.GOP
     },
     focuses: {}
+  },
+  nofocus: {
+    name: 'No states focused',
+    allocations: {},
+    focuses: INITIAL_FOCUSES
   }
 };
 
-MIXINS.safe = {
-  name: 'Safe (both parties)',
-  allocations: {
-    ...MIXINS.safedem.allocations,
-    ...MIXINS.safegop.allocations
-  },
-  focuses: {}
-};
-
 export const PRESETS: Presets = {
-  safe: MIXINS.safe,
   2012: {
     allocations: {
       AK: Allocation.GOP,
@@ -651,6 +646,14 @@ export const PRESETS: Presets = {
       WI: Allocation.GOP,
       WV: Allocation.GOP,
       WY: Allocation.GOP
+    },
+    focuses: {}
+  },
+  safe: {
+    name: 'Safe (both parties)',
+    allocations: {
+      ...MIXINS.safedem.allocations,
+      ...MIXINS.safegop.allocations
     },
     focuses: {}
   }

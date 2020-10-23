@@ -11,13 +11,7 @@ import {
   MIXINS,
   PRESETS
 } from '../../constants';
-import {
-  determineIfAnyStateAllocationsAreMade,
-  graphicPropsToAlternatingCase,
-  urlQueryToGraphicProps,
-  graphicPropsToUrlQuery,
-  getStateIDForGroupID
-} from '../../utils';
+import { graphicPropsToAlternatingCase, urlQueryToGraphicProps, graphicPropsToUrlQuery } from '../../utils';
 import type { GraphicProps } from '../Graphic';
 import Graphic from '../Graphic';
 import graphicStyles from '../Graphic/styles.scss';
