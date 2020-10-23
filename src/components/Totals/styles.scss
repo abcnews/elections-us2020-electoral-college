@@ -43,6 +43,7 @@ $heightBigBar: 2rem;
   margin: 0 auto $heightBar / 4 auto;
   width: 100%;
   height: $heightBar;
+  background-color: rgba(0, 0, 0, 0.025);
 }
 
 @media (min-width: 668px) {
@@ -58,7 +59,6 @@ $heightBigBar: 2rem;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: $color_Tossup;
   transition: transform $transitionDuration;
 }
 
@@ -94,11 +94,6 @@ $heightBigBar: 2rem;
     bottom: $heightBigBar / -4;
     height: calc(100% + #{$heightBigBar / 2});
   }
-}
-
-.midpoint ~ .midpoint {
-  bottom: 0;
-  height: 100%;
 }
 
 .midpointLabel {

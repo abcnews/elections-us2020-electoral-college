@@ -27,10 +27,6 @@ const Totals: React.FC<TotalsProps> = props => {
         </div>
       </div>
       <div className={styles.track}>
-        <div className={styles.midpoint}>
-          <div className={styles.midpointLabel}>{`${WIN_VOTES} to win`}</div>
-        </div>
-        <div className={styles.bar}></div>
         <div
           className={styles.bar}
           title={`Likely Dem.: ${voteCounts[Allocation.LikelyDem]}`}
@@ -63,7 +59,9 @@ const Totals: React.FC<TotalsProps> = props => {
           data-allocation={Allocation.GOP}
           style={{ transform: `translate(${(voteCounts[Allocation.GOP] / MAX_VOTES) * 100 - 100}%, 0)` }}
         ></div>
-        <div className={styles.midpoint}></div>
+        <div className={styles.midpoint}>
+          <div className={styles.midpointLabel}>{`${WIN_VOTES} to win`}</div>
+        </div>
       </div>
     </div>
   );
