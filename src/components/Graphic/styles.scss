@@ -24,5 +24,11 @@
 }
 
 .root > header {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 668px) {
+  .root > header {
+    margin-bottom: 1rem;
+  }
 }

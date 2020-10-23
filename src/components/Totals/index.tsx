@@ -8,24 +8,27 @@ export type TotalsProps = {
 };
 
 const MAX_VOTES = 538;
-const WIN_VOTES = Math.ceil(MAX_VOTES / 2);
+const WIN_VOTES = Math.ceil((MAX_VOTES + 1) / 2);
 
 const Totals: React.FC<TotalsProps> = props => {
   const { allocations } = props;
   const voteCounts = useMemo(() => getVoteCountsForAllocations(allocations || {}), [allocations]);
-  const isMostlyAllocated = MAX_VOTES - voteCounts[Allocation.Dem] - voteCounts[Allocation.GOP] < 100;
-  // const isCloseToLine =
-  //   Math.abs(WIN_VOTES - voteCounts[Allocation.Dem]) < 25 || Math.abs(WIN_VOTES - voteCounts[Allocation.GOP]) < 25;
 
   return (
-    <div
-      className={styles.root}
-      // data-is-close-to-line={isCloseToLine ? '' : undefined}
-      data-is-mostly-allocated={isMostlyAllocated ? '' : undefined}
-    >
+    <div className={styles.root}>
+      <div className={styles.text}>
+        <div className={styles.side} data-allocation={Allocation.GOP}>
+          <span className={styles.value}>{voteCounts[Allocation.GOP]}</span>
+          <span className={styles.label}>Trump</span>
+        </div>
+        <div className={styles.side} data-allocation={Allocation.Dem}>
+          <span className={styles.label}>Biden</span>
+          <span className={styles.value}>{voteCounts[Allocation.Dem]}</span>
+        </div>
+      </div>
       <div className={styles.track}>
-        <div className={styles.winLine}>
-          <div className={styles.label}>270 to win</div>
+        <div className={styles.midpoint}>
+          <div className={styles.midpointLabel}>{`${WIN_VOTES} to win`}</div>
         </div>
         <div className={styles.bar}></div>
         <div
@@ -37,9 +40,7 @@ const Totals: React.FC<TotalsProps> = props => {
               ((voteCounts[Allocation.Dem] + voteCounts[Allocation.LikelyDem]) / MAX_VOTES) * -100 + 100
             }%, 0)`
           }}
-        >
-          <div className={styles.edge}></div>
-        </div>
+        ></div>
         <div
           className={styles.bar}
           title={`Likely GOP: ${voteCounts[Allocation.LikelyGOP]}`}
@@ -49,36 +50,20 @@ const Totals: React.FC<TotalsProps> = props => {
               ((voteCounts[Allocation.GOP] + voteCounts[Allocation.LikelyGOP]) / MAX_VOTES) * 100 - 100
             }%, 0)`
           }}
-        >
-          <div className={styles.edge}></div>
-        </div>
+        ></div>
         <div
           className={styles.bar}
           title={`Dem.: ${voteCounts[Allocation.Dem]}`}
           data-allocation={Allocation.Dem}
           style={{ transform: `translate(${(voteCounts[Allocation.Dem] / MAX_VOTES) * -100 + 100}%, 0)` }}
-        >
-          <div className={styles.edge}>
-            <div className={styles.label} data-votes={voteCounts[Allocation.Dem]}>
-              {voteCounts[Allocation.Dem]}
-            </div>
-          </div>
-        </div>
+        ></div>
         <div
           className={styles.bar}
           title={`GOP: ${voteCounts[Allocation.GOP]}`}
           data-allocation={Allocation.GOP}
           style={{ transform: `translate(${(voteCounts[Allocation.GOP] / MAX_VOTES) * 100 - 100}%, 0)` }}
-        >
-          <div className={styles.edge}>
-            <div className={styles.label} data-votes={voteCounts[Allocation.GOP]}>
-              {voteCounts[Allocation.GOP]}
-            </div>
-          </div>
-        </div>
-        <div className={styles.winLine}></div>
-        <div className={styles.icon} data-allocation={Allocation.Dem}></div>
-        <div className={styles.icon} data-allocation={Allocation.GOP}></div>
+        ></div>
+        <div className={styles.midpoint}></div>
       </div>
     </div>
   );
