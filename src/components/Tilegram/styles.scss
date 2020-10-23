@@ -55,42 +55,100 @@ $focusChangeTransitionDuration: 0.25s;
 }
 
 .delegate {
-  color: $color_None;
-  fill: currentColor;
-  stroke: none;
-  /* stroke is just to cover polygon's hairline edge visible on Firefox */
-  // stroke: currentColor;
-  // stroke-width: 1px;
-  // transition: color $transitionDuration;
   @include fadedOutTransitionable;
 }
 
 .root[data-has-focuses] .delegate[data-focus='#{$Focus_No}'] {
   @include fadedOut;
-  // stroke: none;
 }
 
-.delegate[data-allocation='#{$Allocation_Dem}'] {
+.delegateAllocation {
+  color: $color_None;
+  fill: currentColor;
+  stroke: none;
+  stroke-width: 6.5; // For flip animation strokes
+}
+
+.delegateAllocation[data-allocation='#{$Allocation_Dem}'] {
   color: $color_Dem;
 }
 
-.delegate[data-allocation='#{$Allocation_LikelyDem}'] {
+.delegateAllocation[data-allocation='#{$Allocation_LikelyDem}'] {
   color: $color_LikelyDem;
 }
 
-.delegate[data-allocation='#{$Allocation_Tossup}'] {
+.delegateAllocation[data-allocation='#{$Allocation_Tossup}'] {
   color: $color_Tossup;
 }
 
-.delegate[data-allocation='#{$Allocation_LikelyGOP}'] {
+.delegateAllocation[data-allocation='#{$Allocation_LikelyGOP}'] {
   color: $color_LikelyGOP;
 }
 
-.delegate[data-allocation='#{$Allocation_GOP}'] {
+.delegateAllocation[data-allocation='#{$Allocation_GOP}'] {
   color: $color_GOP;
 }
 
-.root[data-is-interactive][data-tappable='#{$TappableLayer_Delegates}'] .delegate {
+@keyframes flippedDemToGOP {
+  0% {
+    fill: none;
+    stroke: $color_Dem;
+    transform: none;
+  }
+  49.99% {
+    fill: none;
+    stroke: $color_Dem;
+    transform: rotateY(90deg);
+  }
+  50% {
+    fill: $color_GOP;
+    stroke: none;
+    transform: rotateY(-90deg);
+  }
+  100% {
+    fill: $color_GOP;
+    stroke: none;
+    transform: none;
+  }
+}
+
+@keyframes flippedGOPToDem {
+  0% {
+    fill: none;
+    stroke: $color_GOP;
+    transform: none;
+  }
+  49.99% {
+    fill: none;
+    stroke: $color_GOP;
+    transform: rotateY(90deg);
+  }
+  50% {
+    fill: $color_Dem;
+    stroke: none;
+    transform: rotateY(-90deg);
+  }
+  100% {
+    fill: $color_Dem;
+    stroke: none;
+    transform: none;
+  }
+}
+
+.delegateAllocation[data-relative-allocation='#{$Allocation_GOP}'][data-allocation='#{$Allocation_Dem}'] {
+  animation: flippedGOPToDem 1.5s ease-in-out 0.5s 1 both;
+}
+
+.delegateAllocation[data-relative-allocation='#{$Allocation_Dem}'][data-allocation='#{$Allocation_GOP}'] {
+  animation: flippedDemToGOP 1.5s ease-in-out 0.5s 1 both;
+}
+
+.delegateTarget {
+  stroke: none;
+  fill: none;
+}
+
+.root[data-is-interactive][data-tappable='#{$TappableLayer_States}'] .delegateTarget {
   cursor: pointer;
 }
 
@@ -108,15 +166,6 @@ $focusChangeTransitionDuration: 0.25s;
 
 .root[data-has-focuses] .state[data-focus='#{$Focus_No}'] {
   @include fadedOut;
-}
-
-.stateTarget {
-  stroke: none;
-  fill: none;
-}
-
-.root[data-is-interactive][data-tappable='#{$TappableLayer_States}'] .stateTarget {
-  cursor: pointer;
 }
 
 .stateFocus {
@@ -153,6 +202,15 @@ $focusChangeTransitionDuration: 0.25s;
 .stateFocus[data-focus='#{$Focus_GOP}'][data-has-allocation] {
   stroke-width: 0;
   stroke: none;
+}
+
+.stateTarget {
+  stroke: none;
+  fill: none;
+}
+
+.root[data-is-interactive][data-tappable='#{$TappableLayer_States}'] .stateTarget {
+  cursor: pointer;
 }
 
 .labels {

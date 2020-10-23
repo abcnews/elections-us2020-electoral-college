@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { Allocation, Allocations, Focus, Focuses, GroupID, GROUPS, StateID, STATES } from '../../constants';
+import React from 'react';
+import { Allocation, Allocations, Focus, Focuses, GroupID, GROUPS, PRESETS, StateID, STATES } from '../../constants';
 import {
   determineIfAllocationIsMade,
   determineIfMostStateAllocationsAreDefinitive,
@@ -19,15 +19,17 @@ export enum TappableLayer {
 export type TilegramProps = {
   allocations?: Allocations;
   focuses?: Focuses;
+  relative?: number;
   tappableLayer?: TappableLayer;
   onTapGroup?: (groupID: string) => void;
   onTapState?: (stateID: string) => void;
 };
 
 const Tilegram: React.FC<TilegramProps> = props => {
-  const { allocations, focuses, tappableLayer, onTapGroup, onTapState } = props;
+  const { allocations, focuses, relative, tappableLayer, onTapGroup, onTapState } = props;
   const isInteractive = !!onTapGroup;
   const hasFocuses = focuses && Object.keys(focuses).some(key => focuses[key] !== Focus.No);
+  const relativeAllocations = relative && PRESETS[relative]?.allocations;
 
   const onTapDelegateHex = (event: React.MouseEvent<SVGElement>) => {
     if (onTapGroup && tappableLayer === TappableLayer.Delegates && event.target instanceof SVGPolygonElement) {
@@ -85,20 +87,43 @@ const Tilegram: React.FC<TilegramProps> = props => {
                 STATES_DELEGATE_HEXES[stateID].map((points, index) => {
                   const groupID = getGroupIDForStateIDAndDelegateIndex(stateID, index);
                   const allocation = allocations ? allocations[groupID] : Allocation.None;
+                  const relativeAllocation = relativeAllocations ? relativeAllocations[groupID] : undefined;
                   const delegateID = `${stateID}-${index + 1}`;
+                  const [offsetX, offsetY] = points
+                    .split(' ')[0]
+                    .split(',')
+                    .map(x => parseInt(x, 10));
 
                   return (
-                    <polygon
-                      key={delegateID}
+                    <g
+                      key={`${delegateID}_${index}`}
                       className={styles.delegate}
+                      data-index={index}
                       data-focus={focus}
-                      data-allocation={allocation}
-                      data-group={groupID}
-                      data-delegate={delegateID}
-                      points={points}
+                      clipPath={`url(#${delegateID}_${index}_clip)`}
                     >
-                      <title>{GROUPS.find(({ id }) => id === GroupID[groupID])?.name}</title>
-                    </polygon>
+                      <path
+                        id={`${delegateID}_${index}_path`}
+                        className={styles.delegateAllocation}
+                        data-relative-allocation={relativeAllocation}
+                        data-allocation={allocation}
+                        d={`M${points}z`}
+                        style={{ transformOrigin: `${offsetX + 15}px ${offsetY}px` }}
+                      >
+                        <title>{STATES.find(({ id }) => id === StateID[stateID])?.name}</title>
+                      </path>
+                      <clipPath id={`${delegateID}_${index}_clip`}>
+                        <use xlinkHref={`#${delegateID}_${index}_path`} />
+                      </clipPath>
+                      <polygon
+                        key={`${delegateID}_${index}_target`}
+                        className={styles.delegateTarget}
+                        data-group={groupID}
+                        points={points}
+                      >
+                        <title>{GROUPS.find(({ id }) => id === GroupID[groupID])?.name}</title>
+                      </polygon>
+                    </g>
                   );
                 })
               );
@@ -112,14 +137,18 @@ const Tilegram: React.FC<TilegramProps> = props => {
 
               return memo.concat(
                 STATES_SHAPES[stateID].map((points, index) => (
-                  <g key={`${stateID}_${index}`} className={styles.state} data-focus={focus}>
+                  <g
+                    key={`${stateID}_${index}`}
+                    className={styles.state}
+                    data-focus={focus}
+                    clipPath={`url(#${stateID}_${index}_clip)`}
+                  >
                     <path
                       id={`${stateID}_${index}_path`}
                       data-focus={focus}
                       data-has-allocation={hasAllocation ? '' : undefined}
                       className={styles.stateFocus}
                       d={`M${points}z`}
-                      clipPath={`url(#${stateID}_${index}_clip)`}
                     >
                       <title>{STATES.find(({ id }) => id === StateID[stateID])?.name}</title>
                     </path>
@@ -130,7 +159,6 @@ const Tilegram: React.FC<TilegramProps> = props => {
                       key={`${stateID}_${index}_target`}
                       className={styles.stateTarget}
                       data-state={stateID}
-                      data-has-allocation={hasAllocation ? '' : undefined}
                       points={points}
                     ></polygon>
                   </g>

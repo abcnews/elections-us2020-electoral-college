@@ -123,6 +123,7 @@ export const alternatingCaseToGraphicProps = (alternatingCase: string) => {
 
   graphicProps.allocations = decodeAllocations(graphicProps.allocations);
   graphicProps.focuses = decodeFocuses(graphicProps.focuses);
+  graphicProps.relative = graphicProps.relative === 'null' ? null : graphicProps.relative;
 
   return graphicProps;
 };
@@ -143,6 +144,8 @@ export const graphicPropsToAlternatingCase = (graphicProps): string =>
       alternatingCase += encodeFocuses(value);
     } else if (typeof value === 'boolean') {
       alternatingCase += value ? 'true' : 'false';
+    } else if (value === null) {
+      alternatingCase += 'null';
     } else {
       alternatingCase += value;
     }
@@ -162,6 +165,7 @@ export const urlQueryToGraphicProps = (urlQuery: string) => {
 
   graphicProps.allocations = decodeAllocations(graphicProps.allocations);
   graphicProps.focuses = decodeFocuses(graphicProps.focuses);
+  graphicProps.relative = graphicProps.relative === 'null' ? null : +graphicProps.relative;
 
   if (typeof graphicProps.tappableLayer === 'string') {
     graphicProps.tappableLayer = +graphicProps.tappableLayer;

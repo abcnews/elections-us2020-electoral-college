@@ -35,6 +35,7 @@ const COMPONENTS_STYLES = {
 const DEFAULT_GRAPHIC_PROPS = {
   allocations: INITIAL_ALLOCATIONS,
   focuses: INITIAL_FOCUSES,
+  relative: null,
   tappableLayer: TappableLayer.Delegates
 };
 
@@ -57,6 +58,7 @@ const Editor: React.FC = () => {
   };
   const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
   const [focuses, setFocuses] = useState<Focuses>(initialUrlParamProps.focuses);
+  const [relative, setRelative] = useState<number | null>(initialUrlParamProps.relative);
   const [tappableLayer, setTappableLayer] = useState(initialUrlParamProps.tappableLayer);
   const [snapshots, setSnapshots] = useState(JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}'));
 
@@ -148,9 +150,10 @@ const Editor: React.FC = () => {
       ...initialUrlParamProps,
       allocations,
       focuses,
+      relative,
       tappableLayer
     }),
-    [allocations, focuses, tappableLayer]
+    [allocations, focuses, relative, tappableLayer]
   );
 
   const graphicPropsAsAlternatingCase = useMemo(() => graphicPropsToAlternatingCase(graphicProps), [graphicProps]);
@@ -195,7 +198,7 @@ const Editor: React.FC = () => {
             <label>
               <input
                 type="radio"
-                name="tappableDelegates"
+                name="tappableLayer"
                 value={TappableLayer.Delegates}
                 checked={TappableLayer.Delegates === tappableLayer}
                 onChange={() => setTappableLayer(TappableLayer.Delegates)}
@@ -207,7 +210,7 @@ const Editor: React.FC = () => {
             <label>
               <input
                 type="radio"
-                name="tappableStates"
+                name="tappableLayer"
                 value={TappableLayer.States}
                 checked={TappableLayer.States === tappableLayer}
                 onChange={() => setTappableLayer(TappableLayer.States)}
@@ -215,6 +218,38 @@ const Editor: React.FC = () => {
               Focused states
             </label>
           </span>
+        </div>
+        <label>Relative year</label>
+        <div className={styles.flexRow}>
+          <span key="none">
+            <label>
+              <input
+                type="radio"
+                name="relative"
+                value={'none'}
+                checked={null === relative}
+                onChange={() => setRelative(null)}
+              ></input>
+              None
+            </label>
+          </span>
+          {Object.keys(PRESETS)
+            .map(key => parseInt(key, 10))
+            .filter(key => !isNaN(key))
+            .map(year => (
+              <span key={year}>
+                <label>
+                  <input
+                    type="radio"
+                    name="relative"
+                    value={year}
+                    checked={year === relative}
+                    onChange={() => setRelative(year)}
+                  ></input>
+                  {year}
+                </label>
+              </span>
+            ))}
         </div>
         <label>
           Mix-ins <small>(added to the map)</small>
