@@ -10,8 +10,7 @@ import {
   STATE_IDS,
   Focus,
   Focuses,
-  FOCUSES,
-  StateID
+  FOCUSES
 } from './constants';
 
 export const votesForGroups = (groups: Group[]) => {
