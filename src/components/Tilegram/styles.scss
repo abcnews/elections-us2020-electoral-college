@@ -8,6 +8,12 @@ $TappableLayer_States: 1;
 $opacityUnfocused: 0.125;
 $focusChangeTransitionDuration: 0.25s;
 
+// Stroke widths
+$swNone: 0;
+$swLight: 1.5;
+$swNormal: 2.5;
+$swHeavy: 5.5;
+
 @mixin fadedOut {
   opacity: $opacityUnfocused;
 }
@@ -42,7 +48,7 @@ $focusChangeTransitionDuration: 0.25s;
 
 .countryOuter path {
   stroke: $color_Grey;
-  stroke-width: 1.5;
+  stroke-width: $swLight;
   fill: none;
 }
 
@@ -71,7 +77,7 @@ $focusChangeTransitionDuration: 0.25s;
   color: $color_None;
   fill: currentColor;
   stroke: none;
-  stroke-width: 6.5; // For flip animation strokes
+  stroke-width: $swHeavy; // For flip animation strokes
 }
 
 .delegateAllocation[data-allocation='#{$Allocation_Dem}'] {
@@ -176,12 +182,12 @@ $focusChangeTransitionDuration: 0.25s;
 .stateFocus {
   fill: none;
   stroke: $color_Grey;
-  stroke-width: 1.5;
+  stroke-width: $swLight;
 }
 
 .stateFocus[data-focus='#{$Focus_Yes}'] {
   stroke: $color_Yes;
-  stroke-width: 5.5;
+  stroke-width: $swHeavy;
 }
 
 .stateFocus[data-focus='#{$Focus_Yes}'][data-relative-main-allocation='#{$Allocation_Dem}'] {
@@ -193,14 +199,14 @@ $focusChangeTransitionDuration: 0.25s;
 }
 
 .stateFocus[data-focus='#{$Focus_Yes}'][data-has-definitive-allocation] {
-  stroke-width: 0;
   stroke: none;
+  stroke-width: $swNone;
 }
 
 .stateFocus[data-focus='#{$Focus_Yes}'][data-has-allocation]:not([data-has-definitive-allocation]):not([data-relative-main-allocation]),
 .stateFocus[data-focus='#{$Focus_No}'][data-has-allocation] {
   stroke: $color_BG;
-  stroke-width: 2.5;
+  stroke-width: $swNormal;
 }
 
 .stateTarget {
