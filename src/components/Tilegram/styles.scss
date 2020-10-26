@@ -179,11 +179,6 @@ $focusChangeTransitionDuration: 0.25s;
   stroke-width: 1.5;
 }
 
-.stateFocus[data-has-allocation] {
-  stroke-width: 2.5;
-  stroke: $color_BG;
-}
-
 .stateFocus[data-focus='#{$Focus_Yes}'] {
   stroke: $color_Yes;
   stroke-width: 5.5;
@@ -197,9 +192,15 @@ $focusChangeTransitionDuration: 0.25s;
   stroke: $color_GOP;
 }
 
+.stateFocus[data-focus='#{$Focus_Yes}'][data-has-allocation]:not([data-relative-main-allocation]),
 .stateFocus[data-focus='#{$Focus_Yes}'][data-has-definitive-allocation] {
   stroke-width: 0;
   stroke: none;
+}
+
+.stateFocus[data-has-allocation][data-focus='#{$Focus_No}'] {
+  stroke: $color_BG;
+  stroke-width: 2.5;
 }
 
 .stateTarget {
