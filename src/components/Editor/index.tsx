@@ -154,8 +154,6 @@ const Editor: React.FC = () => {
     [allocations, focuses, year, relative, tappableLayer]
   );
 
-  console.log(graphicProps);
-
   const graphicPropsAsAlternatingCase = useMemo(() => graphicPropsToAlternatingCase(graphicProps), [graphicProps]);
   const graphicPropsAsUrlQuery = useMemo(() => graphicPropsToUrlQuery(graphicProps), [graphicProps]);
 
