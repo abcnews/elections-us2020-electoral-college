@@ -14,14 +14,7 @@
         max-width: 960px;
       }
     </style>
-    <script>
-      var features = ['Object.assign', 'Array.from', 'Symbol', 'Promise', 'fetch'];
-      if (navigator.userAgent.indexOf('Trident') > -1) {
-        document.write(
-          '<script src="https://polyfill.io/v3/polyfill.min.js?features=' + features.join('%2C') + '"></scr' + 'ipt>'
-        );
-      }
-    </script>
+    <script nomodule src="../polyfills.js"></script>
     <script src="../standalone.js"></script>
   </head>
   <body>
