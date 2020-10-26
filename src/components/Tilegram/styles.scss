@@ -18,13 +18,18 @@ $focusChangeTransitionDuration: 0.25s;
 
 .root {
   position: relative;
+  width: 100%;
+  height: 0;
+  padding: 0;
+  /* padding-bottom will be defined by JS */
 }
 
 .svg {
-  margin: auto;
+  position: absolute;
+  height: 100%;
   width: 100%;
-  height: auto;
-  vertical-align: bottom;
+  left: 0;
+  top: 0;
 }
 
 .countryOuter {

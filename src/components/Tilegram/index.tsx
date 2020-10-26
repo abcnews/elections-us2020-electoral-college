@@ -62,6 +62,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
       data-has-focuses={hasFocuses ? '' : undefined}
       data-is-interactive={isInteractive ? '' : undefined}
       data-tappable={tappableLayer}
+      style={{ paddingBottom: `${(svgHeight / svgWidth) * 100}%` }}
     >
       <svg className={styles.svg} viewBox={svgViewBox}>
         <g transform={`translate(${HEXGRID_PROPS.margin} ${HEXGRID_PROPS.margin})`}>
