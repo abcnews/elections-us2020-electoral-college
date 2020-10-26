@@ -11,7 +11,12 @@ import {
   MIXINS,
   PRESETS
 } from '../../constants';
-import { graphicPropsToAlternatingCase, urlQueryToGraphicProps, graphicPropsToUrlQuery } from '../../utils';
+import {
+  alternatingCaseToGraphicProps,
+  graphicPropsToAlternatingCase,
+  urlQueryToGraphicProps,
+  graphicPropsToUrlQuery
+} from '../../utils';
 import type { GraphicProps } from '../Graphic';
 import Graphic from '../Graphic';
 import graphicStyles from '../Graphic/styles.scss';
@@ -96,6 +101,13 @@ const Editor: React.FC = () => {
       ...INITIAL_FOCUSES,
       ...replacement.focuses
     });
+  };
+
+  const importMarker = (marker: string) => {
+    const graphicProps = alternatingCaseToGraphicProps(marker);
+
+    replaceGraphicProps(graphicProps);
+    setRelative(graphicProps.relative);
   };
 
   const onTapGroup = (groupID: string) => {
@@ -261,7 +273,22 @@ const Editor: React.FC = () => {
             );
           })}
         </div>
-        <label>Story markers</label>
+        <label>
+          Story markers
+          <button
+            onClick={() => {
+              const marker = prompt('Paste a marker here to import its configuration');
+
+              if (!marker || !marker.length) {
+                return alert('No marker was provided');
+              }
+
+              importMarker(marker);
+            }}
+          >
+            <Icon name="edit" />
+          </button>
+        </label>
         {markersData.map(({ label, note, text }) => (
           <details key={label}>
             <summary>
