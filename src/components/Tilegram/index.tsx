@@ -54,12 +54,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
 
   const svgWidth = HEXGRID_PROPS.width + 2 * HEXGRID_PROPS.margin;
   const svgHeight = HEXGRID_PROPS.height + 2 * HEXGRID_PROPS.margin;
-
-  const svgAttrs = {
-    width: svgWidth,
-    height: svgHeight,
-    viewBox: `0 0 ${svgWidth} ${svgHeight}`
-  };
+  const svgViewBox = `0 0 ${svgWidth} ${svgHeight}`;
 
   return (
     <div
@@ -68,7 +63,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
       data-is-interactive={isInteractive ? '' : undefined}
       data-tappable={tappableLayer}
     >
-      <svg className={styles.svg} {...svgAttrs}>
+      <svg className={styles.svg} viewBox={svgViewBox}>
         <g transform={`translate(${HEXGRID_PROPS.margin} ${HEXGRID_PROPS.margin})`}>
           <g className={styles.countryOuter}>
             {COUNTRY_PATHS.map((d, index) => (
