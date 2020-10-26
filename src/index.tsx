@@ -30,7 +30,7 @@ const whenOdysseyLoaded = new Promise(resolve =>
 const whenScrollytellersLoaded = new Promise((resolve, reject) =>
   whenOdysseyLoaded.then(odyssey => {
     const names = selectMounts('scrollytellerNAME', { markAsUsed: false })
-      .map(mountEl => (getMountValue(mountEl).match(/NAME(\w+)/) || [])[1])
+      .map(mountEl => (getMountValue(mountEl).match(/NAME([a-z]+)/) || [])[1])
       .filter(name => typeof name === 'string');
     const scrollytellerDefinitions: ScrollytellerDefinition<PossiblyEncodedGraphicProps>[] = [];
 
