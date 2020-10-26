@@ -1,3 +1,5 @@
+import type { TotalsYear } from './components/Totals';
+
 export enum GroupID {
   AK,
   AL,
@@ -464,6 +466,7 @@ export type Preset = {
   name?: string;
   allocations: Allocations;
   focuses: Focuses;
+  year?: TotalsYear;
 };
 
 export type Presets = {
@@ -586,7 +589,8 @@ export const PRESETS: Presets = {
       WV: Allocation.GOP,
       WY: Allocation.GOP
     },
-    focuses: {}
+    focuses: {},
+    year: 2012
   },
   2016: {
     allocations: {
@@ -647,7 +651,8 @@ export const PRESETS: Presets = {
       WV: Allocation.GOP,
       WY: Allocation.GOP
     },
-    focuses: {}
+    focuses: {},
+    year: 2016
   },
   safe: {
     name: 'Safe (both parties)',

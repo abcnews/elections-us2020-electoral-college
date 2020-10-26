@@ -166,6 +166,10 @@ export const urlQueryToGraphicProps = (urlQuery: string) => {
   graphicProps.focuses = decodeFocuses(graphicProps.focuses);
   graphicProps.relative = graphicProps.relative === 'null' ? null : +graphicProps.relative;
 
+  if (typeof graphicProps.year === 'string') {
+    graphicProps.year = +graphicProps.year;
+  }
+
   if (typeof graphicProps.tappableLayer === 'string') {
     graphicProps.tappableLayer = +graphicProps.tappableLayer;
   }

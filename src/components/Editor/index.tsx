@@ -23,6 +23,8 @@ import graphicStyles from '../Graphic/styles.scss';
 import Icon from '../Icon';
 import { TappableLayer } from '../Tilegram';
 import tilegramStyles from '../Tilegram/styles.scss';
+import type { TotalsYear } from '../Totals';
+import { YEARS, DEFAULT_YEAR } from '../Totals';
 import totalsStyles from '../Totals/styles.scss';
 import styles from './styles.scss';
 
@@ -35,6 +37,7 @@ const COMPONENTS_STYLES = {
 const DEFAULT_GRAPHIC_PROPS = {
   allocations: INITIAL_ALLOCATIONS,
   focuses: INITIAL_FOCUSES,
+  year: DEFAULT_YEAR,
   relative: null,
   tappableLayer: TappableLayer.Delegates
 };
@@ -58,6 +61,7 @@ const Editor: React.FC = () => {
   };
   const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
   const [focuses, setFocuses] = useState<Focuses>(initialUrlParamProps.focuses);
+  const [year, setYear] = useState<TotalsYear>(initialUrlParamProps.year);
   const [relative, setRelative] = useState<number | null>(initialUrlParamProps.relative);
   const [tappableLayer, setTappableLayer] = useState(initialUrlParamProps.tappableLayer);
   const [snapshots, setSnapshots] = useState(JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}'));
@@ -90,6 +94,7 @@ const Editor: React.FC = () => {
       ...focuses,
       ...mixin.focuses
     });
+    setYear(mixin.year || year);
   };
 
   const replaceGraphicProps = (replacement: GraphicProps) => {
@@ -101,6 +106,7 @@ const Editor: React.FC = () => {
       ...INITIAL_FOCUSES,
       ...replacement.focuses
     });
+    setYear(replacement.year || DEFAULT_YEAR);
   };
 
   const importMarker = (marker: string) => {
@@ -141,11 +147,14 @@ const Editor: React.FC = () => {
       ...initialUrlParamProps,
       allocations,
       focuses,
+      year,
       relative,
       tappableLayer
     }),
-    [allocations, focuses, relative, tappableLayer]
+    [allocations, focuses, year, relative, tappableLayer]
   );
+
+  console.log(graphicProps);
 
   const graphicPropsAsAlternatingCase = useMemo(() => graphicPropsToAlternatingCase(graphicProps), [graphicProps]);
   const graphicPropsAsUrlQuery = useMemo(() => graphicPropsToUrlQuery(graphicProps), [graphicProps]);
@@ -210,7 +219,28 @@ const Editor: React.FC = () => {
             </label>
           </span>
         </div>
-        <label>Relative year</label>
+        <label>
+          Current year <small>(sets candidate names &amp; sides)</small>
+        </label>
+        <div className={styles.flexRow}>
+          {YEARS.map(_year => (
+            <span key={_year}>
+              <label>
+                <input
+                  type="radio"
+                  name="year"
+                  value={_year}
+                  checked={_year === year}
+                  onChange={() => setYear(_year)}
+                ></input>
+                {_year}
+              </label>
+            </span>
+          ))}
+        </div>
+        <label>
+          Relative year <small>(show incumbent outlines &amp; flips)</small>
+        </label>
         <div className={styles.flexRow}>
           <span key="none">
             <label>
@@ -227,6 +257,7 @@ const Editor: React.FC = () => {
           {Object.keys(PRESETS)
             .map(key => parseInt(key, 10))
             .filter(key => !isNaN(key))
+            .reverse()
             .map(year => (
               <span key={year}>
                 <label>

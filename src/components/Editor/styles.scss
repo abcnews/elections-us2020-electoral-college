@@ -70,6 +70,11 @@ body {
   text-decoration: underline;
 }
 
+.controls label small {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
 .controls summary,
 .controls ul {
   margin: 0.25rem 0;
