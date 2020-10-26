@@ -184,7 +184,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
                     allocations && determineIfMostStateAllocationsAreDefinitive(stateID, allocations) ? '' : undefined
                   }
                   x={x}
-                  y={y}
+                  y={y + 5 /* shift baseline down */}
                 >
                   {stateID}
                 </text>
