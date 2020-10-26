@@ -1,3 +1,5 @@
+$color_AlphaGrey: rgba(0, 0, 0, 0.1);
+
 html {
   box-sizing: border-box;
 }
@@ -58,16 +60,25 @@ body {
   }
 }
 
-.controls > label:not([class]),
+.controls > label,
 .controls summary {
   display: table;
   width: 100%;
 }
 
-.controls > label:not([class]) {
-  margin: 1.5rem 0 0.5rem;
+.controls > label {
+  margin: 1rem 0 0.5rem;
+  border-top: 0.0625rem solid $color_AlphaGrey;
+  padding: 0.75rem 0 0 0;
   font-size: 1.125rem;
-  text-decoration: underline;
+}
+
+@media (min-width: 80rem) {
+  .controls > label:first-child {
+    margin: 0 0 0.5rem;
+    border: none;
+    padding: 0;
+  }
 }
 
 .controls label small {
@@ -89,7 +100,7 @@ body {
   content: 'None';
 }
 
-.controls > label:not([class]) button,
+.controls > label button,
 .controls summary button,
 .controls li button {
   float: right;
@@ -102,13 +113,13 @@ body {
   cursor: pointer;
 }
 
-.controls > label:not([class]) button:hover,
+.controls > label button:hover,
 .controls summary button:hover,
 .controls li button:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: $color_AlphaGrey;
 }
 
-.controls > label:not([class])::after,
+.controls > label::after,
 .controls summary::after,
 .controls li::after {
   clear: both;
@@ -130,14 +141,15 @@ body {
 }
 
 .flexRow > span {
-  padding: 0 0.5em;
+  padding: 0 1em 0 0;
 }
 
 .flexRow button {
+  align-self: stretch;
   margin: 0;
   border: 0.0625rem solid currentColor;
   padding: 0.25rem 0.5rem;
-  background: rgba(0, 0, 0, 0.1);
+  background: transparent;
   font-family: inherit;
   font-size: 0.875rem;
   cursor: pointer;
@@ -145,4 +157,8 @@ body {
 
 .flexRow button + button {
   margin-left: 0.25rem;
+}
+
+.flexRow button:hover {
+  background-color: $color_AlphaGrey;
 }

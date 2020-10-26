@@ -220,7 +220,7 @@ const Editor: React.FC = () => {
           </span>
         </div>
         <label>
-          Current year <small>(sets candidate names &amp; sides)</small>
+          Current year <small>(set candidate names &amp; sides)</small>
         </label>
         <div className={styles.flexRow}>
           {YEARS.map(_year => (
