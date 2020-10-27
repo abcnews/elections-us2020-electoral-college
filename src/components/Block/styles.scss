@@ -120,6 +120,53 @@
   }
 }
 
+.state {
+  margin: 0 0.05em;
+  border: 0.125rem solid $color_Yes;
+  padding: 0 0.2em;
+  background-color: $color_None;
+  white-space: nowrap;
+  transition: background-color $allocationTransitionDuration, border-color $allocationTransitionDuration,
+    color $allocationTransitionDuration;
+}
+
+.state[data-is-first-encounter]::after {
+  content: ' (' attr(data-state) ')';
+}
+
+.state[data-main-allocation='#{$Allocation_Dem}'] {
+  background-color: $color_Dem;
+}
+
+.state[data-main-allocation='#{$Allocation_LikelyDem}'] {
+  background-color: $color_LikelyDem;
+}
+
+.state[data-main-allocation='#{$Allocation_Tossup}'] {
+  background-color: $color_Tossup;
+}
+
+.state[data-main-allocation='#{$Allocation_LikelyGOP}'] {
+  background-color: $color_LikelyGOP;
+}
+
+.state[data-main-allocation='#{$Allocation_GOP}'] {
+  background-color: $color_GOP;
+}
+
+.state[data-relative-main-allocation='#{$Allocation_Dem}'] {
+  border-color: $color_Dem;
+}
+
+.state[data-relative-main-allocation='#{$Allocation_GOP}'] {
+  border-color: $color_GOP;
+}
+
+.state[data-is-definitive-main-allocation] {
+  color: $color_BG;
+  border-color: transparent;
+}
+
 /* Environment hacks */
 
 [class*='u-richtext'][class*='u-richtext'] > h3 {

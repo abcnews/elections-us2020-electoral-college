@@ -1,10 +1,12 @@
 import { getGeneration, GENERATIONS } from '@abcnews/env-utils';
 import { getMountValue, isMount, selectMounts } from '@abcnews/mount-utils';
-import { loadScrollyteller, ScrollytellerDefinition } from '@abcnews/scrollyteller';
+import { loadScrollyteller, PanelDefinition, ScrollytellerDefinition } from '@abcnews/scrollyteller';
 import React from 'react';
 import { render } from 'react-dom';
+import { StateID, STATES } from './constants';
 import { alternatingCaseToGraphicProps, decodeAllocations, decodeFocuses } from './utils';
 import Block from './components/Block';
+import blockStyles from './components/Block/styles.scss';
 import type { PossiblyEncodedGraphicProps } from './components/Graphic';
 import Graphic from './components/Graphic';
 
@@ -52,6 +54,7 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
           data.allocations = decodeAllocations((data.allocations as string) || '');
           data.focuses = decodeFocuses((data.focuses as string) || '');
         });
+        applyColourToPanels(scrollytellerDefinition.panels);
       } catch (err) {
         return reject(err);
       }
@@ -85,3 +88,75 @@ whenOdysseyLoaded.then(() => {
     render(<Graphic {...graphicProps} />, mount);
   });
 });
+
+const SORTED_STATES = STATES.sort((a, b) => b.name.length - a.name.length);
+
+function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraphicProps>[]) {
+  const stateIntroductionTracker: { [key: string]: boolean } = {};
+
+  panels.forEach(({ nodes }) => {
+    const textNodes = nodes.reduce<Node[]>((memo, node) => memo.concat(textNodesUnder(node)), []);
+
+    textNodes.forEach(node => {
+      let text = node.textContent || '';
+
+      SORTED_STATES.forEach(({ name }) => {
+        const index = text.indexOf(name);
+        if (index > -1 && text[index - 1] !== '|' && text[index + name.length] !== '|') {
+          text = text.replace(name, `|||${name}|||`);
+        }
+      });
+
+      if (text === node.textContent) {
+        return;
+      }
+
+      const parentEl = node.parentElement;
+
+      if (!parentEl) {
+        return;
+      }
+
+      text.split('|||').forEach((part, index) => {
+        const partTextNode = document.createTextNode(part);
+
+        if (!(index % 2)) {
+          return parentEl.insertBefore(partTextNode, node);
+        }
+
+        const state = STATES.find(({ name }) => name === part);
+
+        if (!state) {
+          return parentEl.insertBefore(partTextNode, node);
+        }
+
+        const partWrapperNode = document.createElement('span');
+        const stateID = StateID[state.id];
+
+        if (!stateIntroductionTracker[stateID]) {
+          stateIntroductionTracker[stateID] = true;
+          partWrapperNode.setAttribute('data-is-first-encounter', '');
+        }
+
+        partWrapperNode.setAttribute('data-state', stateID);
+        partWrapperNode.className = blockStyles.state;
+        partWrapperNode.appendChild(partTextNode);
+        parentEl.insertBefore(partWrapperNode, node);
+      });
+
+      parentEl.removeChild(node);
+    });
+  });
+}
+
+function textNodesUnder(node: Node) {
+  const textNodes: Node[] = [];
+  const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
+  let textNode: Node | null;
+
+  while ((textNode = walk.nextNode())) {
+    textNodes.push(textNode);
+  }
+
+  return textNodes;
+}
