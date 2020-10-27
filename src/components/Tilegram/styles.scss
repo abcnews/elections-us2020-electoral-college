@@ -77,6 +77,13 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   /* padding-bottom will be defined by JS */
 }
 
+@media (orientation: landscape) and (max-height: 480px) {
+  .root {
+    padding-bottom: 0 !important;
+    height: 240px;
+  }
+}
+
 .svg {
   position: absolute;
   height: 100%;
