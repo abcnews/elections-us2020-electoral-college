@@ -14,18 +14,17 @@
 }
 
 .graphic {
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0);
   position: absolute;
-  top: 50%;
+  top: 0;
   left: 50%;
   width: calc(100% - 2rem);
   max-width: 57.5rem;
-  box-shadow: 0 0 5vmin 5vmin $color_BG;
   animation: enter 0.5s;
 }
 
 .scrollyteller .panel.firstPanel {
-  margin-top: 40vh;
+  margin-top: 80vh;
 }
 
 .panel::before {
