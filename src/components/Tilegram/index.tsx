@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Allocation, Allocations, Focus, Focuses, PRESETS } from '../../constants';
 import {
   determineIfAllocationIsDefinitive,
@@ -60,7 +60,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
 
   // We need to trick svg4everyone into not nuking our <use> elements,
   // by making it think the <svg>'s nodeName isn't "svg"
-  useEffect(() => {
+  useLayoutEffect(() => {
     const svgEl = svgRef.current;
 
     if (!svgEl) {
