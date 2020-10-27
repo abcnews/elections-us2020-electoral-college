@@ -433,15 +433,15 @@ export type State = {
 };
 
 export const STATES: State[] = GROUPS.filter(({ id }) => {
-  const [, index] = String(id).split('_');
+  const [, index] = GROUP_IDS[id].split('_');
 
   return index == null || index === '0';
 }).map(({ id, name }) => {
-  const stateID = +String(id).split('_')[0] as unknown;
+  const stateID = StateID[GROUP_IDS[id].split('_')[0]] as unknown;
 
   return {
     id: stateID as StateID,
-    name: name.split('(')[0]
+    name: name.split(' (')[0]
   };
 });
 
