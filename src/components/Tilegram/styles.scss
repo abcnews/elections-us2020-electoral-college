@@ -46,13 +46,13 @@ $swHeavy: 5.5;
   @include fadedOut;
 }
 
-.countryOuter path {
+.countryOuter {
   stroke: $color_Grey;
   stroke-width: $swLight;
   fill: none;
 }
 
-.countryInner path {
+.countryInner {
   stroke: none;
   fill: $color_BG;
 }
@@ -159,7 +159,7 @@ $swHeavy: 5.5;
   fill: none;
 }
 
-.root[data-is-interactive][data-tappable='#{$TappableLayer_States}'] .delegateTarget {
+.root[data-is-interactive][data-tappable='#{$TappableLayer_Delegates}'] .delegateTarget {
   cursor: pointer;
 }
 
