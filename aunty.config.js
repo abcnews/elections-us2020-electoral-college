@@ -15,6 +15,16 @@ module.exports = {
       config.entry[name] = [config.entry.index[0].replace('index', name)];
     });
 
+    // Stop `import()`-ed chunks from being split into `[name].js` and `vendors~[name].js`
+    config.optimization = {
+      ...(config.optimization || {}),
+      splitChunks: {
+        cacheGroups: {
+          vendors: false
+        }
+      }
+    };
+
     return config;
   },
   deploy: [

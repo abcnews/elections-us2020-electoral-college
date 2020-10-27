@@ -25,7 +25,7 @@ declare global {
 const whenEnvReady = new Promise<void>(resolve =>
   getGeneration() !== GENERATIONS.P1
     ? resolve()
-    : import(/* webpackChunkName: "polyfills" */ './polyfills').then(() => resolve())
+    : import(/* webpackChunkName: "env" */ './polyfills').then(() => resolve())
 );
 
 const whenOdysseyLoaded = new Promise(resolve =>
