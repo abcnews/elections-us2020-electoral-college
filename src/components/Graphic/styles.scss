@@ -8,12 +8,12 @@
   -ms-user-select: none;
   user-select: none;
   box-sizing: border-box;
-  background-color: $color_BG;
   font-family: ABCSans, system-ui, sans-serif;
 }
 
 [data-mount][id^='ecgraphic'] > .root {
   border: 0.0625rem solid $color_Grey;
+  background-color: $color_BG;
   padding: 0.5rem;
 }
 
