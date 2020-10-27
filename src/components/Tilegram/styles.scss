@@ -1,18 +1,21 @@
 @import '../../constants.scss';
 
 // TappableLayer enum
+
 $TappableLayer_Delegates: 0;
 $TappableLayer_States: 1;
 
-// Focus management
-$opacityUnfocused: 0.125;
-$focusChangeTransitionDuration: 0.25s;
-
 // Stroke widths
+
 $swNone: 0;
 $swLight: 1.5;
 $swNormal: 2.5;
 $swHeavy: 5.5;
+
+// Focus management
+
+$opacityUnfocused: 0.05;
+$focusChangeTransitionDuration: 0.25s;
 
 @mixin fadedOut {
   opacity: $opacityUnfocused;
@@ -21,6 +24,44 @@ $swHeavy: 5.5;
 @mixin fadedOutTransitionable {
   transition: opacity $focusChangeTransitionDuration;
 }
+
+// Flip animations
+
+// $flipCubicBezier: cubic-bezier(0.455, 0.03, 0.515, 0.955); // easeInOutQuad
+// $flipCubicBezier: cubic-bezier(0.645, 0.045, 0.355, 1); // easeInOutCubic
+// $flipCubicBezier: cubic-bezier(0.4, 0.07, 0.09, 0.99); // custom
+$flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
+
+@mixin flipKeyframes($animationName, $colorFrom, $colorTo) {
+  @keyframes #{$animationName} {
+    0% {
+      fill: $color_White;
+      stroke: $colorFrom;
+      transform: none;
+    }
+    49.99% {
+      fill: $color_White;
+      stroke: $colorFrom;
+      transform: rotateY(90deg);
+    }
+    50% {
+      fill: $colorTo;
+      stroke: none;
+      transform: rotateY(-90deg);
+    }
+    100% {
+      fill: $colorTo;
+      stroke: none;
+      transform: none;
+    }
+  }
+}
+
+@mixin flipAnimation($animationName) {
+  animation: $animationName $allocationTransitionDuration $flipCubicBezier 1 both;
+}
+
+// Styles
 
 .root {
   position: relative;
@@ -54,7 +95,8 @@ $swHeavy: 5.5;
 
 .countryInner {
   stroke: none;
-  fill: $color_BG;
+  fill: $color_White;
+  fill: rgba(0, 0, 0, 0.025);
 }
 
 .delegates {
@@ -100,58 +142,16 @@ $swHeavy: 5.5;
   color: $color_GOP;
 }
 
-@keyframes flippedDemToGOP {
-  0% {
-    fill: none;
-    stroke: $color_Dem;
-    transform: none;
-  }
-  49.99% {
-    fill: none;
-    stroke: $color_Dem;
-    transform: rotateY(90deg);
-  }
-  50% {
-    fill: $color_GOP;
-    stroke: none;
-    transform: rotateY(-90deg);
-  }
-  100% {
-    fill: $color_GOP;
-    stroke: none;
-    transform: none;
-  }
-}
-
-@keyframes flippedGOPToDem {
-  0% {
-    fill: none;
-    stroke: $color_GOP;
-    transform: none;
-  }
-  49.99% {
-    fill: none;
-    stroke: $color_GOP;
-    transform: rotateY(90deg);
-  }
-  50% {
-    fill: $color_Dem;
-    stroke: none;
-    transform: rotateY(-90deg);
-  }
-  100% {
-    fill: $color_Dem;
-    stroke: none;
-    transform: none;
-  }
-}
+@include flipKeyframes(flipGOPToDem, $color_GOP, $color_Dem);
 
 .delegateAllocation[data-relative-allocation='#{$Allocation_GOP}'][data-allocation='#{$Allocation_Dem}'] {
-  animation: flippedGOPToDem 1s ease-in 0.125s 1 both;
+  @include flipAnimation(flipGOPToDem);
 }
 
+@include flipKeyframes(flipDemToGOP, $color_Dem, $color_GOP);
+
 .delegateAllocation[data-relative-allocation='#{$Allocation_Dem}'][data-allocation='#{$Allocation_GOP}'] {
-  animation: flippedDemToGOP 1s ease-in 0.125s 1 both;
+  @include flipAnimation(flipDemToGOP);
 }
 
 .delegateTarget {

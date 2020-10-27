@@ -72,7 +72,7 @@ $heightBigBar: 2rem;
 }
 
 .root[data-consistent-incumbent] .bar {
-  transition: transform $transitionDuration;
+  transition: transform $allocationTransitionDuration;
 }
 
 .bar[data-allocation='#{$Allocation_GOP}'] {
