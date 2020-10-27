@@ -39,7 +39,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
 
   const onTapDelegateHex = (event: React.MouseEvent<SVGElement>) => {
     if (onTapGroup && tappableLayer === TappableLayer.Delegates && event.target instanceof SVGUseElement) {
-      const groupID = event.target.dataset.group;
+      const groupID = event.target.getAttribute('data-group');
 
       if (groupID) {
         onTapGroup(groupID);
@@ -49,7 +49,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
 
   const onTapStateShape = (event: React.MouseEvent<SVGElement>) => {
     if (onTapState && tappableLayer === TappableLayer.States && event.target instanceof SVGUseElement) {
-      const stateID = event.target.dataset.state;
+      const stateID = event.target.getAttribute('data-state');
 
       if (stateID) {
         onTapState(stateID);
