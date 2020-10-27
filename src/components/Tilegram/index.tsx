@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Allocation, Allocations, Focus, Focuses, PRESETS } from '../../constants';
 import {
   determineIfAllocationIsDefinitive,
@@ -30,6 +30,7 @@ export type TilegramProps = {
 const generateComponentID = () => (Math.random() * 0xfffff * 1000000).toString(16).slice(0, 8);
 
 const Tilegram: React.FC<TilegramProps> = props => {
+  const svgRef = useRef<SVGSVGElement>(null);
   const componentID = useMemo(generateComponentID, []);
   const { allocations, focuses, relative, tappableLayer, onTapGroup, onTapState } = props;
   const isInteractive = !!onTapGroup;
@@ -56,6 +57,21 @@ const Tilegram: React.FC<TilegramProps> = props => {
       }
     }
   };
+
+  // We need to trick svg4everyone into not nuking our <use> elements,
+  // by making it think the <svg>'s nodeName isn't "svg"
+  useEffect(() => {
+    const svgEl = svgRef.current;
+
+    if (!svgEl) {
+      return;
+    }
+
+    Object.defineProperty(svgEl, 'nodeName', {
+      value: 'savage',
+      writable: false
+    });
+  }, []);
 
   useEffect(() => {
     if (!isInteractive) {
@@ -89,7 +105,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
       data-tappable={tappableLayer}
       style={{ paddingBottom: `${(svgHeight / svgWidth) * 100}%` }}
     >
-      <svg className={styles.svg} viewBox={svgViewBox}>
+      <svg ref={svgRef} className={styles.svg} viewBox={svgViewBox}>
         <Defs componentID={componentID} />
         <g transform={`translate(${HEXGRID_PROPS.margin} ${HEXGRID_PROPS.margin})`}>
           <use xlinkHref={countryPathsHref} className={styles.countryOuter}></use>
