@@ -15,14 +15,20 @@ $swHeavy: 5.5;
 // Focus management
 
 $opacityUnfocused: 0.05;
+$opacityUnfocusedInspecting: 0.25;
 $focusChangeTransitionDuration: 0.25s;
+
+@mixin fadedOutTransitionable {
+  transition: opacity $focusChangeTransitionDuration;
+}
 
 @mixin fadedOut {
   opacity: $opacityUnfocused;
 }
 
-@mixin fadedOutTransitionable {
-  transition: opacity $focusChangeTransitionDuration;
+@mixin fadedOutInspecting {
+  opacity: $opacityUnfocusedInspecting;
+  transition: opacity 0s;
 }
 
 // Flip animations
@@ -87,6 +93,10 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   @include fadedOut;
 }
 
+.root[data-has-focuses][data-is-inspecting] .countryOuter {
+  @include fadedOutInspecting;
+}
+
 .countryOuter {
   stroke: $color_Grey;
   stroke-width: $swLight;
@@ -95,7 +105,6 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
 
 .countryInner {
   stroke: none;
-  fill: $color_White;
   fill: rgba(0, 0, 0, 0.025);
 }
 
@@ -113,6 +122,10 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
 
 .root[data-has-focuses] .delegate[data-focus='#{$Focus_No}'] {
   @include fadedOut;
+}
+
+.root[data-has-focuses][data-is-inspecting] .delegate[data-focus='#{$Focus_No}'] {
+  @include fadedOutInspecting;
 }
 
 .delegateAllocation {
@@ -179,6 +192,10 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   @include fadedOut;
 }
 
+.root[data-has-focuses][data-is-inspecting] .state[data-focus='#{$Focus_No}'] {
+  @include fadedOutInspecting;
+}
+
 .stateFocus {
   fill: none;
   stroke: $color_Grey;
@@ -239,4 +256,9 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   @include fadedOut;
   fill: $color_Text;
   text-shadow: none;
+}
+
+.root[data-has-focuses][data-is-inspecting] .label[data-focus='#{$Focus_No}'] {
+  @include fadedOutInspecting;
+  opacity: 1;
 }

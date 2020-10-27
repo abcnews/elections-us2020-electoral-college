@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Allocation, Allocations, Focus, Focuses, PRESETS } from '../../constants';
 import {
   determineIfAllocationIsDefinitive,
@@ -33,6 +33,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
   const componentID = useMemo(generateComponentID, []);
   const { allocations, focuses, relative, tappableLayer, onTapGroup, onTapState } = props;
   const isInteractive = !!onTapGroup;
+  const [isInspecting, setIsInspecting] = useState(false);
   const hasFocuses = focuses && Object.keys(focuses).some(key => focuses[key] !== Focus.No);
   const relativeAllocations = relative && PRESETS[relative]?.allocations;
 
@@ -56,6 +57,24 @@ const Tilegram: React.FC<TilegramProps> = props => {
     }
   };
 
+  useEffect(() => {
+    if (!isInteractive) {
+      return;
+    }
+
+    function handler(event: KeyboardEvent) {
+      setIsInspecting(event.altKey);
+    }
+
+    window.addEventListener('keydown', handler, false);
+    window.addEventListener('keyup', handler, false);
+
+    return () => {
+      window.removeEventListener('keydown', handler, false);
+      window.removeEventListener('keyup', handler, false);
+    };
+  }, [isInteractive]);
+
   const svgWidth = HEXGRID_PROPS.width + 2 * HEXGRID_PROPS.margin;
   const svgHeight = HEXGRID_PROPS.height + 2 * HEXGRID_PROPS.margin;
   const svgViewBox = `0 0 ${svgWidth} ${svgHeight}`;
@@ -66,6 +85,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
       className={styles.root}
       data-has-focuses={hasFocuses ? '' : undefined}
       data-is-interactive={isInteractive ? '' : undefined}
+      data-is-inspecting={isInspecting ? '' : undefined}
       data-tappable={tappableLayer}
       style={{ paddingBottom: `${(svgHeight / svgWidth) * 100}%` }}
     >
