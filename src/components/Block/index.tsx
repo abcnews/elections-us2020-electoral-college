@@ -20,6 +20,7 @@ const Block: React.FC<BlockProps> = ({ scrollytellerDefinition }) => {
       firstPanelClassName={styles.firstPanel}
       panels={scrollytellerDefinition.panels}
       onMarker={onMarker}
+      theme="light"
     >
       <div className={styles.graphic}>
         <Graphic {...graphicProps} />

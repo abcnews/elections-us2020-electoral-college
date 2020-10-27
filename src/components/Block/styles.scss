@@ -16,7 +16,7 @@
 .graphic {
   transform: translate(-50%, 0);
   position: absolute;
-  top: 0;
+  top: 1rem;
   left: 50%;
   width: calc(100% - 2rem);
   max-width: 57.5rem;
@@ -28,10 +28,11 @@
 }
 
 .panel::before {
-  background-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.26);
+  // box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
 }
 
-.panel > * {
+.panel > :not(p) {
   margin-left: auto !important;
   margin-right: auto !important;
   margin-top: 0;
@@ -44,7 +45,7 @@
 }
 
 @media only screen and (max-width: 667px) {
-  .panel > * {
+  .panel > :not(p) {
     width: 83.333333%;
     font-size: 1.125rem;
     line-height: 1.555555556;
@@ -57,10 +58,7 @@
 
 .panel > h2,
 .panel > h3 {
-  margin-left: auto !important;
-  margin-right: auto !important;
-  width: 24rem;
-  max-width: 90%;
+  max-width: 30rem;
   line-height: 1.25;
   text-align: center;
   text-transform: none;
@@ -70,8 +68,20 @@
   font-size: 2.25rem;
 }
 
+@media only screen and (max-width: 667px) {
+  .panel > h2 {
+    font-size: 1.75rem;
+  }
+}
+
 .panel > h3 {
   font-size: 1.75rem;
+}
+
+@media only screen and (max-width: 667px) {
+  .panel > h3 {
+    font-size: 1.5rem;
+  }
 }
 
 .panel ul {
@@ -93,12 +103,15 @@
 .panel a:visited {
   color: inherit !important;
   text-decoration: underline !important;
-  text-decoration-color: rgba(255, 255, 255, 0.5) !important;
 }
 
 .panel a:hover,
 .panel a:active {
   text-decoration-color: #fff !important;
+}
+
+.panel > :last-child {
+  margin-bottom: 0;
 }
 
 @media only screen and (min-width: 668px) and (max-width: 1022px) {
@@ -107,15 +120,14 @@
   }
 }
 
-@media only screen and (min-width: 1023px) {
-  .panel :nth-of-type(2)[data-align='left'],
-  .panel :nth-of-type(2)[data-align='right'] {
-    margin-top: 40vh;
-  }
-}
+/* Environment hacks */
 
 [class*='u-richtext'][class*='u-richtext'] > h3 {
   padding-top: 2rem;
   font-family: 'ABCSerif', sans-serif;
   text-align: center;
+}
+
+[data-component='StickyHeader'] {
+  display: none;
 }
