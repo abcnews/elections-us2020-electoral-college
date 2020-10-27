@@ -1,3 +1,4 @@
+import { getGeneration, GENERATIONS } from '@abcnews/env-utils';
 import { getMountValue, isMount, selectMounts } from '@abcnews/mount-utils';
 import { loadScrollyteller, ScrollytellerDefinition } from '@abcnews/scrollyteller';
 import React from 'react';
@@ -21,10 +22,18 @@ declare global {
   }
 }
 
+const whenEnvReady = new Promise<void>(resolve =>
+  getGeneration() !== GENERATIONS.P1
+    ? resolve()
+    : import(/* webpackChunkName: "env-p1" */ './env/p1').then(() => resolve())
+);
+
 const whenOdysseyLoaded = new Promise(resolve =>
-  window.__ODYSSEY__
-    ? resolve(window.__ODYSSEY__)
-    : window.addEventListener('odyssey:api', () => resolve(window.__ODYSSEY__))
+  whenEnvReady.then(() =>
+    window.__ODYSSEY__
+      ? resolve(window.__ODYSSEY__)
+      : window.addEventListener('odyssey:api', () => resolve(window.__ODYSSEY__))
+  )
 );
 
 const whenScrollytellersLoaded = new Promise((resolve, reject) =>
