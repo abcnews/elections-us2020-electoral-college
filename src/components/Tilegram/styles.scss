@@ -140,6 +140,7 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   fill: currentColor;
   stroke: none;
   stroke-width: $swHeavy; // For flip animation strokes
+  transition: color $allocationTransitionDuration;
 }
 
 .delegateAllocation[data-allocation='#{$Allocation_Dem}'] {
