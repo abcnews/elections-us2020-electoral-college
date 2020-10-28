@@ -30,6 +30,7 @@ export type TotalsYear = keyof typeof YEARS_ALLOCATIONS_CANDIDATES;
 export const YEARS = Object.keys(YEARS_ALLOCATIONS_CANDIDATES)
   .reverse()
   .map(x => +x as TotalsYear);
+
 export const DEFAULT_YEAR = YEARS[0];
 
 function usePrevious(value) {

@@ -18,13 +18,13 @@ import {
   graphicPropsToUrlQuery
 } from '../../utils';
 import type { GraphicProps } from '../Graphic';
-import Graphic from '../Graphic';
+import Graphic, { DEFAULT_PROPS as DEFAULT_GRAPHIC_PROPS } from '../Graphic';
 import graphicStyles from '../Graphic/styles.scss';
 import Icon from '../Icon';
 import { TappableLayer } from '../Tilegram';
 import tilegramStyles from '../Tilegram/styles.scss';
 import type { TotalsYear } from '../Totals';
-import { YEARS, DEFAULT_YEAR } from '../Totals';
+import { YEARS } from '../Totals';
 import totalsStyles from '../Totals/styles.scss';
 import styles from './styles.scss';
 
@@ -34,12 +34,9 @@ const COMPONENTS_STYLES = {
   Tilegram: tilegramStyles
 };
 
-const DEFAULT_GRAPHIC_PROPS = {
+const INITIAL_GRAPHIC_PROPS = {
   allocations: INITIAL_ALLOCATIONS,
   focuses: INITIAL_FOCUSES,
-  year: DEFAULT_YEAR,
-  relative: null,
-  counting: true,
   tappableLayer: TappableLayer.Delegates
 };
 
@@ -56,10 +53,14 @@ const STORY_MARKERS = [
 const SNAPSHOTS_LOCALSTORAGE_KEY = 'eceditorsnapshots';
 
 const Editor: React.FC = () => {
-  const initialUrlParamProps = {
-    ...DEFAULT_GRAPHIC_PROPS,
-    ...urlQueryToGraphicProps(String(window.location.search))
-  };
+  const initialUrlParamProps = useMemo(
+    () => ({
+      ...INITIAL_GRAPHIC_PROPS,
+      ...DEFAULT_GRAPHIC_PROPS,
+      ...urlQueryToGraphicProps(String(window.location.search))
+    }),
+    []
+  );
   const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
   const [focuses, setFocuses] = useState<Focuses>(initialUrlParamProps.focuses);
   const [year, setYear] = useState<TotalsYear>(initialUrlParamProps.year);
@@ -108,7 +109,7 @@ const Editor: React.FC = () => {
       ...INITIAL_FOCUSES,
       ...replacement.focuses
     });
-    setYear(replacement.year || DEFAULT_YEAR);
+    setYear(replacement.year || DEFAULT_GRAPHIC_PROPS.year);
   };
 
   const importMarker = (marker: string) => {

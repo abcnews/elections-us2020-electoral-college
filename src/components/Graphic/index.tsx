@@ -1,8 +1,9 @@
 import React from 'react';
+import { INITIAL_ALLOCATIONS, INITIAL_FOCUSES } from '../../constants';
 import type { TilegramProps } from '../Tilegram';
-import Tilegram from '../Tilegram';
+import Tilegram, { TappableLayer } from '../Tilegram';
 import type { TotalsProps } from '../Totals';
-import Totals from '../Totals';
+import Totals, { DEFAULT_YEAR } from '../Totals';
 import styles from './styles.scss';
 
 export type GraphicProps = {
@@ -17,6 +18,12 @@ export type PossiblyEncodedGraphicProps =
       focuses: string;
     }
   | GraphicProps;
+
+export const DEFAULT_PROPS = {
+  year: DEFAULT_YEAR,
+  relative: null,
+  counting: true
+};
 
 const Graphic: React.FC<GraphicProps> = props => {
   const { title, counting, year, allocations, children, ...otherTilegramProps } = props;
