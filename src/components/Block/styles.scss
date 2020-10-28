@@ -126,8 +126,6 @@
   padding: 0 0.2em;
   background-color: $color_None;
   white-space: nowrap;
-  // transition: background-color $allocationTransitionDuration, border-color $allocationTransitionDuration,
-  //   color $allocationTransitionDuration;
 }
 
 .state[data-is-first-encounter]::after {
