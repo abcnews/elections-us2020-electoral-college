@@ -39,6 +39,7 @@ const DEFAULT_GRAPHIC_PROPS = {
   focuses: INITIAL_FOCUSES,
   year: DEFAULT_YEAR,
   relative: null,
+  counting: true,
   tappableLayer: TappableLayer.Delegates
 };
 
@@ -63,6 +64,7 @@ const Editor: React.FC = () => {
   const [focuses, setFocuses] = useState<Focuses>(initialUrlParamProps.focuses);
   const [year, setYear] = useState<TotalsYear>(initialUrlParamProps.year);
   const [relative, setRelative] = useState<number | null>(initialUrlParamProps.relative);
+  const [counting, setCounting] = useState(initialUrlParamProps.counting);
   const [tappableLayer, setTappableLayer] = useState(initialUrlParamProps.tappableLayer);
   const [snapshots, setSnapshots] = useState(JSON.parse(localStorage.getItem(SNAPSHOTS_LOCALSTORAGE_KEY) || '{}'));
 
@@ -114,6 +116,7 @@ const Editor: React.FC = () => {
 
     replaceGraphicProps(graphicProps);
     setRelative(graphicProps.relative);
+    setCounting(graphicProps.counting);
   };
 
   const onTapGroup = (groupID: string) => {
@@ -149,9 +152,10 @@ const Editor: React.FC = () => {
       focuses,
       year,
       relative,
+      counting,
       tappableLayer
     }),
-    [allocations, focuses, year, relative, tappableLayer]
+    [allocations, focuses, year, relative, counting, tappableLayer]
   );
 
   const graphicPropsAsAlternatingCase = useMemo(() => graphicPropsToAlternatingCase(graphicProps), [graphicProps]);
@@ -270,6 +274,21 @@ const Editor: React.FC = () => {
                 </label>
               </span>
             ))}
+        </div>
+        <label>Counting</label>
+        <div className={styles.flexRow}>
+          <span key="none">
+            <label>
+              <input
+                type="checkbox"
+                name="counting"
+                value="counting"
+                checked={counting}
+                onChange={() => setCounting(!counting)}
+              ></input>
+              Show totals
+            </label>
+          </span>
         </div>
         <label>
           Mix-ins <small>(added to the map)</small>

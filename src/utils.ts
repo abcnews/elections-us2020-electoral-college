@@ -170,6 +170,10 @@ export const urlQueryToGraphicProps = (urlQuery: string) => {
     graphicProps.year = +graphicProps.year;
   }
 
+  if (typeof graphicProps.counting === 'string') {
+    graphicProps.counting = graphicProps.counting === 'true';
+  }
+
   if (typeof graphicProps.tappableLayer === 'string') {
     graphicProps.tappableLayer = +graphicProps.tappableLayer;
   }
