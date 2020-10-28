@@ -655,11 +655,20 @@ export const PRESETS: Presets = {
     year: 2016
   },
   safe: {
-    name: 'Safe (both parties)',
+    name: 'Safe',
     allocations: {
       ...MIXINS.safedem.allocations,
       ...MIXINS.safegop.allocations
     },
+    focuses: {}
+  },
+  tossup: {
+    name: 'Tossup',
+    allocations: GROUP_IDS.reduce((allocations, groupID) => {
+      allocations[groupID] = Allocation.Tossup;
+
+      return allocations;
+    }, {}),
     focuses: {}
   }
 };
