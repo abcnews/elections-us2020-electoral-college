@@ -11,14 +11,27 @@
   font-family: ABCSans, system-ui, sans-serif;
 }
 
-[data-mount][id^='ecgraphic'] > .root {
+[data-mount][id^='ecgraphic']:global(.u-pull) > .root {
+  padding: 0 1rem;
+  margin: 0 auto;
+  max-width: 59.5rem;
+}
+
+@media (min-width: 668px) {
+  [data-mount][id^='ecgraphic']:global(.u-pull) > .root {
+    padding: 0;
+    max-width: 57.5rem;
+  }
+}
+
+[data-mount][id^='ecgraphic']:not(:global(.u-pull)) > .root {
   border: 0.0625rem solid $color_Grey;
   background-color: $color_BG;
   padding: 0.5rem;
 }
 
 @media (min-width: 668px) {
-  [data-mount][id^='ecgraphic'] > .root {
+  [data-mount][id^='ecgraphic']:not(:global(.u-pull)) > .root {
     padding: 1rem;
   }
 }

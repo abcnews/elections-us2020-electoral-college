@@ -95,7 +95,6 @@ whenOdysseyLoaded.then(() => {
     if (prevEl && prevEl.parentElement && prevEl.tagName === 'H1') {
       mount.removeAttribute('class');
       prevEl.parentElement.insertBefore(mount, prevEl);
-
       render(<Illustration />, mount);
     }
   });
@@ -105,6 +104,7 @@ whenOdysseyLoaded.then(() => {
   standaloneGraphicMounts.forEach(mount => {
     const graphicProps = alternatingCaseToGraphicProps(getMountValue(mount));
 
+    mount.classList.add('u-pull');
     render(<Graphic {...graphicProps} />, mount);
   });
 });
