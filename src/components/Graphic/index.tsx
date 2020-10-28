@@ -7,6 +7,7 @@ import styles from './styles.scss';
 
 export type GraphicProps = {
   title?: string;
+  counting?: boolean;
 } & TilegramProps &
   TotalsProps;
 
@@ -18,11 +19,12 @@ export type PossiblyEncodedGraphicProps =
   | GraphicProps;
 
 const Graphic: React.FC<GraphicProps> = props => {
-  const { title, year, allocations, children, ...otherTilegramProps } = props;
+  const { title, counting, year, allocations, children, ...otherTilegramProps } = props;
+  const isCounting = typeof counting !== 'boolean' || counting;
 
   return (
     <div className={styles.root} title={title}>
-      <header>
+      <header className={styles.header} data-is-counting={isCounting ? '' : undefined}>
         <Totals allocations={allocations} year={year} />
       </header>
       <Tilegram allocations={allocations} {...otherTilegramProps} />

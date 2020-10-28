@@ -36,12 +36,18 @@
   }
 }
 
-.root > header {
+.header {
   margin-bottom: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.25s;
 }
 
 @media (min-width: 668px) {
-  .root > header {
+  .header {
     margin-bottom: 1rem;
   }
+}
+
+.header[data-is-counting] {
+  opacity: 1;
 }
