@@ -15,6 +15,7 @@ import Block from './components/Block';
 import blockStyles from './components/Block/styles.scss';
 import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Graphic';
 import Graphic from './components/Graphic';
+import Illustration from './components/Illustration';
 
 type OdysseyAPI = {
   utils: {
@@ -86,9 +87,22 @@ whenScrollytellersLoaded.then(scrollytellerDefinitions => {
 });
 
 whenOdysseyLoaded.then(() => {
-  const mounts = selectMounts('ecgraphic');
+  const illustrationMounts = selectMounts('ecillustration');
 
-  mounts.forEach(mount => {
+  illustrationMounts.forEach(mount => {
+    const prevEl = mount.previousElementSibling;
+
+    if (prevEl && prevEl.parentElement && prevEl.tagName === 'H1') {
+      mount.removeAttribute('class');
+      prevEl.parentElement.insertBefore(mount, prevEl);
+
+      render(<Illustration />, mount);
+    }
+  });
+
+  const standaloneGraphicMounts = selectMounts('ecgraphic');
+
+  standaloneGraphicMounts.forEach(mount => {
     const graphicProps = alternatingCaseToGraphicProps(getMountValue(mount));
 
     render(<Graphic {...graphicProps} />, mount);
