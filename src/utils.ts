@@ -122,7 +122,11 @@ export const alternatingCaseToGraphicProps = (alternatingCase: string) => {
 
   graphicProps.allocations = decodeAllocations(graphicProps.allocations);
   graphicProps.focuses = decodeFocuses(graphicProps.focuses);
-  graphicProps.relative = graphicProps.relative === 'null' ? null : graphicProps.relative;
+
+  // Support deprecated marker prop values
+  if (graphicProps.relative === 'null') {
+    graphicProps.relative = null;
+  }
 
   return graphicProps;
 };

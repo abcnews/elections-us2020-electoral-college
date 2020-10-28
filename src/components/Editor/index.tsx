@@ -116,8 +116,8 @@ const Editor: React.FC = () => {
     const graphicProps = alternatingCaseToGraphicProps(marker);
 
     replaceGraphicProps(graphicProps);
-    setRelative(graphicProps.relative);
-    setCounting(graphicProps.counting);
+    setRelative(graphicProps.relative || DEFAULT_GRAPHIC_PROPS.relative);
+    setCounting(graphicProps.counting || DEFAULT_GRAPHIC_PROPS.counting);
   };
 
   const onTapGroup = (groupID: string) => {
