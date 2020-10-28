@@ -1,8 +1,8 @@
 import type { ScrollytellerDefinition } from '@abcnews/scrollyteller';
 import Scrollyteller from '@abcnews/scrollyteller';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { PRESETS } from '../../constants';
-import { determineIfAllocationIsDefinitive, determineIfAllocationIsMade, getStateAllocations } from '../../utils';
+// import { PRESETS } from '../../constants';
+// import { determineIfAllocationIsDefinitive, getStateAllocations } from '../../utils';
 import type { GraphicProps } from '../Graphic';
 import Graphic from '../Graphic';
 import styles from './styles.scss';
@@ -14,6 +14,7 @@ interface BlockProps {
 const Block: React.FC<BlockProps> = ({ scrollytellerDefinition }) => {
   const [graphicProps, setGraphicProps] = useState(scrollytellerDefinition.panels[0].data);
   const onMarker = useCallback(graphicProps => setGraphicProps(graphicProps), []);
+  /*
   const panelsStateEls = useRef<HTMLSpanElement[]>();
 
   const { allocations, relative } = graphicProps;
@@ -60,6 +61,7 @@ const Block: React.FC<BlockProps> = ({ scrollytellerDefinition }) => {
       });
     }
   }, [graphicProps]);
+  */
 
   return (
     <Scrollyteller

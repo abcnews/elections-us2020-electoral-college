@@ -3,11 +3,17 @@ import { getMountValue, isMount, selectMounts } from '@abcnews/mount-utils';
 import { loadScrollyteller, PanelDefinition, ScrollytellerDefinition } from '@abcnews/scrollyteller';
 import React from 'react';
 import { render } from 'react-dom';
-import { StateID, STATES } from './constants';
-import { alternatingCaseToGraphicProps, decodeAllocations, decodeFocuses } from './utils';
+import { PRESETS, StateID, STATES } from './constants';
+import {
+  alternatingCaseToGraphicProps,
+  decodeAllocations,
+  decodeFocuses,
+  determineIfAllocationIsDefinitive,
+  getStateAllocations
+} from './utils';
 import Block from './components/Block';
 import blockStyles from './components/Block/styles.scss';
-import type { PossiblyEncodedGraphicProps } from './components/Graphic';
+import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Graphic';
 import Graphic from './components/Graphic';
 
 type OdysseyAPI = {
@@ -94,7 +100,7 @@ const SORTED_STATES = STATES.sort((a, b) => b.name.length - a.name.length);
 function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraphicProps>[]) {
   const stateIntroductionTracker: { [key: string]: boolean } = {};
 
-  panels.forEach(({ nodes }) => {
+  panels.forEach(({ data, nodes }) => {
     const textNodes = nodes.reduce<Node[]>((memo, node) => memo.concat(textNodesUnder(node)), []);
 
     textNodes.forEach(node => {
@@ -132,10 +138,28 @@ function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraphicProps
 
         const partWrapperNode = document.createElement('span');
         const stateID = StateID[state.id];
+        const { allocations, relative } = data as GraphicProps;
+        const stateMainAllocation = allocations && getStateAllocations(stateID, allocations)[0];
+        const isDefinitiveMainAllocation =
+          stateMainAllocation && determineIfAllocationIsDefinitive(stateMainAllocation);
+        const relativeAllocations = relative && PRESETS[relative]?.allocations;
+        const stateRelativeMainAllocation = relativeAllocations && getStateAllocations(stateID, relativeAllocations)[0];
 
         if (!stateIntroductionTracker[stateID]) {
           stateIntroductionTracker[stateID] = true;
           partWrapperNode.setAttribute('data-is-first-encounter', '');
+        }
+
+        if (stateMainAllocation) {
+          partWrapperNode.setAttribute('data-main-allocation', stateMainAllocation);
+        }
+
+        if (isDefinitiveMainAllocation) {
+          partWrapperNode.setAttribute('data-is-definitive-main-allocation', '');
+        }
+
+        if (stateRelativeMainAllocation) {
+          partWrapperNode.setAttribute('data-relative-main-allocation', stateRelativeMainAllocation);
         }
 
         partWrapperNode.setAttribute('data-state', stateID);
