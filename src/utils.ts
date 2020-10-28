@@ -127,13 +127,19 @@ export const alternatingCaseToGraphicProps = (alternatingCase: string) => {
   return graphicProps;
 };
 
-export const graphicPropsToAlternatingCase = (graphicProps): string =>
+export const graphicPropsToAlternatingCase = (graphicProps, defaultGraphicProps?): string =>
   Object.keys(graphicProps).reduce((alternatingCase, key) => {
+    // We never export tappableLayer
     if (key === 'tappableLayer') {
       return alternatingCase;
     }
 
     const value = graphicProps[key];
+
+    // We never export defaults
+    if (defaultGraphicProps && defaultGraphicProps[key] === value) {
+      return alternatingCase;
+    }
 
     alternatingCase += key.toUpperCase();
 
@@ -164,10 +170,13 @@ export const urlQueryToGraphicProps = (urlQuery: string) => {
 
   graphicProps.allocations = decodeAllocations(graphicProps.allocations);
   graphicProps.focuses = decodeFocuses(graphicProps.focuses);
-  graphicProps.relative = graphicProps.relative === 'null' ? null : +graphicProps.relative;
 
   if (typeof graphicProps.year === 'string') {
     graphicProps.year = +graphicProps.year;
+  }
+
+  if (typeof graphicProps.relative === 'string') {
+    graphicProps.relative = graphicProps.relative === 'null' ? null : +graphicProps.relative;
   }
 
   if (typeof graphicProps.counting === 'string') {
@@ -181,9 +190,19 @@ export const urlQueryToGraphicProps = (urlQuery: string) => {
   return graphicProps;
 };
 
-export const graphicPropsToUrlQuery = (graphicProps): string =>
+export const graphicPropsToUrlQuery = (graphicProps, defaultGraphicProps?): string =>
   Object.keys(graphicProps).reduce((urlQuery, key, index) => {
+    // We never export tappableLayer
+    if (key === 'tappableLayer') {
+      return urlQuery;
+    }
+
     const value = graphicProps[key];
+
+    // We never export defaults
+    if (defaultGraphicProps && defaultGraphicProps[key] === value) {
+      return urlQuery;
+    }
 
     urlQuery += (index ? '&' : '?') + key + '=';
 

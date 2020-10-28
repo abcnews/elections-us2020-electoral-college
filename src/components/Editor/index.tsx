@@ -159,8 +159,13 @@ const Editor: React.FC = () => {
     [allocations, focuses, year, relative, counting, tappableLayer]
   );
 
-  const graphicPropsAsAlternatingCase = useMemo(() => graphicPropsToAlternatingCase(graphicProps), [graphicProps]);
-  const graphicPropsAsUrlQuery = useMemo(() => graphicPropsToUrlQuery(graphicProps), [graphicProps]);
+  const graphicPropsAsAlternatingCase = useMemo(
+    () => graphicPropsToAlternatingCase(graphicProps, DEFAULT_GRAPHIC_PROPS),
+    [graphicProps]
+  );
+  const graphicPropsAsUrlQuery = useMemo(() => graphicPropsToUrlQuery(graphicProps, DEFAULT_GRAPHIC_PROPS), [
+    graphicProps
+  ]);
 
   const markersData = useMemo(
     () =>
