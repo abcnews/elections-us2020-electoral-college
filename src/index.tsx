@@ -1,5 +1,5 @@
 import * as acto from '@abcnews/alternating-case-to-object';
-import { getGeneration, GENERATIONS } from '@abcnews/env-utils';
+import { getGeneration, GENERATIONS, getTier, TIERS } from '@abcnews/env-utils';
 import { getMountValue, isMount, selectMounts } from '@abcnews/mount-utils';
 import { loadScrollyteller, PanelDefinition, ScrollytellerDefinition } from '@abcnews/scrollyteller';
 import React from 'react';
@@ -120,6 +120,19 @@ whenOdysseyLoaded.then(() => {
     mount.classList.add('u-pull');
     render(<Graphic {...graphicProps} />, mount);
   });
+
+  // Fallback exporter
+
+  if (getTier() === TIERS.PREVIEW) {
+    const titleEl = document.querySelector('.Header h1');
+
+    if (titleEl) {
+      (titleEl as HTMLElement).style.cursor = 'copy';
+      titleEl.addEventListener('click', () => {
+        import(/* webpackChunkName: "fallbacks" */ './fallbacks').then(module => module.default(titleEl));
+      });
+    }
+  }
 });
 
 const SORTED_STATES = STATES.sort((a, b) => b.name.length - a.name.length);
