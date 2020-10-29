@@ -1,3 +1,4 @@
+import * as acto from '@abcnews/alternating-case-to-object';
 import { getGeneration, GENERATIONS } from '@abcnews/env-utils';
 import { getMountValue, isMount, selectMounts } from '@abcnews/mount-utils';
 import { loadScrollyteller, PanelDefinition, ScrollytellerDefinition } from '@abcnews/scrollyteller';
@@ -15,7 +16,7 @@ import Block from './components/Block';
 import blockStyles from './components/Block/styles.scss';
 import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Graphic';
 import Graphic from './components/Graphic';
-import Illustration from './components/Illustration';
+import Illustration, { IllustrationName } from './components/Illustration';
 
 type OdysseyAPI = {
   utils: {
@@ -90,12 +91,24 @@ whenOdysseyLoaded.then(() => {
   const illustrationMounts = selectMounts('ecillustration');
 
   illustrationMounts.forEach(mount => {
-    const prevEl = mount.previousElementSibling;
+    const parentEl = mount.parentElement;
 
-    if (prevEl && prevEl.parentElement && prevEl.tagName === 'H1') {
+    if (!parentEl) {
+      return;
+    }
+
+    const titleEl = parentEl.querySelector('h1');
+
+    if (titleEl) {
+      const { name } = acto(getMountValue(mount));
+
+      if (name && !Object.values(IllustrationName).includes(name)) {
+        return;
+      }
+
       mount.removeAttribute('class');
-      prevEl.parentElement.insertBefore(mount, prevEl);
-      render(<Illustration />, mount);
+      parentEl.insertBefore(mount, titleEl);
+      render(<Illustration name={name} />, mount);
     }
   });
 
