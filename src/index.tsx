@@ -17,6 +17,7 @@ import blockStyles from './components/Block/styles.scss';
 import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Graphic';
 import Graphic from './components/Graphic';
 import Illustration, { IllustrationName } from './components/Illustration';
+import Live from './components/Live';
 
 type OdysseyAPI = {
   utils: {
@@ -48,6 +49,8 @@ const whenOdysseyLoaded = new Promise(resolve =>
 
 const whenScrollytellersLoaded = new Promise((resolve, reject) =>
   whenOdysseyLoaded.then(odyssey => {
+    const liveMounts = selectMounts('eclive');
+
     const names = selectMounts('scrollytellerNAME', { markAsUsed: false })
       .map(mountEl => (getMountValue(mountEl).match(/NAME([a-z]+)/) || [])[1])
       .filter(name => typeof name === 'string');
@@ -58,10 +61,14 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
 
       try {
         scrollytellerDefinition = loadScrollyteller(name, 'u-full');
+
+        // Decode encoded props
         scrollytellerDefinition.panels.forEach(({ data }) => {
           data.allocations = decodeAllocations((data.allocations as string) || '');
           data.focuses = decodeFocuses((data.focuses as string) || '');
         });
+
+        // Upgrade scrollyteller' content to show coloured state names
         applyColourToPanels(scrollytellerDefinition.panels);
       } catch (err) {
         return reject(err);
@@ -77,6 +84,18 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
       scrollytellerDefinitions.push(scrollytellerDefinition);
     }
 
+    // Upgrade all scrollytellers' content to show live results
+    liveMounts.forEach(mount => {
+      const { state, hide } = acto(getMountValue(mount));
+
+      if (typeof hide === 'boolean' && hide) {
+        return (((mount as unknown) as HTMLElement).style.display = 'none');
+      }
+
+      render(<Live stateCode={state.toUpperCase()} />, mount);
+    });
+
+    // Return scrollyteller definitions
     resolve(scrollytellerDefinitions);
   })
 );

@@ -9,7 +9,9 @@ import {
   FOCUSES,
   INITIAL_FOCUSES,
   MIXINS,
-  PRESETS
+  PRESETS,
+  ElectionYear,
+  ELECTION_YEARS
 } from '../../constants';
 import {
   alternatingCaseToGraphicProps,
@@ -23,8 +25,6 @@ import graphicStyles from '../Graphic/styles.scss';
 import Icon from '../Icon';
 import { TappableLayer } from '../Tilegram';
 import tilegramStyles from '../Tilegram/styles.scss';
-import type { TotalsYear } from '../Totals';
-import { YEARS } from '../Totals';
 import totalsStyles from '../Totals/styles.scss';
 import styles from './styles.scss';
 
@@ -63,7 +63,7 @@ const Editor: React.FC = () => {
   );
   const [allocations, setAllocations] = useState<Allocations>(initialUrlParamProps.allocations);
   const [focuses, setFocuses] = useState<Focuses>(initialUrlParamProps.focuses);
-  const [year, setYear] = useState<TotalsYear>(initialUrlParamProps.year);
+  const [year, setYear] = useState<ElectionYear>(initialUrlParamProps.year);
   const [relative, setRelative] = useState<number | null>(initialUrlParamProps.relative);
   const [counting, setCounting] = useState(initialUrlParamProps.counting);
   const [tappableLayer, setTappableLayer] = useState(initialUrlParamProps.tappableLayer);
@@ -231,7 +231,7 @@ const Editor: React.FC = () => {
           Current year <small>(set candidate names &amp; sides)</small>
         </label>
         <div className={styles.flexRow}>
-          {YEARS.map(_year => (
+          {ELECTION_YEARS.map(_year => (
             <span key={_year}>
               <label>
                 <input

@@ -1,5 +1,3 @@
-import type { TotalsYear } from './components/Totals';
-
 export enum GroupID {
   AK,
   AL,
@@ -466,7 +464,7 @@ export type Preset = {
   name?: string;
   allocations: Allocations;
   focuses: Focuses;
-  year?: TotalsYear;
+  year?: ElectionYear;
 };
 
 export type Presets = {
@@ -672,3 +670,30 @@ export const PRESETS: Presets = {
     focuses: {}
   }
 };
+
+export const ELECTION_YEARS_ALLOCATIONS_CANDIDATES = {
+  2020: {
+    [Allocation.GOP]: 'Trump',
+    [Allocation.Dem]: 'Biden'
+  },
+  2016: {
+    [Allocation.Dem]: 'Clinton',
+    [Allocation.GOP]: 'Trump'
+  },
+  2012: {
+    [Allocation.Dem]: 'Obama',
+    [Allocation.GOP]: 'Romney'
+  },
+  2008: {
+    [Allocation.GOP]: 'McCain',
+    [Allocation.Dem]: 'Obama'
+  }
+};
+
+export type ElectionYear = keyof typeof ELECTION_YEARS_ALLOCATIONS_CANDIDATES;
+
+export const ELECTION_YEARS = Object.keys(ELECTION_YEARS_ALLOCATIONS_CANDIDATES)
+  .reverse()
+  .map(x => +x as ElectionYear);
+
+export const DEFAULT_ELECTION_YEAR = ELECTION_YEARS[0];

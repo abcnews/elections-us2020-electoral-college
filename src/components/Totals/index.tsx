@@ -1,37 +1,11 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { Allocation, Allocations } from '../../constants';
+import type { Allocations, ElectionYear } from '../../constants';
+import { Allocation, DEFAULT_ELECTION_YEAR, ELECTION_YEARS_ALLOCATIONS_CANDIDATES } from '../../constants';
 import { getVoteCountsForAllocations } from '../../utils';
 import styles from './styles.scss';
 
 const MAX_VOTES = 538;
 const WIN_VOTES = Math.ceil((MAX_VOTES + 1) / 2);
-
-const YEARS_ALLOCATIONS_CANDIDATES = {
-  2020: {
-    [Allocation.GOP]: 'Trump',
-    [Allocation.Dem]: 'Biden'
-  },
-  2016: {
-    [Allocation.Dem]: 'Clinton',
-    [Allocation.GOP]: 'Trump'
-  },
-  2012: {
-    [Allocation.Dem]: 'Obama',
-    [Allocation.GOP]: 'Romney'
-  },
-  2008: {
-    [Allocation.GOP]: 'McCain',
-    [Allocation.Dem]: 'Obama'
-  }
-};
-
-export type TotalsYear = keyof typeof YEARS_ALLOCATIONS_CANDIDATES;
-
-export const YEARS = Object.keys(YEARS_ALLOCATIONS_CANDIDATES)
-  .reverse()
-  .map(x => +x as TotalsYear);
-
-export const DEFAULT_YEAR = YEARS[0];
 
 function usePrevious(value) {
   const ref = useRef();
@@ -42,14 +16,14 @@ function usePrevious(value) {
 }
 
 export type TotalsProps = {
-  year?: TotalsYear;
+  year?: ElectionYear;
   allocations?: Allocations;
 };
 
 const Totals: React.FC<TotalsProps> = props => {
   const { allocations, year } = props;
   const voteCounts = useMemo(() => getVoteCountsForAllocations(allocations || {}), [allocations]);
-  const sides = useMemo(() => YEARS_ALLOCATIONS_CANDIDATES[year || DEFAULT_YEAR], [year]);
+  const sides = useMemo(() => ELECTION_YEARS_ALLOCATIONS_CANDIDATES[year || DEFAULT_ELECTION_YEAR], [year]);
   const incumbent = useMemo(() => Object.keys(sides)[0], [sides]);
   const previousIncumbent = usePrevious(incumbent);
 

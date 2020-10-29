@@ -1,9 +1,9 @@
 import React from 'react';
-import { INITIAL_ALLOCATIONS, INITIAL_FOCUSES } from '../../constants';
+import { DEFAULT_ELECTION_YEAR } from '../../constants';
 import type { TilegramProps } from '../Tilegram';
-import Tilegram, { TappableLayer } from '../Tilegram';
+import Tilegram from '../Tilegram';
 import type { TotalsProps } from '../Totals';
-import Totals, { DEFAULT_YEAR } from '../Totals';
+import Totals from '../Totals';
 import styles from './styles.scss';
 
 export type GraphicProps = {
@@ -20,7 +20,7 @@ export type PossiblyEncodedGraphicProps =
   | GraphicProps;
 
 export const DEFAULT_PROPS = {
-  year: DEFAULT_YEAR,
+  year: DEFAULT_ELECTION_YEAR,
   relative: null,
   counting: true
 };
