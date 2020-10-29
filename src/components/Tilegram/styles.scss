@@ -252,7 +252,8 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   font-size: 1rem;
   fill: $color_Text;
   stroke: none;
-  @include fadedOutTransitionable;
+  // @include fadedOutTransitionable;
+  transition: opacity $focusChangeTransitionDuration, fill $focusChangeTransitionDuration;
 }
 
 .label[data-most-definitively-allocated] {
@@ -261,9 +262,10 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
 }
 
 .root[data-has-focuses] .label[data-focus='#{$Focus_No}'] {
-  @include fadedOut;
-  fill: $color_Text;
-  text-shadow: none;
+  opacity: 0;
+  // @include fadedOut;
+  // fill: $color_Text;
+  // text-shadow: none;
 }
 
 .root[data-has-focuses][data-is-inspecting] .label[data-focus='#{$Focus_No}'] {
