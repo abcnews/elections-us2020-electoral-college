@@ -4,32 +4,33 @@
   background-color: inherit;
 }
 
-@keyframes enter {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+// Override Scrollyteller's internal sticky styles
+.scrollyteller > :first-child {
+  position: fixed !important;
+  top: 0 !important;
+  bottom: auto !important;
+  z-index: -1;
+  transform: translate3d(0, 0%, 0);
+  will-change: transform;
 }
 
 .graphic {
-  transform: translate(-50%, 0);
-  position: absolute;
-  top: 1rem;
-  left: 50%;
+  margin: 0 auto;
+  padding: 1rem 0 0;
   width: calc(100% - 2rem);
   max-width: 57.5rem;
-  animation: enter 0.5s;
 }
 
 .scrollyteller .panel.firstPanel {
   margin-top: 80vh;
 }
 
+.scrollyteller .panel.lastPanel {
+  margin-bottom: 80vh;
+}
+
 .panel::before {
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.26);
-  // box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.26);
 }
 
 .panel > :not(p) {

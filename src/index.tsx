@@ -19,7 +19,18 @@ import Graphic from './components/Graphic';
 import Illustration, { IllustrationName } from './components/Illustration';
 import Live from './components/Live';
 
+export type OdysseySchedulerClient = {
+  hasChanged: boolean;
+  fixedHeight: number;
+};
+
+export type OdysseySchedulerSubscriber = (client: OdysseySchedulerClient) => void;
+
 type OdysseyAPI = {
+  scheduler: {
+    subscribe: (subscriber: OdysseySchedulerSubscriber) => void;
+    unsubscribe: (subscriber: OdysseySchedulerSubscriber) => void;
+  };
   utils: {
     dom: {
       detach: (el: Element) => void;
