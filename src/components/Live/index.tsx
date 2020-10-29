@@ -15,8 +15,10 @@ interface LiveProps {
   stateCode: string;
 }
 
-const ALLOCATIONS_CANDIDATES = ELECTION_YEARS_ALLOCATIONS_CANDIDATES[DEFAULT_ELECTION_YEAR];
-ALLOCATIONS_CANDIDATES[Allocation.Tossup] = 'Other';
+const ALLOCATIONS_CANDIDATES = {
+  ...ELECTION_YEARS_ALLOCATIONS_CANDIDATES[DEFAULT_ELECTION_YEAR],
+  [Allocation.Tossup]: 'Other'
+};
 
 const getAllocationForPartyId = (partyId: PartyId): Allocation =>
   partyId === 'dem' ? Allocation.Dem : partyId === 'gop' ? Allocation.GOP : Allocation.Tossup;
