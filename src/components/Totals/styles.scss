@@ -9,7 +9,7 @@ $heightBigBar: 2rem;
   letter-spacing: 0.0625rem;
 }
 
-@media (min-width: 668px) {
+@media (min-width: 668px) and (min-height: 480px) {
   .root {
     font-size: 0.9375rem;
   }
@@ -56,7 +56,7 @@ $heightBigBar: 2rem;
   background-color: rgba(0, 0, 0, 0.025);
 }
 
-@media (min-width: 668px) {
+@media (min-width: 668px) and (min-height: 480px) {
   .track {
     margin: 0 auto $heightBigBar / 4 auto;
     height: $heightBigBar;
@@ -116,7 +116,7 @@ $heightBigBar: 2rem;
   height: calc(100% + #{$heightBar / 2});
 }
 
-@media (min-width: 668px) {
+@media (min-width: 668px) and (min-height: 480px) {
   .midpoint {
     bottom: $heightBigBar / -4;
     height: calc(100% + #{$heightBigBar / 2});

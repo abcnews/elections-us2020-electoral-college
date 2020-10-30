@@ -70,10 +70,17 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   /* padding-bottom will be defined by JS */
 }
 
-@media (orientation: landscape) and (max-height: 480px) {
+@media (orientation: landscape) and (max-height: 60rem) {
   .root {
     padding-bottom: 0 !important;
-    height: 240px;
+    height: 32rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 30rem) {
+  .root {
+    padding-bottom: 0 !important;
+    height: 16rem;
   }
 }
 
