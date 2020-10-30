@@ -5,13 +5,6 @@
 $TappableLayer_Delegates: 0;
 $TappableLayer_States: 1;
 
-// Stroke widths
-
-$swNone: 0;
-$swLight: 1.5;
-$swNormal: 2.5;
-$swHeavy: 5.5;
-
 // Focus management
 
 $opacityUnfocused: 0.05;
@@ -93,6 +86,9 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
 }
 
 .countryOuter {
+  stroke: $color_Grey;
+  stroke-width: $swLight;
+  fill: none;
   @include fadedOutTransitionable;
 }
 
@@ -102,12 +98,6 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
 
 .root[data-has-focuses][data-is-inspecting] .countryOuter {
   @include fadedOutInspecting;
-}
-
-.countryOuter {
-  stroke: $color_Grey;
-  stroke-width: $swLight;
-  fill: none;
 }
 
 .countryInner {
@@ -210,6 +200,11 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   stroke-width: $swLight;
 }
 
+.stateFocus[data-focus='#{$Focus_No}'][data-has-allocation] {
+  stroke: $color_BG;
+  stroke-width: $swLight;
+}
+
 .stateFocus[data-focus='#{$Focus_Yes}'] {
   stroke: $color_Yes;
   stroke-width: $swHeavy;
@@ -235,12 +230,6 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   stroke: $color_GOP;
 }
 
-.stateFocus[data-focus='#{$Focus_Yes}'][data-has-allocation]:not([data-has-definitive-allocation]):not([data-relative-main-allocation]),
-.stateFocus[data-focus='#{$Focus_No}'][data-has-allocation] {
-  stroke: $color_BG;
-  stroke-width: $swNormal;
-}
-
 .stateTarget {
   stroke: none;
   fill: none;
@@ -262,7 +251,7 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
 .statePartition {
   fill: none;
   stroke: none;
-  stroke-width: 0.5;
+  stroke-width: $swLight;
 }
 
 .statePartition[data-focus='#{$Focus_Yes}'],
