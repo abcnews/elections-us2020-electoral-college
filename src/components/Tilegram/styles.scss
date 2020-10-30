@@ -225,7 +225,14 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
 
 .stateFocus[data-focus='#{$Focus_Yes}'][data-has-definitive-allocation] {
   stroke: none;
-  stroke-width: $swNone;
+}
+
+.stateFocus[data-focus='#{$Focus_Yes}'][data-main-allocation='#{$Allocation_Dem}'][data-relative-main-allocation='#{$Allocation_Dem}'] {
+  stroke: $color_Dem;
+}
+
+.stateFocus[data-focus='#{$Focus_Yes}'][data-main-allocation='#{$Allocation_GOP}'][data-relative-main-allocation='#{$Allocation_GOP}'] {
+  stroke: $color_GOP;
 }
 
 .stateFocus[data-focus='#{$Focus_Yes}'][data-has-allocation]:not([data-has-definitive-allocation]):not([data-relative-main-allocation]),

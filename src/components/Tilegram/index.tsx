@@ -154,6 +154,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
             {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, stateID) => {
               const focus = focuses ? focuses[stateID] : Focus.No;
               const stateAllocations = allocations && getStateAllocations(stateID, allocations);
+              const stateMainAllocation = stateAllocations && stateAllocations[0];
               const hasAllocation = stateAllocations && stateAllocations.some(determineIfAllocationIsMade);
               const hasDefinitiveAllocation =
                 stateAllocations && stateAllocations.some(determineIfAllocationIsDefinitive);
@@ -177,6 +178,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
                         data-focus={focus}
                         data-has-allocation={hasAllocation ? '' : undefined}
                         data-has-definitive-allocation={hasDefinitiveAllocation ? '' : undefined}
+                        data-main-allocation={stateMainAllocation || undefined}
                         data-relative-main-allocation={stateRelativeMainAllocation || undefined}
                       ></use>
                       <use xlinkHref={`#${keys['target']}`} className={styles.stateTarget} data-state={stateID}></use>
