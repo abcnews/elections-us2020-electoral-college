@@ -20,8 +20,16 @@ const ALLOCATIONS_CANDIDATES = {
   [Allocation.Tossup]: 'Other'
 };
 
-const getAllocationForPartyId = (partyId: PartyId): Allocation =>
-  partyId === 'dem' ? Allocation.Dem : partyId === 'gop' ? Allocation.GOP : Allocation.Tossup;
+const MONTH_SHORTNAMES = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+const isToday = (date: Date) => {
+  const today = new Date();
+  return (
+    date.getDate() === today.getDate() &&
+    date.getMonth() === today.getMonth() &&
+    date.getFullYear() === today.getFullYear()
+  );
+};
 
 const getPartyIdForAllocation = (allocation: Allocation): PartyId =>
   allocation === Allocation.Dem ? 'dem' : allocation === Allocation.GOP ? 'gop' : 'oth';
@@ -45,20 +53,35 @@ const Live: React.FC<LiveProps> = ({ stateCode }) => {
     return <div data-loading={stateCode}></div>;
   }
 
+  const time = result.t !== null ? new Date(result.t) : null;
+  const timeString = time ? time.toString() : '';
+  const updatedText = time
+    ? isToday(time)
+      ? `${time.getHours() % 12}:${time.getMinutes()}${time.getHours() > 12 ? 'a' : 'p'}m ${timeString
+          .substring(timeString.indexOf('('))
+          .replace(/([a-z\s]+)/g, '')}`
+      : `${time.getDate()} ${MONTH_SHORTNAMES[time.getMonth()]}`
+    : null;
+
   return (
     <div className={styles.root}>
-      <h4 className={styles.title}>{state.name}</h4>
-      <div className={styles.votes}>{`Electoral college votes: ${result.e}`}</div>
-      <div className={styles.results}>
-        {(Object.keys(ALLOCATIONS_CANDIDATES) as Allocation[]).map(allocation => {
-          const { v, vp, e } = result[getPartyIdForAllocation(allocation)];
-          return (
-            <div key={allocation} className={styles.result} data-allocation={allocation}>
-              <strong>{ALLOCATIONS_CANDIDATES[allocation]}</strong>
-              {` ${vp}%`}
-            </div>
-          );
-        })}
+      <div className={styles.flex}>
+        <h4 className={styles.title}>{state.name}</h4>
+        {updatedText && <div className={styles.time}>{`Updated ${updatedText}`}</div>}
+      </div>
+      <div className={styles.flex}>
+        <div className={styles.votes}>{`Electoral college votes: ${result.e}`}</div>
+        <div className={styles.results}>
+          {(Object.keys(ALLOCATIONS_CANDIDATES) as Allocation[]).map(allocation => {
+            const { v, vp, e } = result[getPartyIdForAllocation(allocation)];
+            return (
+              <div key={allocation} className={styles.result} data-allocation={allocation}>
+                <strong>{ALLOCATIONS_CANDIDATES[allocation]}</strong>
+                {` ${vp}%`}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

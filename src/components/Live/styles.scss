@@ -6,16 +6,11 @@
   padding: 1rem 1.25rem;
   background-color: #ebebeb;
   font-size: 0.75rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
 
   /* Scrollyteller panel layout matching (large-first responsive) */
 
   @media only screen and (max-width: 1022px) {
     font-size: 0.6875rem;
-    flex-direction: column;
-    align-items: flex-start;
   }
 
   @media only screen and (max-width: 667px) {
@@ -41,9 +36,31 @@
   }
 }
 
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.flex > :not(.title) {
+  font-family: ABCSans;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.flex > :first-child {
+  padding-right: 0.5rem;
+}
+
+.flex > :last-child {
+  @media only screen and (min-width: 1023px) {
+    margin-left: auto;
+    align-self: flex-start;
+  }
+}
+
 .title {
   margin: 0;
-  padding-right: 0.5rem;
   font-size: 1.25rem;
   line-height: 1.25;
 
@@ -52,23 +69,18 @@
   }
 }
 
-.votes {
-  margin-right: auto;
-  padding-right: 0.5rem;
-  font-family: ABCSans;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
+.time {
 }
 
-.results {
-  font-family: ABCSans;
-  letter-spacing: 0.05em;
-  white-space: nowrap;
+.votes {
 }
 
 .result {
-  margin-right: 0.5em;
   display: inline-block;
+}
+
+.result + .result {
+  margin-left: 0.5em;
 }
 
 .result::before {
