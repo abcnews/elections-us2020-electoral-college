@@ -67,10 +67,10 @@ const Live: React.FC<LiveProps> = ({ stateCode }) => {
     <div className={styles.root}>
       <div className={styles.flex}>
         <h4 className={styles.title}>{state.name}</h4>
-        {updatedText && <div className={styles.time}>{`Updated ${updatedText}`}</div>}
+        {updatedText && <div>{`Updated ${updatedText}`}</div>}
       </div>
       <div className={styles.flex}>
-        <div className={styles.votes}>{`Electoral college votes: ${result.e}`}</div>
+        <div>{`Electoral college votes: ${result.e}`}</div>
         <div className={styles.results}>
           {(Object.keys(ALLOCATIONS_CANDIDATES) as Allocation[]).map(allocation => {
             const { v, vp, e } = result[getPartyIdForAllocation(allocation)];
