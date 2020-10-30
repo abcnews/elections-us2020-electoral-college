@@ -186,6 +186,26 @@ const Tilegram: React.FC<TilegramProps> = props => {
               );
             }, [])}
           </g>
+          <g className={styles.statesPartitions}>
+            {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, stateID) => {
+              const focus = focuses ? focuses[stateID] : Focus.No;
+
+              return memo.concat(
+                STATES_SHAPES[stateID].map((_points, index) => {
+                  const keys = generateKeys(componentID, 'state', stateID, index);
+
+                  return (
+                    <use
+                      key={stateID + index}
+                      className={styles.statePartition}
+                      xlinkHref={`#${keys['path']}`}
+                      data-focus={focus}
+                    ></use>
+                  );
+                })
+              );
+            }, [])}
+          </g>
           <g className={styles.labels}>
             {Object.keys(STATES_LABELS).map(stateID => {
               const focus = focuses ? focuses[stateID] : Focus.No;

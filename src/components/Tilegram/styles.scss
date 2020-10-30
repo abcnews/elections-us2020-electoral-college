@@ -243,6 +243,29 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   cursor: pointer;
 }
 
+.statesPartitions {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.root[data-has-focuses] .statesPartitions {
+  opacity: 1;
+}
+
+.statePartition {
+  fill: none;
+  stroke: none;
+  stroke-width: 0.5;
+}
+
+.statePartition[data-focus='#{$Focus_Yes}'] {
+  stroke: $color_BG;
+}
+
+.root[data-has-focuses] .statePartition[data-focus='#{$Focus_No}'] {
+  stroke: none;
+}
+
 .labels {
   pointer-events: none;
 }
@@ -252,7 +275,6 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   font-size: 1rem;
   fill: $color_Text;
   stroke: none;
-  // @include fadedOutTransitionable;
   transition: opacity $focusChangeTransitionDuration, fill $focusChangeTransitionDuration;
 }
 
@@ -263,9 +285,6 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
 
 .root[data-has-focuses] .label[data-focus='#{$Focus_No}'] {
   opacity: 0;
-  // @include fadedOut;
-  // fill: $color_Text;
-  // text-shadow: none;
 }
 
 .root[data-has-focuses][data-is-inspecting] .label[data-focus='#{$Focus_No}'] {
