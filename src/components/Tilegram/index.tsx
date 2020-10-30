@@ -189,6 +189,8 @@ const Tilegram: React.FC<TilegramProps> = props => {
           <g className={styles.statesPartitions}>
             {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, stateID) => {
               const focus = focuses ? focuses[stateID] : Focus.No;
+              const stateRelativeMainAllocation =
+                relativeAllocations && getStateAllocations(stateID, relativeAllocations)[0];
 
               return memo.concat(
                 STATES_SHAPES[stateID].map((_points, index) => {
@@ -197,9 +199,10 @@ const Tilegram: React.FC<TilegramProps> = props => {
                   return (
                     <use
                       key={stateID + index}
-                      className={styles.statePartition}
                       xlinkHref={`#${keys['path']}`}
+                      className={styles.statePartition}
                       data-focus={focus}
+                      data-relative-main-allocation={stateRelativeMainAllocation || undefined}
                     ></use>
                   );
                 })

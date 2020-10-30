@@ -258,7 +258,9 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   stroke-width: 0.5;
 }
 
-.statePartition[data-focus='#{$Focus_Yes}'] {
+.statePartition[data-focus='#{$Focus_Yes}'],
+.statePartition[data-focus='#{$Focus_No}'][data-relative-main-allocation='#{$Allocation_Dem}'],
+.statePartition[data-focus='#{$Focus_No}'][data-relative-main-allocation='#{$Allocation_GOP}'] {
   stroke: $color_BG;
 }
 
