@@ -73,9 +73,6 @@ export const determineIfAnyStateAllocationsAreMade = (stateID: string, allocatio
 export const determineIfMostStateAllocationsAreMade = (stateID: string, allocations: Allocations) =>
   determineIfProportionOfStateAllocationsMeetCondition(0.5, stateID, allocations, determineIfAllocationIsMade);
 
-export const determineIfMostStateAllocationsAreDefinitive = (stateID: string, allocations: Allocations) =>
-  determineIfProportionOfStateAllocationsMeetCondition(0.5, stateID, allocations, determineIfAllocationIsDefinitive);
-
 function decode<Dict>(code: string, keys: string[], possibleValues: string[], defaultValue: string): Dict {
   code = typeof code === 'string' ? code.replace(/(\w)(\d+)/g, (_, char, repeated) => char.repeat(+repeated)) : code;
   code = code && code.length === keys.length ? code : defaultValue.repeat(keys.length);

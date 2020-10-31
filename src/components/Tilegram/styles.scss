@@ -283,9 +283,11 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
   transition: opacity $focusChangeTransitionDuration, fill $focusChangeTransitionDuration;
 }
 
-.label[data-most-definitively-allocated] {
+.label[data-main-allocation='#{$Allocation_Dem}'],
+.label[data-main-allocation='#{$Allocation_GOP}'],
+.label[data-main-allocation='#{$Allocation_Tossup}'] {
   fill: $color_BG;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 0 1px $color_Text, 0 0 1px $color_Text;
 }
 
 .root[data-has-focuses] .label[data-focus='#{$Focus_No}'] {

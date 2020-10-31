@@ -163,8 +163,14 @@
   border-color: $color_GOP;
 }
 
-.state[data-is-definitive-main-allocation] {
+.state[data-main-allocation='#{$Allocation_Dem}'],
+.state[data-main-allocation='#{$Allocation_GOP}'],
+.state[data-main-allocation='#{$Allocation_Tossup}'] {
   color: $color_BG;
+}
+
+.state[data-main-allocation='#{$Allocation_Dem}'],
+.state[data-main-allocation='#{$Allocation_GOP}'] {
   border-color: transparent;
 }
 

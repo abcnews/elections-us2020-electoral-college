@@ -3,15 +3,12 @@ import { Allocation, Allocations, Focus, Focuses, PRESETS } from '../../constant
 import {
   determineIfAllocationIsDefinitive,
   determineIfAllocationIsMade,
-  determineIfMostStateAllocationsAreDefinitive,
   getGroupIDForStateIDAndDelegateIndex,
   getStateAllocations
 } from '../../utils';
 import { STATES_DELEGATE_HEXES, STATES_LABELS, STATES_SHAPES, HEXGRID_PROPS } from './data';
 import Defs, { generateKeys } from './defs';
 import styles from './styles.scss';
-
-// inner stroke methods: https://stackoverflow.com/questions/7241393/can-you-control-how-an-svgs-stroke-width-is-drawn
 
 export enum TappableLayer {
   Delegates,
@@ -215,6 +212,8 @@ const Tilegram: React.FC<TilegramProps> = props => {
             {Object.keys(STATES_LABELS).map(stateID => {
               const focus = focuses ? focuses[stateID] : Focus.No;
               const [x, y] = STATES_LABELS[stateID];
+              const stateAllocations = allocations && getStateAllocations(stateID, allocations);
+              const stateMainAllocation = stateAllocations && stateAllocations[0];
 
               return (
                 <text
@@ -222,9 +221,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
                   className={styles.label}
                   data-focus={focus}
                   data-state={stateID}
-                  data-most-definitively-allocated={
-                    allocations && determineIfMostStateAllocationsAreDefinitive(stateID, allocations) ? '' : undefined
-                  }
+                  data-main-allocation={stateMainAllocation || undefined}
                   x={x}
                   y={y + 5 /* shift baseline down */}
                 >

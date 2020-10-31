@@ -5,13 +5,7 @@ import { loadScrollyteller, PanelDefinition, ScrollytellerDefinition } from '@ab
 import React from 'react';
 import { render } from 'react-dom';
 import { PRESETS, StateID, STATES } from './constants';
-import {
-  alternatingCaseToGraphicProps,
-  decodeAllocations,
-  decodeFocuses,
-  determineIfAllocationIsDefinitive,
-  getStateAllocations
-} from './utils';
+import { alternatingCaseToGraphicProps, decodeAllocations, decodeFocuses, getStateAllocations } from './utils';
 import Block from './components/Block';
 import blockStyles from './components/Block/styles.scss';
 import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Graphic';
@@ -210,8 +204,6 @@ function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraphicProps
         const stateID = StateID[state.id];
         const { allocations, relative } = data as GraphicProps;
         const stateMainAllocation = allocations && getStateAllocations(stateID, allocations)[0];
-        const isDefinitiveMainAllocation =
-          stateMainAllocation && determineIfAllocationIsDefinitive(stateMainAllocation);
         const relativeAllocations = relative && PRESETS[relative]?.allocations;
         const stateRelativeMainAllocation = relativeAllocations && getStateAllocations(stateID, relativeAllocations)[0];
 
@@ -222,10 +214,6 @@ function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraphicProps
 
         if (stateMainAllocation) {
           partWrapperNode.setAttribute('data-main-allocation', stateMainAllocation);
-        }
-
-        if (isDefinitiveMainAllocation) {
-          partWrapperNode.setAttribute('data-is-definitive-main-allocation', '');
         }
 
         if (stateRelativeMainAllocation) {
