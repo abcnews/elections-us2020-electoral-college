@@ -11,9 +11,10 @@
   position: fixed !important;
   top: 0 !important;
   bottom: auto !important;
+  left: 0 !important;
   z-index: 0;
   transform: translate3d(0, 0%, 0);
-  will-change: transform;
+  transition: transform 0.125s;
 }
 
 .graphic {
