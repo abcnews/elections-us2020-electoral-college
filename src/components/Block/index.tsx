@@ -1,6 +1,6 @@
 import type { ScrollytellerDefinition } from '@abcnews/scrollyteller';
 import Scrollyteller from '@abcnews/scrollyteller';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import type { OdysseySchedulerSubscriber } from '../../index';
 import type { GraphicProps } from '../Graphic';
 import Graphic from '../Graphic';
@@ -14,9 +14,11 @@ const Block: React.FC<BlockProps> = ({ scrollytellerDefinition }) => {
   const { subscribe, unsubscribe } = window.__ODYSSEY__.scheduler;
   const graphicRef = useRef<HTMLDivElement>(null);
   const [graphicProps, setGraphicProps] = useState(scrollytellerDefinition.panels[0].data);
-  const onMarker = useCallback(graphicProps => setGraphicProps(graphicProps), []);
+  const onMarker = useCallback(graphicProps => {
+    setGraphicProps(graphicProps);
+  }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const graphicEl = graphicRef.current;
 
     if (!graphicEl) {
@@ -35,22 +37,38 @@ const Block: React.FC<BlockProps> = ({ scrollytellerDefinition }) => {
       return;
     }
 
-    let tY: number = 0;
+    if (window.navigator.userAgent.indexOf('Trident/') > -1) {
+      mediaEl.setAttribute('data-ie', '');
+    }
+
+    let prevTop: number = 0;
+    let prevBottom: number = 0;
+    let prevStage: string = 'initial';
 
     const onUpdate: OdysseySchedulerSubscriber = ({ fixedHeight }) => {
       const { top, bottom } = blockEl.getBoundingClientRect();
-      const prevTY = tY;
+      const isAbove = top > 0;
+      const isBelow = bottom < fixedHeight;
+      const stage = isAbove ? 'above' : isBelow ? 'below' : 'during';
 
-      tY =
-        top > 0
-          ? Math.min(top / fixedHeight, 1)
-          : bottom < fixedHeight
-          ? Math.max((bottom - fixedHeight) / fixedHeight, -1)
-          : 0;
+      if (stage !== prevStage) {
+        mediaEl.setAttribute('data-stage', stage);
 
-      if (tY !== prevTY) {
-        mediaEl.style.transform = `translate3d(0, ${tY * 100}%, 0)`;
+        if (prevStage !== 'initial' && mediaEl.animate) {
+          const catchupDiff = isBelow ? prevBottom - bottom : top - prevTop;
+
+          mediaEl.animate([{ transform: `translate3D(0, ${catchupDiff}px, 0)` }, { transform: 'none' }], {
+            duration: 250,
+            easing: 'cubic-bezier(0.22,0.61,0.36,1)',
+            fill: 'both',
+            iterations: 1
+          });
+        }
       }
+
+      prevTop = top;
+      prevBottom = bottom;
+      prevStage = stage;
     };
 
     subscribe(onUpdate);

@@ -6,15 +6,29 @@
   clip-path: inset(0 0);
 }
 
-// Override Scrollyteller's internal sticky styles
+// Override Scrollyteller's internal snapping behaviour
+
 .scrollyteller > :first-child {
   position: fixed !important;
   top: 0 !important;
   bottom: auto !important;
   left: 0 !important;
-  z-index: 0;
-  transform: translate3d(0, 0%, 0);
-  transition: transform 0.125s;
+  z-index: -1 !important;
+  will-change: transform;
+}
+
+.scrollyteller > :first-child[data-ie] {
+  z-index: 0 !important;
+}
+
+.scrollyteller > :first-child[data-stage='above'],
+.scrollyteller > :first-child[data-stage='below'] {
+  position: absolute !important;
+}
+
+.scrollyteller > :first-child[data-stage='below'] {
+  top: auto !important;
+  bottom: 0 !important;
 }
 
 .graphic {
