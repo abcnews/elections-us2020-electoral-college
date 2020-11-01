@@ -128,31 +128,30 @@ $focusChangeTransitionDuration: 0.5s;
 }
 
 .delegateAllocation {
-  color: $color_None;
-  fill: currentColor;
+  fill: $color_None;
   stroke: none;
   stroke-width: $swHeavy; // For flip animation strokes
-  transition: color $allocationTransitionDuration;
+  transition: fill $allocationTransitionDuration;
 }
 
 .delegateAllocation[data-allocation='#{$Allocation_Dem}'] {
-  color: $color_Dem;
+  fill: $color_Dem;
 }
 
 .delegateAllocation[data-allocation='#{$Allocation_LikelyDem}'] {
-  color: $color_LikelyDem;
+  fill: $color_LikelyDem;
 }
 
 .delegateAllocation[data-allocation='#{$Allocation_Tossup}'] {
-  color: $color_Tossup;
+  fill: $color_Tossup;
 }
 
 .delegateAllocation[data-allocation='#{$Allocation_LikelyGOP}'] {
-  color: $color_LikelyGOP;
+  fill: $color_LikelyGOP;
 }
 
 .delegateAllocation[data-allocation='#{$Allocation_GOP}'] {
-  color: $color_GOP;
+  fill: $color_GOP;
 }
 
 @include flipKeyframes(flipGOPToDem, $color_GOP, $color_Dem);
