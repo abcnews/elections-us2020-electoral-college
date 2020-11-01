@@ -372,6 +372,12 @@ $focusChangeTransitionDuration: 0.5s;
   transition: opacity $focusChangeTransitionDuration,
     fill $allocationTransitionDuration / 4 $allocationTransitionDuration / 4,
     text-shadow $allocationTransitionDuration / 4 $allocationTransitionDuration / 4;
+
+  @media (max-width: 667px) {
+    transform: translate(0, 0.25rem);
+    font-size: 1.5rem;
+    text-shadow: 0 0 0.75rem $color_BG;
+  }
 }
 
 .label[data-main-allocation='#{$Allocation_Dem}'],
@@ -379,6 +385,10 @@ $focusChangeTransitionDuration: 0.5s;
 .label[data-main-allocation='#{$Allocation_Tossup}'] {
   fill: $color_BG;
   text-shadow: 0 0 0.125rem $color_Text;
+
+  @media (max-width: 667px) {
+    text-shadow: 0 0 0.75rem $color_Text;
+  }
 }
 
 .root[data-has-focuses] .label[data-focus='#{$Focus_No}'] {
