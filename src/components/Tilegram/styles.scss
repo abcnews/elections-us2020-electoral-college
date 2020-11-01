@@ -26,11 +26,6 @@ $focusChangeTransitionDuration: 0.5s;
 
 // Flip animations
 
-// $flipCubicBezier: cubic-bezier(0.455, 0.03, 0.515, 0.955); // easeInOutQuad
-// $flipCubicBezier: cubic-bezier(0.645, 0.045, 0.355, 1); // easeInOutCubic
-// $flipCubicBezier: cubic-bezier(0.4, 0.07, 0.09, 0.99); // custom
-$flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
-
 @mixin flipKeyframes($animationName, $colorFrom, $colorTo) {
   @keyframes #{$animationName} {
     0% {
@@ -57,7 +52,7 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
 }
 
 @mixin flipAnimation($animationName) {
-  animation: $animationName $allocationTransitionDuration $flipCubicBezier 1 both;
+  animation: $animationName $allocationTransitionDuration linear 1 both;
 }
 
 // Styles
@@ -170,6 +165,101 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
 
 .delegateAllocation[data-relative-allocation='#{$Allocation_Dem}'][data-allocation='#{$Allocation_GOP}'] {
   @include flipAnimation(flipDemToGOP);
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='1'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='1'] .delegateAllocation {
+  animation-delay: 0.025s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='2'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='2'] .delegateAllocation {
+  animation-delay: 0.05s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='3'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='3'] .delegateAllocation {
+  animation-delay: 0.075s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='4'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='4'] .delegateAllocation {
+  animation-delay: 0.1s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='5'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='5'] .delegateAllocation {
+  animation-delay: 0.125s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='6'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='6'] .delegateAllocation {
+  animation-delay: 0.15s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='7'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='7'] .delegateAllocation {
+  animation-delay: 0.175s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='8'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='8'] .delegateAllocation {
+  animation-delay: 0.2s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='9'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='9'] .delegateAllocation {
+  animation-delay: 0.225s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='10'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='10'] .delegateAllocation {
+  animation-delay: 0.25s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='11'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='11'] .delegateAllocation {
+  animation-delay: 0.275s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='12'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='12'] .delegateAllocation {
+  animation-delay: 0.3s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='13'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='13'] .delegateAllocation {
+  animation-delay: 0.325s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='14'] .delegateAllocation,
+.delegate[data-flip-direction='ltr'][data-ltr-index='14'] .delegateAllocation {
+  animation-delay: 0.35s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='15'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='15'] .delegateAllocation {
+  animation-delay: 0.375s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='16'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='16'] .delegateAllocation {
+  animation-delay: 0.4s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='17'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='17'] .delegateAllocation {
+  animation-delay: 0.425s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='18'] .delegateAllocation,
+.delegate[data-flip-direction='rtl'][data-rtl-index='18'] .delegateAllocation {
+  animation-delay: 0.45s;
+}
+
+.delegate[data-flip-direction='ltr'][data-ltr-index='19'] .delegateAllocation,
+.delegate[data-flip-direction='ltr'][data-ltr-index='19'] .delegateAllocation {
+  animation-delay: 0.475s;
 }
 
 .delegateTarget {

@@ -34,7 +34,7 @@ const Graphic: React.FC<GraphicProps> = props => {
       <header className={styles.header} data-is-counting={isCounting ? '' : undefined}>
         <Totals allocations={allocations} year={year} />
       </header>
-      <Tilegram allocations={allocations} {...otherTilegramProps} />
+      <Tilegram allocations={allocations} year={year} {...otherTilegramProps} />
     </div>
   );
 };
