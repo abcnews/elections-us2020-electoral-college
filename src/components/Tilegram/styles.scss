@@ -370,7 +370,9 @@ $focusChangeTransitionDuration: 0.5s;
   font-size: 1rem;
   fill: $color_Text;
   stroke: none;
-  transition: opacity $focusChangeTransitionDuration, fill $focusChangeTransitionDuration;
+  transition: opacity $focusChangeTransitionDuration,
+    fill $allocationTransitionDuration / 4 $allocationTransitionDuration / 4,
+    text-shadow $allocationTransitionDuration / 4 $allocationTransitionDuration / 4;
 }
 
 .label[data-main-allocation='#{$Allocation_Dem}'],
