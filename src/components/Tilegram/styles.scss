@@ -8,8 +8,8 @@ $TappableLayer_States: 1;
 // Focus management
 
 $opacityUnfocused: 0.05;
-$opacityUnfocusedInspecting: 0.25;
-$focusChangeTransitionDuration: 0.25s;
+$opacityUnfocusedInspecting: 0.5;
+$focusChangeTransitionDuration: 0.5s;
 
 @mixin fadedOutTransitionable {
   transition: opacity $focusChangeTransitionDuration;
@@ -287,7 +287,7 @@ $flipCubicBezier: cubic-bezier(0.785, 0.135, 0.15, 0.86); // easeInOutCirc
 .label[data-main-allocation='#{$Allocation_GOP}'],
 .label[data-main-allocation='#{$Allocation_Tossup}'] {
   fill: $color_BG;
-  text-shadow: 0 0 1px $color_Text, 0 0 1px $color_Text;
+  text-shadow: 0 0 0.125rem $color_Text;
 }
 
 .root[data-has-focuses] .label[data-focus='#{$Focus_No}'] {
