@@ -38,6 +38,11 @@
   max-width: 57.5rem;
 }
 
+.panel {
+  -webkit-font-smoothing: initial;
+  -moz-osx-font-smoothing: initial;
+}
+
 .scrollyteller .panel.firstPanel {
   margin-top: 80vh;
 }
@@ -186,7 +191,7 @@
 .state[data-main-allocation='#{$Allocation_GOP}'],
 .state[data-main-allocation='#{$Allocation_Tossup}'] {
   color: $color_BG;
-  text-shadow: 0 0 0.25rem $color_Text;
+  text-shadow: 0 0 0.125rem $color_Text;
 }
 
 .state[data-main-allocation='#{$Allocation_Dem}'],

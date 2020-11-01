@@ -9,6 +9,8 @@
   user-select: none;
   box-sizing: border-box;
   font-family: ABCSans, system-ui, sans-serif;
+  -webkit-font-smoothing: initial;
+  -moz-osx-font-smoothing: initial;
 }
 
 [data-mount][id^='ecgraphic']:global(.u-pull) > .root {
