@@ -117,6 +117,9 @@ const Tilegram: React.FC<TilegramProps> = props => {
                   const keys = generateKeys(componentID, 'group', groupID, index);
                   const allocation = allocations ? allocations[groupID] : Allocation.None;
                   const relativeAllocation = relativeAllocations ? relativeAllocations[groupID] : undefined;
+                  const isFlipping =
+                    (relativeAllocation === Allocation.GOP && allocation === Allocation.Dem) ||
+                    (relativeAllocation === Allocation.Dem && allocation === Allocation.GOP);
                   const [offsetX, offsetY] = points
                     .split(' ')[0]
                     .split(',')
@@ -127,7 +130,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
                       key={groupID + index}
                       className={styles.delegate}
                       data-focus={focus}
-                      clipPath={`url(#${keys['clip']})`}
+                      clipPath={isFlipping ? `url(#${keys['clip']})` : undefined}
                     >
                       <use
                         xlinkHref={`#${keys['path']}`}
@@ -167,7 +170,9 @@ const Tilegram: React.FC<TilegramProps> = props => {
                       key={stateID + index}
                       className={styles.state}
                       data-focus={focus}
-                      clipPath={`url(#${keys['clip']})`}
+                      clipPath={
+                        focus === Focus.Yes || stateRelativeMainAllocation ? `url(#${keys['clip']})` : undefined
+                      }
                     >
                       <use
                         xlinkHref={`#${keys['path']}`}
