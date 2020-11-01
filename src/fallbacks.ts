@@ -14,7 +14,10 @@ export default function run(initiatingElement) {
     window.__scrollytellers[key].panels.forEach(panel => {
       const { data, nodes } = panel;
 
-      graphicsProps.push(data as GraphicProps);
+      graphicsProps.push({
+        ...DEFAULT_GRAPHIC_PROPS,
+        ...data
+      } as GraphicProps);
       filenames.push(String(nodes[0].textContent).trim().replace(/\W+/g, '-').slice(0, 30).toLowerCase());
     });
   });
@@ -30,11 +33,11 @@ export default function run(initiatingElement) {
   // const imageURLs = graphicsProps.map(
   //   graphicProps =>
   //     `https://cors-anywhere.herokuapp.com/https://fallback-automation.drzax.now.sh/api?url=${encodeURIComponent(
-  //       `https://www.abc.net.au/res/sites/news-projects/elections-us2020-electoral-college/1.0.0-pre.69/editor/${graphicPropsToUrlQuery(
+  //       `https://www.abc.net.au/res/sites/news-projects/elections-us2020-electoral-college/1.2.0/editor/${graphicPropsToUrlQuery(
   //         graphicProps,
   //         DEFAULT_GRAPHIC_PROPS
   //       )}`
-  //     )}&width=600&selector=.Lu9Q0C`
+  //     )}&width=600&selector=.${graphicProps.counting ? '_1Ykpoi' : '_3-hRFt'}`
   // );
 
   const zip = new JSZip();
