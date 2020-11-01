@@ -1,7 +1,3 @@
-@function hsl-str($color) {
-  @return unquote('hsl(#{hue($color)}, #{saturation($color)}, #{lightness($color)})');
-}
-
 // Allocation enum
 $Allocation_None: 'n';
 $Allocation_Dem: 'd';
@@ -15,17 +11,17 @@ $Focus_No: 'n';
 $Focus_Yes: 'y';
 
 // Theming
-$color_Black: hsl-str(#000);
-$color_Grey: hsl-str(#b3b3b3);
-$color_White: hsl-str(#fff);
+$color_Black: #000;
+$color_Grey: #b3b3b3;
+$color_White: #fff;
 $color_Text: $color_Black;
 $color_BG: $color_White;
 $color_None: $color_White;
-$color_Dem: hsl-str(#006dbd);
-$color_LikelyDem: hsl-str(#bdd4ef);
+$color_Dem: #006dbd;
+$color_LikelyDem: #bdd4ef;
 $color_Tossup: $color_Grey;
-$color_LikelyGOP: hsl-str(#eaaeae);
-$color_GOP: hsl-str(#c21718);
+$color_LikelyGOP: #eaaeae;
+$color_GOP: #c21718;
 $color_No: $color_White;
 $color_Yes: $color_Black;
 
