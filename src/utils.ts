@@ -192,7 +192,7 @@ export const urlQueryToGraphicProps = (urlQuery: string) => {
 };
 
 export const graphicPropsToUrlQuery = (graphicProps, defaultGraphicProps?): string =>
-  Object.keys(graphicProps).reduce((urlQuery, key, index) => {
+  Object.keys(graphicProps).reduce((urlQuery, key) => {
     // We never export tappableLayer
     if (key === 'tappableLayer') {
       return urlQuery;
@@ -205,7 +205,7 @@ export const graphicPropsToUrlQuery = (graphicProps, defaultGraphicProps?): stri
       return urlQuery;
     }
 
-    urlQuery += (index ? '&' : '?') + key + '=';
+    urlQuery += (urlQuery.length > 0 ? '&' : '?') + key + '=';
 
     if (key === 'allocations') {
       urlQuery += encodeAllocations(value);
