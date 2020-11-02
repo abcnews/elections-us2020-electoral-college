@@ -92,6 +92,10 @@ $focusChangeTransitionDuration: 0.5s;
   stroke-width: $swLight;
   fill: none;
   @include fadedOutTransitionable;
+
+  @media (max-width: 667px) {
+    stroke-width: $swLight_SM;
+  }
 }
 
 .root[data-has-focuses] .countryOuter {
@@ -130,8 +134,12 @@ $focusChangeTransitionDuration: 0.5s;
 .delegateAllocation {
   fill: $color_None;
   stroke: none;
-  stroke-width: $swHeavy; // For flip animation strokes
+  stroke-width: $swHeavy;
   transition: fill $allocationTransitionDuration;
+
+  @media (max-width: 667px) {
+    stroke-width: $swHeavy_SM;
+  }
 }
 
 .delegateAllocation[data-allocation='#{$Allocation_Dem}'] {
@@ -294,16 +302,23 @@ $focusChangeTransitionDuration: 0.5s;
   fill: none;
   stroke: $color_Grey;
   stroke-width: $swLight;
+
+  @media (max-width: 667px) {
+    stroke-width: $swLight_SM;
+  }
 }
 
 .stateFocus[data-focus='#{$Focus_No}'][data-has-allocation] {
   stroke: $color_BG;
-  stroke-width: $swLight;
 }
 
 .stateFocus[data-focus='#{$Focus_Yes}'] {
   stroke: $color_Yes;
   stroke-width: $swHeavy;
+
+  @media (max-width: 667px) {
+    stroke-width: $swHeavy_SM;
+  }
 }
 
 .stateFocus[data-focus='#{$Focus_Yes}'][data-relative-main-allocation='#{$Allocation_Dem}'] {
@@ -348,6 +363,10 @@ $focusChangeTransitionDuration: 0.5s;
   fill: none;
   stroke: none;
   stroke-width: $swLight;
+
+  @media (max-width: 667px) {
+    stroke-width: $swLight_SM;
+  }
 }
 
 .statePartition[data-focus='#{$Focus_Yes}'],
