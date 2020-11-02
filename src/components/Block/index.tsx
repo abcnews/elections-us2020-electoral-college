@@ -1,4 +1,4 @@
-import type { ScrollytellerDefinition } from '@abcnews/scrollyteller';
+import type { PanelDefinition } from '@abcnews/scrollyteller';
 import Scrollyteller from '@abcnews/scrollyteller';
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import type { OdysseySchedulerSubscriber } from '../../index';
@@ -7,13 +7,13 @@ import Graphic from '../Graphic';
 import styles from './styles.scss';
 
 interface BlockProps {
-  scrollytellerDefinition: ScrollytellerDefinition<GraphicProps>;
+  panels: PanelDefinition<GraphicProps>[];
 }
 
-const Block: React.FC<BlockProps> = ({ scrollytellerDefinition }) => {
+const Block: React.FC<BlockProps> = ({ panels }) => {
   const { subscribe, unsubscribe } = window.__ODYSSEY__.scheduler;
   const graphicRef = useRef<HTMLDivElement>(null);
-  const [graphicProps, setGraphicProps] = useState(scrollytellerDefinition.panels[0].data);
+  const [graphicProps, setGraphicProps] = useState(panels[0].data);
   const onMarker = useCallback(graphicProps => {
     setGraphicProps(graphicProps);
   }, []);
@@ -82,7 +82,7 @@ const Block: React.FC<BlockProps> = ({ scrollytellerDefinition }) => {
       panelClassName={styles.panel}
       firstPanelClassName={styles.firstPanel}
       lastPanelClassName={styles.lastPanel}
-      panels={scrollytellerDefinition.panels}
+      panels={panels}
       onMarker={onMarker}
       theme="light"
     >
