@@ -14,7 +14,7 @@ import {
   getStateAllocations
 } from '../../utils';
 import { STATES_DELEGATE_HEXES, STATES_LABELS, STATES_SHAPES, HEXGRID_PROPS } from './data';
-import Defs, { generateKeys } from './defs';
+import Defs, { generateKey, generatePolyKeys } from './defs';
 import styles from './styles.scss';
 
 export enum TappableLayer {
@@ -132,7 +132,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
                   const ltrIndex = orderedUniqueXOffsets.indexOf(xOffset);
                   const rtlIndex = orderedUniqueXOffsets.length - 1 - ltrIndex;
                   const groupID = getGroupIDForStateIDAndDelegateIndex(stateID, index);
-                  const keys = generateKeys(componentID, 'group', groupID, index);
+                  const keys = generatePolyKeys(componentID, 'group', groupID, index);
                   const allocation = allocations ? allocations[groupID] : Allocation.None;
                   const relativeAllocation = relativeAllocations ? relativeAllocations[groupID] : undefined;
                   const isFlipping =
@@ -190,7 +190,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
 
               return memo.concat(
                 STATES_SHAPES[stateID].map((_points, index) => {
-                  const keys = generateKeys(componentID, 'state', stateID, index);
+                  const keys = generatePolyKeys(componentID, 'state', stateID, index);
 
                   return (
                     <g
@@ -225,7 +225,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
 
               return memo.concat(
                 STATES_SHAPES[stateID].map((_points, index) => {
-                  const keys = generateKeys(componentID, 'state', stateID, index);
+                  const keys = generatePolyKeys(componentID, 'state', stateID, index);
 
                   return (
                     <use
@@ -242,23 +242,25 @@ const Tilegram: React.FC<TilegramProps> = props => {
           </g>
           <g className={styles.labels}>
             {Object.keys(STATES_LABELS).map(stateID => {
+              const key = generateKey(componentID, 'label', stateID);
               const focus = focuses ? focuses[stateID] : Focus.No;
-              const [x, y] = STATES_LABELS[stateID];
               const stateAllocations = allocations && getStateAllocations(stateID, allocations);
               const stateMainAllocation = stateAllocations && stateAllocations[0];
+              const stateRelativeMainAllocation =
+                relativeAllocations && getStateAllocations(stateID, relativeAllocations)[0];
 
               return (
-                <text
+                <g
                   key={stateID}
                   className={styles.label}
                   data-focus={focus}
                   data-state={stateID}
                   data-main-allocation={stateMainAllocation || undefined}
-                  x={x}
-                  y={y + 5 /* shift baseline down */}
+                  data-relative-main-allocation={stateRelativeMainAllocation || undefined}
                 >
-                  {stateID}
-                </text>
+                  <use xlinkHref={`#${key}`} className={styles.labelOutline}></use>
+                  <use xlinkHref={`#${key}`} className={styles.labelText}></use>
+                </g>
               );
             })}
           </g>

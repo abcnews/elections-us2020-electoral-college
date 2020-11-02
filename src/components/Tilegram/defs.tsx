@@ -1,16 +1,16 @@
 import React, { memo } from 'react';
 import { GroupID, GROUPS, StateID, STATES } from '../../constants';
 import { getGroupIDForStateIDAndDelegateIndex } from '../../utils';
-import { COUNTRY_PATHS, STATES_DELEGATE_HEXES, STATES_SHAPES } from './data';
+import { COUNTRY_PATHS, STATES_DELEGATE_HEXES, STATES_SHAPES, STATES_LABELS } from './data';
 
-const KEY_NAMES = ['path', 'clip', 'target'];
+const POLY_KEY_NAMES = ['path', 'clip', 'target'];
 
-export const generateKey = (componentID: string, group: string, id: string, index: number, key: string) =>
-  `${componentID}_${group}_${id}_${index}_${key}`;
+export const generateKey = (componentID: string, ...rest: Array<string | number>) =>
+  ([componentID] as Array<string | number>).concat(rest).join('_');
 
-export const generateKeys = (componentID: string, group: string, id: string, index: number) =>
-  KEY_NAMES.reduce((memo, key) => {
-    memo[key] = generateKey(componentID, group, id, index, key);
+export const generatePolyKeys = (componentID: string, ...rest: Array<string | number>) =>
+  POLY_KEY_NAMES.reduce((memo, key) => {
+    memo[key] = generateKey(componentID, ...rest.concat([key]));
 
     return memo;
   }, {});
@@ -33,7 +33,7 @@ const Defs: React.FC<DefsProps> = ({ componentID }) => {
         return memo.concat(
           STATES_DELEGATE_HEXES[stateID].reduce<JSX.Element[]>((memo, points, index) => {
             const groupID = getGroupIDForStateIDAndDelegateIndex(stateID, index);
-            const keys = generateKeys(componentID, 'group', groupID, index);
+            const keys = generatePolyKeys(componentID, 'group', groupID, index);
 
             return memo.concat([
               <path key={keys['path']} id={keys['path']} d={`M${points}z`}></path>,
@@ -50,7 +50,7 @@ const Defs: React.FC<DefsProps> = ({ componentID }) => {
       {Object.keys(STATES_SHAPES).reduce<JSX.Element[]>((memo, stateID) => {
         return memo.concat(
           STATES_SHAPES[stateID].reduce<JSX.Element[]>((memo, points, index) => {
-            const keys = generateKeys(componentID, 'state', stateID, index);
+            const keys = generatePolyKeys(componentID, 'state', stateID, index);
 
             return memo.concat([
               <path key={keys['path']} id={keys['path']} d={`M${points}z`}></path>,
@@ -64,6 +64,16 @@ const Defs: React.FC<DefsProps> = ({ componentID }) => {
           }, [])
         );
       }, [])}
+      {Object.keys(STATES_LABELS).map(stateID => {
+        const [x, y] = STATES_LABELS[stateID];
+        const key = generateKey(componentID, 'label', stateID);
+
+        return (
+          <text key={key} id={key} data-state={stateID} x={x} y={y + 5 /* shift baseline down */}>
+            {stateID}
+          </text>
+        );
+      })}
     </defs>
   );
 };

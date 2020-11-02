@@ -386,27 +386,11 @@ $focusChangeTransitionDuration: 0.5s;
 .label {
   text-anchor: middle;
   font-size: 1rem;
-  fill: $color_Text;
-  stroke: none;
-  transition: opacity $focusChangeTransitionDuration,
-    fill $allocationTransitionDuration / 4 $allocationTransitionDuration / 4,
-    text-shadow $allocationTransitionDuration / 4 $allocationTransitionDuration / 4;
+  @include fadedOutTransitionable;
 
   @media (max-width: 667px) {
     transform: translate(0, 0.25rem);
     font-size: 1.5rem;
-    text-shadow: 0 0 0.75rem $color_BG;
-  }
-}
-
-.label[data-main-allocation='#{$Allocation_Dem}'],
-.label[data-main-allocation='#{$Allocation_GOP}'],
-.label[data-main-allocation='#{$Allocation_Tossup}'] {
-  fill: $color_BG;
-  text-shadow: 0 0 0.125rem $color_Text;
-
-  @media (max-width: 667px) {
-    text-shadow: 0 0 0.75rem $color_Text;
   }
 }
 
@@ -417,4 +401,41 @@ $focusChangeTransitionDuration: 0.5s;
 .root[data-has-focuses][data-is-inspecting] .label[data-focus='#{$Focus_No}'] {
   @include fadedOutInspecting;
   opacity: 1;
+}
+
+.label > * {
+  text-anchor: middle;
+  font-size: 1rem;
+  stroke-width: $swHeavy;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+
+  @media (max-width: 667px) {
+    transform: translate(0, 0.25rem);
+    font-size: 1.5rem;
+    stroke-width: $swHeavy_SM;
+  }
+}
+
+.label > :first-child {
+  fill: none;
+  stroke: $color_BG;
+  stroke-opacity: 0.5;
+}
+
+.label[data-main-allocation='#{$Allocation_Dem}'] > :first-child,
+.label[data-main-allocation='#{$Allocation_GOP}'] > :first-child,
+.label[data-main-allocation='#{$Allocation_Tossup}'] > :first-child {
+  stroke: $color_Text;
+}
+
+.label > :last-child {
+  fill: $color_Text;
+  stroke: none;
+}
+
+.label[data-main-allocation='#{$Allocation_Dem}'] > :last-child,
+.label[data-main-allocation='#{$Allocation_GOP}'] > :last-child,
+.label[data-main-allocation='#{$Allocation_Tossup}'] > :last-child {
+  fill: $color_BG;
 }
