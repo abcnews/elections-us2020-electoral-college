@@ -8,6 +8,7 @@ import {
   ELECTION_YEARS_ALLOCATIONS_CANDIDATES,
   DEFAULT_ELECTION_YEAR
 } from '../../constants';
+import { getPartyIdForAllocation } from '../../utils';
 import { loadData } from '../../data';
 import styles from './styles.scss';
 
@@ -30,9 +31,6 @@ const isToday = (date: Date) => {
     date.getFullYear() === today.getFullYear()
   );
 };
-
-const getPartyIdForAllocation = (allocation: Allocation): PartyId =>
-  allocation === Allocation.Dem ? 'dem' : allocation === Allocation.GOP ? 'gop' : 'oth';
 
 const Live: React.FC<LiveProps> = ({ stateCode }) => {
   const stateID: number | undefined = StateID[stateCode];

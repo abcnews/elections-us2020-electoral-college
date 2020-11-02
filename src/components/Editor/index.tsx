@@ -13,11 +13,13 @@ import {
   ElectionYear,
   ELECTION_YEARS
 } from '../../constants';
+import { loadData } from '../../data';
 import {
   alternatingCaseToGraphicProps,
   graphicPropsToAlternatingCase,
   urlQueryToGraphicProps,
-  graphicPropsToUrlQuery
+  graphicPropsToUrlQuery,
+  liveResultsToGraphicProps
 } from '../../utils';
 import type { GraphicProps } from '../Graphic';
 import Graphic, { DEFAULT_PROPS as DEFAULT_GRAPHIC_PROPS } from '../Graphic';
@@ -118,6 +120,15 @@ const Editor: React.FC = () => {
     replaceGraphicProps(graphicProps);
     setRelative(graphicProps.relative || DEFAULT_GRAPHIC_PROPS.relative);
     setCounting(graphicProps.counting || DEFAULT_GRAPHIC_PROPS.counting);
+  };
+
+  const loadLiveResults = () => {
+    loadData(undefined, true).then(data => {
+      const graphicProps = liveResultsToGraphicProps(data);
+
+      replaceGraphicProps(graphicProps);
+      setRelative(graphicProps.relative || DEFAULT_GRAPHIC_PROPS.relative);
+    });
   };
 
   const onTapGroup = (groupID: string) => {
@@ -326,6 +337,9 @@ const Editor: React.FC = () => {
               </button>
             );
           })}
+          <button key="live" onClick={loadLiveResults}>
+            Live results
+          </button>
         </div>
         <label>
           Story markers

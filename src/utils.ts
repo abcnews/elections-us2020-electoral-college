@@ -1,3 +1,4 @@
+import type { PartyId } from 'elections-us2020-results-data';
 import * as acto from '@abcnews/alternating-case-to-object';
 import {
   Allocation,
@@ -10,7 +11,10 @@ import {
   STATE_IDS,
   Focus,
   Focuses,
-  FOCUSES
+  FOCUSES,
+  INITIAL_ALLOCATIONS,
+  ELECTION_YEARS,
+  DEFAULT_ELECTION_YEAR
 } from './constants';
 
 export const votesForGroups = (groups: Group[]) => {
@@ -219,3 +223,48 @@ export const graphicPropsToUrlQuery = (graphicProps, defaultGraphicProps?): stri
 
     return urlQuery;
   }, '');
+
+export const getPartyIdForAllocation = (allocation: Allocation): PartyId =>
+  allocation === Allocation.Dem ? 'dem' : allocation === Allocation.GOP ? 'gop' : 'oth';
+
+export const getAllocationForPartyID = (partyID: PartyId): Allocation =>
+  partyID === 'dem' ? Allocation.Dem : partyID === 'gop' ? Allocation.GOP : Allocation.None;
+
+export const liveResultsToGraphicProps = data =>
+  Object.keys(data.s).reduce(
+    (memo, stateID) => {
+      const result = data.s[stateID];
+      const stateWinningPartyID = result.w;
+      const stateAllocation = getAllocationForPartyID(stateWinningPartyID);
+
+      if (stateAllocation !== Allocation.None) {
+        switch (stateID) {
+          case 'ME':
+          case 'NE':
+            const allocations = new Array(result.e - 1).fill(stateAllocation);
+
+            if (result[stateWinningPartyID].e !== result.e) {
+              allocations[allocations.length - 1] =
+                stateAllocation === Allocation.Dem ? Allocation.GOP : Allocation.Dem;
+            }
+
+            allocations.forEach((allocation, index) => {
+              memo.allocations[`${stateID}_${index}`] = allocation;
+            });
+            break;
+          case 'NE':
+            break;
+          default:
+            memo.allocations[stateID] = stateAllocation;
+            break;
+        }
+      }
+
+      return memo;
+    },
+    {
+      allocations: INITIAL_ALLOCATIONS,
+      year: DEFAULT_ELECTION_YEAR,
+      relative: 2016
+    }
+  );

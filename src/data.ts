@@ -5,8 +5,8 @@ const FIREBASE_URL_BASE = 'https://elections-us2020-results-data.web.app/';
 
 let dataPromise: Promise<Combined.Results> | undefined;
 
-export const loadData = (server?: string) => {
-  if (!dataPromise) {
+export const loadData = (server?: string, forceRefresh?: boolean) => {
+  if (!dataPromise || forceRefresh) {
     dataPromise = fetch(`${server === 'firebase' ? FIREBASE_URL_BASE : ABC_URL_BASE}latest.json`).then(response =>
       response.json()
     );
