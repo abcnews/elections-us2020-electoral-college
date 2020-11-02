@@ -411,7 +411,6 @@ $focusChangeTransitionDuration: 0.5s;
   stroke-linejoin: round;
 
   @media (max-width: 667px) {
-    transform: translate(0, 0.25rem);
     font-size: 1.5rem;
     stroke-width: $swHeavy_SM;
   }
