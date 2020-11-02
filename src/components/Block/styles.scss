@@ -35,19 +35,38 @@
   padding: 1rem 0 0;
   width: calc(100% - 2rem);
   max-width: 57.5rem;
+
+  @media (min-width: 100rem) {
+    margin-left: 50%;
+    padding: 7.5vw 0 0;
+    max-width: 40vw;
+  }
 }
 
-.panel {
+.scrollyteller .panel {
   -webkit-font-smoothing: initial;
   -moz-osx-font-smoothing: initial;
+
+  @media (min-width: 100rem) {
+    margin-right: 55%;
+    max-width: 40vw;
+  }
 }
 
 .scrollyteller .panel.firstPanel {
   margin-top: 80vh;
+
+  @media (min-width: 100rem) {
+    margin-top: 33.3vh;
+  }
 }
 
 .scrollyteller .panel.lastPanel {
   margin-bottom: 80vh;
+
+  @media (min-width: 100rem) {
+    margin-bottom: 33.3vh;
+  }
 }
 
 .panel::before {
