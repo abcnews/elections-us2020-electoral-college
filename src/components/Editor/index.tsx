@@ -37,8 +37,8 @@ const COMPONENTS_STYLES = {
 };
 
 const INITIAL_GRAPHIC_PROPS = {
-  allocations: INITIAL_ALLOCATIONS,
-  focuses: INITIAL_FOCUSES,
+  allocations: { ...INITIAL_ALLOCATIONS },
+  focuses: { ...INITIAL_FOCUSES },
   tappableLayer: TappableLayer.Delegates
 };
 

@@ -523,7 +523,7 @@ export const MIXINS: Presets = {
   nofocus: {
     name: 'No states focused',
     allocations: {},
-    focuses: INITIAL_FOCUSES
+    focuses: { ...INITIAL_FOCUSES }
   }
 };
 

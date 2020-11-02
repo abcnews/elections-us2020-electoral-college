@@ -263,7 +263,7 @@ export const liveResultsToGraphicProps = data =>
       return memo;
     },
     {
-      allocations: INITIAL_ALLOCATIONS,
+      allocations: { ...INITIAL_ALLOCATIONS },
       year: DEFAULT_ELECTION_YEAR,
       relative: 2016
     }
