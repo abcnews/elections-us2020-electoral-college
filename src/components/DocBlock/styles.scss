@@ -1,0 +1,65 @@
+html {
+  box-sizing: border-box;
+}
+
+html *,
+html *::before,
+html *::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  background-color: #fcfcfc;
+}
+
+.root {
+  font-family: ABCSans, sans-serif;
+}
+
+.block {
+  margin-bottom: 3rem;
+  min-height: calc(100vh - 3rem);
+  font-family: ABCSerif, sans-serif;
+  transition: opacity 1s, filter 1s;
+
+  &:empty,
+  .root[data-is-loading] & {
+    opacity: 0.5;
+    filter: blur(1rem);
+  }
+}
+
+.controls {
+  z-index: 1;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 0.5rem;
+  width: 100%;
+  height: 3rem;
+  background-color: #bbb;
+  box-shadow: 0 0 0.25rem #000;
+
+  display: flex;
+  justify-content: stretch;
+
+  > * {
+    margin: 0;
+    border: 0.0625rem solid currentColor;
+    padding: 0.25rem 0.5rem;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    background: white;
+    font-family: inherit;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    margin-left: 0.5rem;
+    cursor: pointer;
+  }
+}
