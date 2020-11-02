@@ -169,7 +169,9 @@
   margin: 0 0.05em;
   border: 0.125rem solid $color_Yes;
   padding: 0 0.2em;
+  display: inline-block;
   background-color: $color_None;
+  line-height: 1.25;
   white-space: nowrap;
 }
 
