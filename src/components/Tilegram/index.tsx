@@ -242,6 +242,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
           </g>
           <g className={styles.labels}>
             {Object.keys(STATES_LABELS).map(stateID => {
+              const [, , isOutlineRequired] = STATES_LABELS[stateID];
               const key = generateKey(componentID, 'label', stateID);
               const focus = focuses ? focuses[stateID] : Focus.No;
               const stateAllocations = allocations && getStateAllocations(stateID, allocations);
@@ -258,7 +259,7 @@ const Tilegram: React.FC<TilegramProps> = props => {
                   data-main-allocation={stateMainAllocation || undefined}
                   data-relative-main-allocation={stateRelativeMainAllocation || undefined}
                 >
-                  <use xlinkHref={`#${key}`} className={styles.labelOutline}></use>
+                  {isOutlineRequired && <use xlinkHref={`#${key}`} className={styles.labelOutline}></use>}
                   <use xlinkHref={`#${key}`} className={styles.labelText}></use>
                 </g>
               );

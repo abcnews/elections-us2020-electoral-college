@@ -405,36 +405,41 @@ $focusChangeTransitionDuration: 0.5s;
 
 .label > * {
   text-anchor: middle;
-  font-size: 1rem;
-  stroke-width: $swHeavy;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  font-size: 1.5rem;
 
-  @media (max-width: 667px) {
-    font-size: 1.5rem;
-    stroke-width: $swHeavy_SM;
+  @media (min-width: 668px) {
+    font-size: 1rem;
   }
 }
 
-.label > :first-child {
+.labelOutline {
   fill: none;
   stroke: $color_BG;
   stroke-opacity: 0.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: $swHeavy_SM;
 }
 
-.label[data-main-allocation='#{$Allocation_Dem}'] > :first-child,
-.label[data-main-allocation='#{$Allocation_GOP}'] > :first-child,
-.label[data-main-allocation='#{$Allocation_Tossup}'] > :first-child {
+.label[data-main-allocation='#{$Allocation_Dem}'] > .labelOutline,
+.label[data-main-allocation='#{$Allocation_GOP}'] > .labelOutline,
+.label[data-main-allocation='#{$Allocation_Tossup}'] > .labelOutline {
+  stroke-opacity: 0.25;
   stroke: $color_Text;
 }
 
-.label > :last-child {
-  fill: $color_Text;
-  stroke: none;
+.labelOutline {
+  @media (min-width: 668px) {
+    stroke: none !important;
+  }
 }
 
-.label[data-main-allocation='#{$Allocation_Dem}'] > :last-child,
-.label[data-main-allocation='#{$Allocation_GOP}'] > :last-child,
-.label[data-main-allocation='#{$Allocation_Tossup}'] > :last-child {
+.labelText {
+  fill: $color_Text;
+}
+
+.label[data-main-allocation='#{$Allocation_Dem}'] > .labelText,
+.label[data-main-allocation='#{$Allocation_GOP}'] > .labelText,
+.label[data-main-allocation='#{$Allocation_Tossup}'] > .labelText {
   fill: $color_BG;
 }
