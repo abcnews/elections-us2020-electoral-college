@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import { render } from 'react-dom';
 import type { PanelDefinition } from '@abcnews/scrollyteller';
 import { applyColourToPanels } from '../../panels';
-import { decodeAllocations, decodeFocuses } from '../../utils';
+import { decodeAllocations, decodeFocuses, graphicPropsToAlternatingCase, urlQueryToGraphicProps } from '../../utils';
 import Live from '../Live';
 import Block from '../Block';
 import type { GraphicProps } from '../Graphic';
@@ -74,7 +74,24 @@ const DocBlock: React.FC = () => {
           el.removeAttribute('id');
         });
 
-        const nodes = Array.from(body.children);
+        const nodes = Array.from(body.children).map(el => {
+          const text = String(el.textContent).trim();
+          const linkEl: HTMLAnchorElement | null = el.querySelector('a[href]');
+          const urlQuery = linkEl && (new URL(linkEl.href).searchParams.get('q') || '').split('?')[1];
+          const markerMatch = text.match(/#(scrollyteller|mark)/);
+
+          if (urlQuery && markerMatch) {
+            const markerPrefix = markerMatch[1] === 'scrollyteller' ? 'scrollytellerNAMEecblock' : 'mark';
+            const graphicProps = urlQueryToGraphicProps('?' + urlQuery);
+            const pEl = document.createElement('p');
+
+            pEl.textContent = `#${markerPrefix}${graphicPropsToAlternatingCase(graphicProps)}`;
+
+            return pEl;
+          }
+
+          return el;
+        });
 
         const coreText = nodes.reduce((memo, node) => {
           const text = String(node.textContent).trim();
@@ -95,9 +112,9 @@ const DocBlock: React.FC = () => {
 
         const panels = loadPanels(
           nodes.reduce<{ isRemoving: boolean; config: LoadPanelsConfig }>(
-            (memo, sourceEl) => {
+            (memo, el) => {
               const { config } = memo;
-              const text = String(sourceEl.textContent).trim();
+              const text = String(el.textContent).trim();
 
               if (text.indexOf('#remove') === 0) {
                 memo.isRemoving = true;
@@ -107,8 +124,8 @@ const DocBlock: React.FC = () => {
                 const { state, hide } = acto(text.slice(1));
 
                 if (typeof hide !== 'boolean' || !hide) {
-                  render(<Live stateCode={state.toUpperCase()} />, sourceEl);
-                  config.nodes.push(sourceEl);
+                  render(<Live stateCode={state.toUpperCase()} />, el);
+                  config.nodes.push(el);
                 }
               } else if (text.indexOf('#scrollyteller') === 0 && !config.initialProps) {
                 config.initialProps = acto(text.slice(1));
@@ -123,8 +140,7 @@ const DocBlock: React.FC = () => {
                 mountEl.setAttribute('id', text.slice(1));
                 config.nodes.push(mountEl);
               } else {
-                // TODO: format content nodes
-                config.nodes.push(sourceEl);
+                config.nodes.push(el);
               }
 
               return memo;
