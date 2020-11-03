@@ -2,7 +2,8 @@ import React from 'react';
 import styles from './styles.scss';
 
 export enum IllustrationName {
-  Unknown = 'unknown'
+  Preview = 'preview',
+  Tossup = 'tossup'
 }
 
 export type IllustrationProps = {
@@ -15,7 +16,7 @@ const Illustration: React.FC<IllustrationProps> = ({ name }) => {
       <div className={styles.graphic}>
         <iframe
           frameBorder="0"
-          src={`${__webpack_public_path__}illustration/${name || IllustrationName.Unknown}.svg`}
+          src={`${__webpack_public_path__}illustration/${name || IllustrationName.Preview}.svg`}
         />
       </div>
     </div>
