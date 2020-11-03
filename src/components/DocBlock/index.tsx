@@ -167,36 +167,51 @@ const DocBlock: React.FC = () => {
     <div className={styles.root} data-is-loading={isLoading ? '' : undefined}>
       <div className={styles.block}>{panels && <Block panels={panels} />}</div>
       <div className={styles.controls}>
-        <input
-          ref={inputRef}
-          type="text"
-          placeholder="Public Google Doc URL"
-          onKeyDown={event => event.keyCode === 13 && load()}
-          defaultValue={localStorage.getItem(URL_LOCALSTORAGE_KEY) || ''}
-        ></input>
-        <button disabled={isLoading} onClick={load}>
-          Load
-        </button>
-        {coreText && (
-          <button
-            onClick={() => {
-              const listener = event => {
-                event.clipboardData.setData('text/plain', coreText);
-
-                if (coreHTML) {
-                  event.clipboardData.setData('text/html', coreHTML);
-                }
-
-                event.preventDefault();
-              };
-
-              document.addEventListener('copy', listener);
-              document.execCommand('copy');
-              document.removeEventListener('copy', listener);
-            }}
-          >
-            Export
+        <div className={styles.row}>
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Public Google Doc URL"
+            onKeyDown={event => event.keyCode === 13 && load()}
+            defaultValue={localStorage.getItem(URL_LOCALSTORAGE_KEY) || ''}
+          ></input>
+          <button disabled={isLoading} onClick={load}>
+            Load
           </button>
+        </div>
+        {coreText && (
+          <div className={styles.row}>
+            <button
+              onClick={() => {
+                const listener = event => {
+                  event.clipboardData.setData('text/plain', coreText);
+
+                  if (coreHTML) {
+                    event.clipboardData.setData('text/html', coreHTML);
+                  }
+
+                  event.preventDefault();
+                };
+
+                document.addEventListener('copy', listener);
+                document.execCommand('copy');
+                document.removeEventListener('copy', listener);
+              }}
+            >
+              Core Text
+            </button>
+            <button
+              onClick={event => {
+                const buttonEl = event.target;
+
+                import(/* webpackChunkName: "fallbacks" */ '../../fallbacks').then(module =>
+                  module.default(buttonEl, panels)
+                );
+              }}
+            >
+              Fallback Images
+            </button>
+          </div>
         )}
       </div>
     </div>

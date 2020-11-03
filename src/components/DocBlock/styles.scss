@@ -3,10 +3,14 @@
 }
 
 .block {
-  margin-bottom: 3.4rem;
+  margin-bottom: 3.5rem;
   min-height: calc(100vh - 3rem);
   font-family: ABCSerif, sans-serif;
   transition: opacity 1s, filter 1s;
+
+  @media (max-width: 36rem) {
+    margin-bottom: 7.5rem;
+  }
 
   &:empty,
   .root[data-is-loading] & {
@@ -27,7 +31,14 @@
   border: 1px solid #bbb;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.25);
   display: flex;
+  flex-wrap: wrap;
   justify-content: stretch;
+
+  @media (max-width: 36rem) {
+    .block:not(:empty) + & {
+      height: 7.5rem;
+    }
+  }
 
   .block:empty + & {
     transform: translate(-50%, -50%);
@@ -37,7 +48,8 @@
     max-width: 24rem;
   }
 
-  > * {
+  input,
+  button {
     margin: 0;
     border: 0.0625rem solid black;
     padding: 0.5rem 0.75rem;
@@ -60,4 +72,16 @@
   button + button {
     margin-left: 0.5rem;
   }
+}
+
+.row {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+}
+
+.row + .row {
+  margin-left: auto;
+  justify-content: flex-end;
 }

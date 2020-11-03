@@ -6,21 +6,25 @@ import graphicStyles from './components/Graphic/styles.scss';
 import tilegramStyles from './components/Tilegram/styles.scss';
 import { graphicPropsToUrlQuery } from './utils';
 
-export default function run(initiatingElement) {
+export default function run(initiatingElement, panels) {
   const graphicsProps: GraphicProps[] = [];
   const filenames: string[] = [];
 
-  Object.keys(window.__scrollytellers).forEach(key => {
-    window.__scrollytellers[key].panels.forEach(panel => {
-      const { data, nodes } = panel;
+  function processPanel({ data, nodes }) {
+    graphicsProps.push({
+      ...DEFAULT_GRAPHIC_PROPS,
+      ...data
+    } as GraphicProps);
+    filenames.push(String(nodes[0].textContent).trim().replace(/\W+/g, '-').slice(0, 30).toLowerCase());
+  }
 
-      graphicsProps.push({
-        ...DEFAULT_GRAPHIC_PROPS,
-        ...data
-      } as GraphicProps);
-      filenames.push(String(nodes[0].textContent).trim().replace(/\W+/g, '-').slice(0, 30).toLowerCase());
+  if (panels) {
+    panels.forEach(processPanel);
+  } else {
+    Object.keys(window.__scrollytellers).forEach(key => {
+      window.__scrollytellers[key].panels.forEach(processPanel);
     });
-  });
+  }
 
   const imageURLs = graphicsProps.map(
     graphicProps =>

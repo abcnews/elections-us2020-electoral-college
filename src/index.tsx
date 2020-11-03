@@ -153,7 +153,7 @@ whenOdysseyLoaded.then(() => {
     if (titleEl) {
       (titleEl as HTMLElement).style.cursor = 'copy';
       titleEl.addEventListener('click', () => {
-        import(/* webpackChunkName: "fallbacks" */ './fallbacks').then(module => module.default(titleEl));
+        import(/* webpackChunkName: "fallbacks" */ './fallbacks').then(module => module.default(titleEl, null));
       });
     }
   }
