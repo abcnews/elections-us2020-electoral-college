@@ -1,18 +1,3 @@
-html {
-  box-sizing: border-box;
-}
-
-html *,
-html *::before,
-html *::after {
-  box-sizing: inherit;
-}
-
-body {
-  margin: 0;
-  background-color: #fcfcfc;
-}
-
 .root {
   font-family: ABCSans, sans-serif;
 }
