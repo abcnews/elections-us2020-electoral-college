@@ -3,7 +3,11 @@ import type { Combined } from 'elections-us2020-results-data';
 const ABC_URL_BASE = 'https://www.abc.net.au/dat/news/elections/international/us-2020/';
 const FIREBASE_URL_BASE = 'https://elections-us2020-results-data.web.app/';
 
-let dataPromise: Promise<Combined.Results> | undefined;
+type DataPromises = {
+  [key: string]: Promise<Combined.Results>;
+};
+
+const dataPromises: DataPromises = {};
 
 type LoadDataOptions = {
   server?: string;
@@ -12,13 +16,13 @@ type LoadDataOptions = {
 };
 
 export const loadData = ({ server, forceRefresh, test }: LoadDataOptions) => {
-  if (!dataPromise || forceRefresh) {
-    dataPromise = fetch(
-      `${server === 'firebase' ? FIREBASE_URL_BASE : ABC_URL_BASE}${
-        typeof test === 'number' && server !== 'firebase' ? `test/${test}` : 'latest'
-      }.json`
-    ).then(response => response.json());
+  const id = typeof test === 'number' && server !== 'firebase' ? `test/${test}` : 'latest';
+
+  if (!dataPromises[id] || forceRefresh) {
+    dataPromises[id] = fetch(`${server === 'firebase' ? FIREBASE_URL_BASE : ABC_URL_BASE}${id}.json`).then(response =>
+      response.json()
+    );
   }
 
-  return dataPromise;
+  return dataPromises[id];
 };
