@@ -50,9 +50,11 @@ const DocBlock: React.FC = () => {
 
     setIsLoading(true);
 
-    fetch(url)
+    fetch(url.replace(/\/[^\/]+?$/, '/pub'))
       .then(response => response.text())
       .then(html => {
+        localStorage.setItem(URL_LOCALSTORAGE_KEY, url);
+
         const panels = loadPanels(
           Array.from(
             new DOMParser().parseFromString(html, 'text/html').querySelectorAll('#contents > div > *')
@@ -114,9 +116,8 @@ const DocBlock: React.FC = () => {
         <input
           ref={inputRef}
           type="text"
-          placeholder="Enter the URL of a Google Document containing a Scrollyteller"
+          placeholder="Public Google Doc URL"
           onKeyDown={event => event.keyCode === 13 && load()}
-          onChange={event => localStorage.setItem(URL_LOCALSTORAGE_KEY, event.target.value)}
           defaultValue={localStorage.getItem(URL_LOCALSTORAGE_KEY) || ''}
         ></input>
         <button disabled={isLoading} onClick={load}>
