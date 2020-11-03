@@ -39,6 +39,7 @@ const URL_LOCALSTORAGE_KEY = 'ecdburl';
 const DocBlock: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [coreText, setCoreText] = useState<string>();
   const [panels, setPanels] = useState<PanelDefinition<GraphicProps>[]>();
 
   const load = () => {
@@ -55,10 +56,20 @@ const DocBlock: React.FC = () => {
       .then(html => {
         localStorage.setItem(URL_LOCALSTORAGE_KEY, url);
 
+        const nodes = Array.from(
+          new DOMParser().parseFromString(html, 'text/html').querySelectorAll('#contents > div > *')
+        );
+
+        const coreText = nodes.reduce((memo, node) => {
+          const text = String(node.textContent).trim();
+
+          memo = `${memo}\n${text ? `\n${text}` : ''}`;
+
+          return memo;
+        }, '');
+
         const panels = loadPanels(
-          Array.from(
-            new DOMParser().parseFromString(html, 'text/html').querySelectorAll('#contents > div > *')
-          ).reduce<{ isRemoving: boolean; config: LoadPanelsConfig }>(
+          nodes.reduce<{ isRemoving: boolean; config: LoadPanelsConfig }>(
             (memo, sourceEl) => {
               const { config } = memo;
               const text = String(sourceEl.textContent).trim();
@@ -104,6 +115,7 @@ const DocBlock: React.FC = () => {
 
         applyColourToPanels(panels);
         setPanels(panels);
+        setCoreText(coreText);
         setIsLoading(false);
       })
       .catch(() => setIsLoading(false));
@@ -123,6 +135,7 @@ const DocBlock: React.FC = () => {
         <button disabled={isLoading} onClick={load}>
           Load Google Doc
         </button>
+        {coreText && <button onClick={() => navigator.clipboard.writeText(coreText)}>Copy Core Text</button>}
       </div>
     </div>
   );

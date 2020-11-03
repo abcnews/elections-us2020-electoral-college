@@ -56,4 +56,8 @@
     white-space: nowrap;
     cursor: pointer;
   }
+
+  button + button {
+    margin-left: 0.5rem;
+  }
 }
