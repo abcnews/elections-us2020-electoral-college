@@ -14,6 +14,7 @@ import styles from './styles.scss';
 
 interface LiveProps {
   stateCode: string;
+  test?: number;
 }
 
 const ALLOCATIONS_CANDIDATES = {
@@ -32,7 +33,7 @@ const isToday = (date: Date) => {
   );
 };
 
-const Live: React.FC<LiveProps> = ({ stateCode }) => {
+const Live: React.FC<LiveProps> = ({ stateCode, test }) => {
   const stateID: number | undefined = StateID[stateCode];
 
   if (typeof stateID !== 'number') {
@@ -40,38 +41,30 @@ const Live: React.FC<LiveProps> = ({ stateCode }) => {
   }
 
   useEffect(() => {
-    // loadData('firebase').then(data => setData(setStateData(data.s.)); // When Andrew stops updating /dat/
-    loadData().then(data => setResult(data.s[stateCode]));
+    // loadData({ server: 'firebase', test }).then(data => setResult(data.s[stateCode])); // When Andrew stops updating /dat/
+    loadData({ test }).then(data => setResult(data.s[stateCode]));
   }, []);
 
   const state: State = STATES.find(({ id }) => stateID === id) as State; // We can assume stateID will match
   const [result, setResult] = useState<Combined.Result>();
 
-  if (!result) {
+  if (!result || !result.cp) {
     return <div data-loading={stateCode}></div>;
   }
 
-  const time = result.t !== null ? new Date(result.t) : null;
-  const timeString = time ? time.toString() : '';
-  const updatedText = time
-    ? isToday(time)
-      ? `${time.getHours() % 12}:${time.getMinutes()}${time.getHours() > 12 ? 'a' : 'p'}m ${timeString
-          .substring(timeString.indexOf('('))
-          .replace(/([a-z\s]+)/g, '')}`
-      : `${time.getDate()} ${MONTH_SHORTNAMES[time.getMonth()]}`
-    : null;
+  const timeUpdated = result.t !== null ? new Date(result.t) : null;
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root} data-test={typeof test === 'number' ? test : undefined}>
       <div className={styles.flex}>
         <h4 className={styles.title}>{state.name}</h4>
-        {updatedText && <div>{`Updated ${updatedText}`}</div>}
+        {timeUpdated && <div>{`Updated ${formatTimeUpdated(timeUpdated)}`}</div>}
       </div>
       <div className={styles.flex}>
         <div>{`Electoral college votes: ${result.e}`}</div>
         <div className={styles.results}>
           {(Object.keys(ALLOCATIONS_CANDIDATES) as Allocation[]).map(allocation => {
-            const { v, vp, e } = result[getPartyIdForAllocation(allocation)];
+            const { vp } = result[getPartyIdForAllocation(allocation)];
             return (
               <div key={allocation} className={styles.result} data-allocation={allocation}>
                 <strong>{ALLOCATIONS_CANDIDATES[allocation]}</strong>
@@ -86,3 +79,13 @@ const Live: React.FC<LiveProps> = ({ stateCode }) => {
 };
 
 export default Live;
+
+const formatTimeUpdated = (time: Date) => {
+  const timeString = time.toString();
+
+  return isToday(time)
+    ? `${time.getHours() % 12}:${String(time.getMinutes()).padStart(2, '0')}${
+        time.getHours() > 12 ? 'a' : 'p'
+      }m ${timeString.substring(timeString.indexOf('(')).replace(/([a-z\s]+)/g, '')}`
+    : `${time.getDate()} ${MONTH_SHORTNAMES[time.getMonth()]}`;
+};

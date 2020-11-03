@@ -121,10 +121,10 @@ const DocBlock: React.FC = () => {
               } else if (text.indexOf('#endremove') === 0) {
                 memo.isRemoving = false;
               } else if (text.indexOf('#eclive') === 0) {
-                const { state, hide } = acto(text.slice(1));
+                const { state, test, hide } = acto(text.slice(1));
 
                 if (typeof hide !== 'boolean' || !hide) {
-                  render(<Live stateCode={state.toUpperCase()} />, el);
+                  render(<Live stateCode={state.toUpperCase()} test={test} />, el);
                   config.nodes.push(el);
                 }
               } else if (text.indexOf('#scrollyteller') === 0 && !config.initialProps) {

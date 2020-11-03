@@ -123,7 +123,7 @@ const Editor: React.FC = () => {
   };
 
   const loadLiveResults = () => {
-    loadData(undefined, true).then(data => {
+    loadData({ forceRefresh: true }).then(data => {
       const graphicProps = liveResultsToGraphicProps(data);
 
       replaceGraphicProps(graphicProps);
