@@ -40,6 +40,7 @@ const DocBlock: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [coreText, setCoreText] = useState<string>();
+  const [coreHTML, setCoreHTML] = useState<string>();
   const [panels, setPanels] = useState<PanelDefinition<GraphicProps>[]>();
 
   const load = () => {
@@ -51,19 +52,43 @@ const DocBlock: React.FC = () => {
 
     setIsLoading(true);
 
-    fetch(url.replace(/\/[^\/]+?$/, '/pub'))
+    new Promise<Response>(resolve => {
+      const pubURL = url.replace(/\/[^\/]+?$/, '/pub');
+
+      fetch(pubURL)
+        .then(resolve)
+        .catch(() => fetch(`https://cors-anywhere.herokuapp.com/${pubURL}`).then(resolve));
+    })
       .then(response => response.text())
       .then(html => {
         localStorage.setItem(URL_LOCALSTORAGE_KEY, url);
 
-        const nodes = Array.from(
-          new DOMParser().parseFromString(html, 'text/html').querySelectorAll('#contents > div > *')
-        );
+        const body = new DOMParser().parseFromString(html, 'text/html').querySelector('#contents > div');
+
+        if (!body) {
+          throw new Error('Body not found');
+        }
+
+        Array.from(body.querySelectorAll('*')).forEach(el => {
+          el.removeAttribute('class');
+          el.removeAttribute('id');
+        });
+
+        const nodes = Array.from(body.children);
 
         const coreText = nodes.reduce((memo, node) => {
           const text = String(node.textContent).trim();
 
           memo = `${memo}\n${text ? `\n${text}` : ''}`;
+
+          return memo;
+        }, '');
+
+        const coreHTML = nodes.reduce((memo, node) => {
+          const text = String(node.textContent).trim();
+          const html = node.outerHTML;
+
+          memo = `${memo}${text ? `${html}` : ''}`;
 
           return memo;
         }, '');
@@ -116,6 +141,7 @@ const DocBlock: React.FC = () => {
         applyColourToPanels(panels);
         setPanels(panels);
         setCoreText(coreText);
+        setCoreHTML(coreHTML);
         setIsLoading(false);
       })
       .catch(() => setIsLoading(false));
@@ -133,9 +159,29 @@ const DocBlock: React.FC = () => {
           defaultValue={localStorage.getItem(URL_LOCALSTORAGE_KEY) || ''}
         ></input>
         <button disabled={isLoading} onClick={load}>
-          Load Google Doc
+          Load
         </button>
-        {coreText && <button onClick={() => navigator.clipboard.writeText(coreText)}>Copy Core Text</button>}
+        {coreText && (
+          <button
+            onClick={() => {
+              const listener = event => {
+                event.clipboardData.setData('text/plain', coreText);
+
+                if (coreHTML) {
+                  event.clipboardData.setData('text/html', coreHTML);
+                }
+
+                event.preventDefault();
+              };
+
+              document.addEventListener('copy', listener);
+              document.execCommand('copy');
+              document.removeEventListener('copy', listener);
+            }}
+          >
+            Export
+          </button>
+        )}
       </div>
     </div>
   );
