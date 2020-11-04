@@ -1,5 +1,9 @@
 @import '../../constants.scss';
 
+[data-mount][id^='eclive'] + [data-mount][id^='eclive'] {
+  margin-top: -2rem;
+}
+
 .root {
   position: relative;
   margin-left: -2.375rem;
