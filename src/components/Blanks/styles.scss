@@ -32,6 +32,7 @@
   top: calc(4rem + 60%);
   right: 15%;
   animation: hintMove 1s ease-out 0.25s infinite alternate;
+  transition: opacity 0.5s;
   pointer-events: none;
 
   .root[data-has-interacted] & {

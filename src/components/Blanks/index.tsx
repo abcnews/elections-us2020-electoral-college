@@ -81,18 +81,35 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, initialGraphicProps }) => {
     //     : Allocation.LikelyGOP;
 
     // Strategy 4)
-    // Cycle between relative incumbent, challenger and none
+    // Cycle between relative incumbent, challenger and None
+    // const relativeIncumbentAllocation =
+    //   PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupID] || Allocation.Dem;
+    // const relativeChallengerAllocation =
+    //   relativeIncumbentAllocation === Allocation.Dem ? Allocation.GOP : Allocation.Dem;
+    // switch (allocation) {
+    //   case relativeIncumbentAllocation:
+    //     nextAudienceAllocations[groupID] = relativeChallengerAllocation;
+    //     break;
+    //   case relativeChallengerAllocation:
+    //     nextAudienceAllocations[groupID] = Allocation.None;
+    //     break;
+    //   default:
+    //     nextAudienceAllocations[groupID] = relativeIncumbentAllocation;
+    //     break;
+    // }
+
+    // Strategy 5)
+    // Cycle between relative incumbent, challenger and Tossup
     const relativeIncumbentAllocation =
       PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupID] || Allocation.Dem;
     const relativeChallengerAllocation =
       relativeIncumbentAllocation === Allocation.Dem ? Allocation.GOP : Allocation.Dem;
-
     switch (allocation) {
       case relativeIncumbentAllocation:
         nextAudienceAllocations[groupID] = relativeChallengerAllocation;
         break;
       case relativeChallengerAllocation:
-        nextAudienceAllocations[groupID] = Allocation.None;
+        nextAudienceAllocations[groupID] = Allocation.Tossup;
         break;
       default:
         nextAudienceAllocations[groupID] = relativeIncumbentAllocation;
@@ -110,6 +127,7 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, initialGraphicProps }) => {
         ...fixedGraphicProps.allocations,
         ...audienceAllocations
       },
+      relative: undefined,
       tappableLayer: TappableLayer.Delegates,
       onTapGroup
     };
@@ -124,6 +142,8 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, initialGraphicProps }) => {
         const allocation = allocations[groupID];
         const stateID = getStateIDForGroupID(groupID);
 
+        allocations[groupID] =
+          allocation === Allocation.Dem || allocation === Allocation.GOP ? allocation : Allocation.Tossup;
         focuses[stateID] = allocation === Allocation.Dem || allocation === Allocation.GOP ? Focus.No : Focus.Yes;
       });
 
