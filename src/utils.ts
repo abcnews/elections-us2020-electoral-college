@@ -241,12 +241,16 @@ export const liveResultsToGraphicProps = data =>
         switch (stateID) {
           case 'ME':
           case 'NE':
-            const allocations = new Array(result.e - 1).fill(stateAllocation);
+            const allocations = new Array(result.e - 1).fill(Allocation.None);
 
-            if (result[stateWinningPartyID].e !== result.e) {
-              allocations[allocations.length - 1] =
+            new Array(result[stateWinningPartyID].e - 1).fill(0).forEach((_, index) => {
+              allocations[index] = stateAllocation === Allocation.Dem ? Allocation.Dem : Allocation.GOP;
+            });
+
+            new Array(result[stateWinningPartyID === 'gop' ? 'dem' : 'gop'].e).fill(0).forEach((_, index) => {
+              allocations[allocations.length - (1 + index)] =
                 stateAllocation === Allocation.Dem ? Allocation.GOP : Allocation.Dem;
-            }
+            });
 
             allocations.forEach((allocation, index) => {
               memo.allocations[`${stateID}_${index}`] = allocation;
