@@ -1,6 +1,7 @@
 @import '../../constants.scss';
 
 .root {
+  position: relative;
   padding: 0 1rem;
   margin: 0 auto 2rem;
   max-width: 59.5rem;
@@ -14,5 +15,26 @@
 .graphic {
   [data-focus='#{$Focus_No}'] * {
     cursor: default !important;
+  }
+}
+
+@keyframes hintMove {
+  from {
+    transform: none;
+  }
+  to {
+    transform: rotate(-15deg) translate(0, -50%);
+  }
+}
+
+.hint {
+  position: absolute;
+  top: calc(4rem + 60%);
+  right: 15%;
+  animation: hintMove 1s ease-out 0.25s infinite alternate;
+  pointer-events: none;
+
+  .root[data-has-interacted] & {
+    opacity: 0;
   }
 }
