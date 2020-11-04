@@ -41,34 +41,44 @@ const Block: React.FC<BlockProps> = ({ panels }) => {
       mediaEl.setAttribute('data-ie', '');
     }
 
-    let prevTop: number = 0;
-    let prevBottom: number = 0;
+    let recentTops: number[] = [];
+    let lastUpdateTime: number = 0;
     let prevStage: string = 'initial';
 
     const onUpdate: OdysseySchedulerSubscriber = ({ fixedHeight }) => {
+      const updateTime = Date.now();
       const { top, bottom } = blockEl.getBoundingClientRect();
-      const isAbove = top > 0;
-      const isBelow = bottom < fixedHeight;
-      const stage = isAbove ? 'above' : isBelow ? 'below' : 'during';
+      const stage = top > 0 ? 'above' : bottom < fixedHeight ? 'below' : 'during';
 
       if (stage !== prevStage) {
         mediaEl.setAttribute('data-stage', stage);
 
         if (prevStage !== 'initial' && mediaEl.animate) {
-          const catchupDiff = isBelow ? prevBottom - bottom : top - prevTop;
+          const catchupDistance = top - recentTops[0];
+          const catchupDuration = 250 / recentTops.length;
 
-          mediaEl.animate([{ transform: `translate3D(0, ${catchupDiff}px, 0)` }, { transform: 'none' }], {
-            duration: 250,
+          mediaEl.animate([{ transform: `translate3D(0, ${catchupDistance}px, 0)` }, { transform: 'none' }], {
+            duration: catchupDuration,
             easing: 'cubic-bezier(0.22,0.61,0.36,1)',
             fill: 'both',
             iterations: 1
           });
+
+          recentTops = [];
         }
+      } else {
+        // Retain last 3 top values (resets when stage changes or 30ms passes between frames)
+        if (updateTime - lastUpdateTime > 30) {
+          recentTops = [];
+        } else if (recentTops.length >= 3) {
+          recentTops.shift();
+        }
+
+        recentTops.push(top);
       }
 
-      prevTop = top;
-      prevBottom = bottom;
       prevStage = stage;
+      lastUpdateTime = updateTime;
     };
 
     subscribe(onUpdate);
