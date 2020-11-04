@@ -1,6 +1,6 @@
 {
 	"name": "elections-us2020-electoral-college",
-	"version": "1.11.7",
+	"version": "1.12.0",
 	"description": "A project generated from aunty's react project template.",
 	"license": "MIT",
 	"private": true,
