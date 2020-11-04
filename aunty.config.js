@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const ADDITIONAL_ENTRY_POINTS = ['editor', 'standalone', 'polyfills', 'doc-block', 'illustrations'];
+const ADDITIONAL_ENTRY_POINTS = ['editor', 'standalone', 'polyfills', 'doc-block', 'illustrations', 'live'];
 
 module.exports = {
   type: 'react',
