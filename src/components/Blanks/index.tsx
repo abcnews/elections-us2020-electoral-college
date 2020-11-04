@@ -64,16 +64,35 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, initialGraphicProps }) => {
 
     // Strategy 3)
     // Same as Strategy 2, but allocates Likely{X} instead
-    const relativeAllocation =
+    // const relativeAllocation =
+    //   PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupID] || Allocation.Dem;
+    // nextAudienceAllocations[groupID] =
+    //   allocation === Allocation.LikelyDem
+    //     ? Allocation.LikelyGOP
+    //     : allocation === Allocation.LikelyGOP
+    //     ? Allocation.LikelyDem
+    //     : relativeAllocation === Allocation.Dem
+    //     ? Allocation.LikelyDem
+    //     : Allocation.LikelyGOP;
+
+    // Strategy 4)
+    // Cycle between relative incumbent, challenger and none
+    const relativeIncumbentAllocation =
       PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupID] || Allocation.Dem;
-    nextAudienceAllocations[groupID] =
-      allocation === Allocation.LikelyDem
-        ? Allocation.LikelyGOP
-        : allocation === Allocation.LikelyGOP
-        ? Allocation.LikelyDem
-        : relativeAllocation === Allocation.Dem
-        ? Allocation.LikelyDem
-        : Allocation.LikelyGOP;
+    const relativeChallengerAllocation =
+      relativeIncumbentAllocation === Allocation.Dem ? Allocation.GOP : Allocation.Dem;
+
+    switch (allocation) {
+      case relativeIncumbentAllocation:
+        nextAudienceAllocations[groupID] = relativeChallengerAllocation;
+        break;
+      case relativeChallengerAllocation:
+        nextAudienceAllocations[groupID] = Allocation.None;
+        break;
+      default:
+        nextAudienceAllocations[groupID] = relativeIncumbentAllocation;
+        break;
+    }
 
     setAudienceAllocations(nextAudienceAllocations);
   };
