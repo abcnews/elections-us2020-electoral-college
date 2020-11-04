@@ -28,7 +28,7 @@ const Article = () => (
     <div>
       {STATE_IDS.map(stateID => (
         <div key={stateID} style={{ margin: '0 0 2rem' }}>
-          <div style={{ margin: '0 0 0.5rem', maxWidth: '30rem' }}>
+          <div style={{ margin: '0 0 0.5rem', maxWidth: '32rem' }}>
             <Live stateCode={stateID} />
           </div>
           <MarkerText text={`#ecliveSTATE${stateID.toLowerCase()}`}></MarkerText>
