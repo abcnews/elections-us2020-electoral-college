@@ -168,14 +168,12 @@ export const GROUPS: Group[] = [
   },
   {
     id: GroupID.ME_1,
-    // name: 'Maine (District 1)',
-    name: 'Maine (District)',
+    name: 'Maine (District 1)',
     votes: 1
   },
   {
     id: GroupID.ME_2,
-    // name: 'Maine (District 2)',
-    name: 'Maine (District)',
+    name: 'Maine (District 2)',
     votes: 1
   },
   {
@@ -220,20 +218,17 @@ export const GROUPS: Group[] = [
   },
   {
     id: GroupID.NE_1,
-    // name: 'Nebraska (District 1)',
-    name: 'Nebraska (District)',
+    name: 'Nebraska (District 1)',
     votes: 1
   },
   {
     id: GroupID.NE_2,
-    // name: 'Nebraska (District 2)',
-    name: 'Nebraska (District)',
+    name: 'Nebraska (District 2)',
     votes: 1
   },
   {
     id: GroupID.NE_3,
-    // name: 'Nebraska (District 3)',
-    name: 'Nebraska (District)',
+    name: 'Nebraska (District 3)',
     votes: 1
   },
   {
