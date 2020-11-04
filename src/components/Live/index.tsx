@@ -85,7 +85,7 @@ const formatTimeUpdated = (time: Date) => {
 
   return isToday(time)
     ? `${time.getHours() % 12}:${String(time.getMinutes()).padStart(2, '0')}${
-        time.getHours() > 12 ? 'a' : 'p'
+        time.getHours() > 12 ? 'p' : 'a'
       }m ${timeString.substring(timeString.indexOf('(')).replace(/([a-z\s]+)/g, '')}`
     : `${time.getDate()} ${MONTH_SHORTNAMES[time.getMonth()]}`;
 };
