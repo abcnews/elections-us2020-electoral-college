@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 800 800">
+	<g transform="translate(400.6,399.7) scale(1.2,1.2) translate(-276.5,-258.2)">
+		<g transform="translate(343.2,80.8) translate(-69.8,-80.1)">
+			<image id="trump1-2" xlink:href="trump/1.png" width="199.7" height="229" preserveAspectRatio="none" transform="translate(70.3,80.1) scale(.7,.7) translate(-99.2,-114.5)" />
+			<image id="biden-1-2" xlink:href="biden/2replace.png" width="0" height="228" preserveAspectRatio="none" transform="translate(69,79.8) scale(.7,.7) translate(-0.5,-114)" />
+		</g>
+		<g transform="translate(413.5,198) translate(-70.3,-80.5)">
+			<image id="trump3-2" xlink:href="trump/5.png" width="198" height="229" preserveAspectRatio="none" transform="translate(71.2,80.8) scale(.7,.7) translate(-99,-114.5)" />
+			<image id="biden-3-2" xlink:href="biden/5.png" width="0" height="229" preserveAspectRatio="none" transform="translate(2.8,80.1) scale(.7,.7) translate(95.1,-114.5)" />
+		</g>
+		<g transform="translate(482.7,318.7) translate(-69.3,-80.3)">
+			<image id="_a0" xlink:href="trump/9.png" width="198" height="229" preserveAspectRatio="none" transform="translate(69.3,80.1) scale(.7,.7) translate(-99,-114.5)" />
+			<image id="_a1" xlink:href="biden/9.png" width="0" height="229" preserveAspectRatio="none" transform="translate(67.9,79.1) scale(.7,.7) translate(-0.5,-114)" />
+		</g>
+		<g transform="translate(205.7,80.5) translate(-70.2,-80.5)">
+			<image id="trump2-2" xlink:href="trump/2.png" width="198" height="229" preserveAspectRatio="none" transform="translate(71,80.1) scale(.7,.7) translate(-99,-114.5)" />
+			<image id="biden2-2" xlink:href="biden/1.png" width="0" height="229" preserveAspectRatio="none" transform="translate(2.8,80.8) scale(.7,.7) translate(95.1,-114.5)" />
+		</g>
+		<g transform="translate(276.9,198.5) translate(-69.3,-80.3)">
+			<image id="trump4-2" xlink:href="trump/4.png" width="198" height="229" preserveAspectRatio="none" transform="translate(69.3,80.1) scale(.7,.7) translate(-99,-114.5)" />
+			<image id="biden-4-2" xlink:href="biden/4.png" width="0" height="229" preserveAspectRatio="none" transform="translate(69.6,80.1) scale(.7,.7) translate(-0.5,-114)" />
+		</g>
+		<g transform="translate(345.2,318.6) translate(-69.3,-80.3)">
+			<image id="_a2" xlink:href="trump/8.png" width="198" height="229" preserveAspectRatio="none" transform="translate(69.3,80.1) scale(.7,.7) translate(-99,-114.5)" />
+			<image id="_a3" xlink:href="biden/8.png" width="0" height="229" preserveAspectRatio="none" transform="translate(69.3,80.1) scale(.7,.7) translate(-0.5,-114)" />
+		</g>
+		<g transform="translate(414.9,436.4) translate(-69.3,-80.3)">
+			<image id="_a4" xlink:href="trump/13.png" width="198" height="229" preserveAspectRatio="none" transform="translate(69.3,80.1) scale(.7,.7) translate(-99,-114.5)" />
+			<image id="biden-13-2" xlink:href="biden/13.png" width="0" height="229" preserveAspectRatio="none" transform="translate(69.3,80.1) scale(.7,.7) translate(-0.5,-114)" />
+		</g>
+		<g transform="translate(138.1,199.1) translate(-70.1,-81)">
+			<image id="_a5" xlink:href="trump/3.png" width="198" height="229" preserveAspectRatio="none" transform="translate(71,81.8) scale(.7,.7) translate(-99,-114.5)" />
+			<image id="_a6" xlink:href="biden/3replace.png" width="0" height="228" preserveAspectRatio="none" transform="translate(69.6,81.8) scale(.7,.7) translate(-0.5,-114)" />
+		</g>
+		<g transform="translate(207.1,317.8) translate(-69.8,-80.1)">
+			<image id="_a7" xlink:href="trump/7.png" width="198" height="229" preserveAspectRatio="none" transform="translate(69.3,80.1) scale(.7,.7) translate(-99,-114.5)" />
+			<image id="_a8" xlink:href="biden/7.png" width="0" height="229" preserveAspectRatio="none" transform="translate(68.1,79.8) scale(.7,.7) translate(-0.5,-114)" />
+		</g>
+		<g transform="translate(276.5,436.2) translate(-70,-80.1)">
+			<image id="_a9" xlink:href="trump/12.png" width="198" height="229" preserveAspectRatio="none" transform="translate(70.6,80.1) scale(.7,.7) translate(-99,-114.5)" />
+			<image id="_a10" xlink:href="biden/12.png" width="0" height="229" preserveAspectRatio="none" transform="translate(69,79.8) scale(.7,.7) translate(-0.5,-114)" />
+		</g>
+		<g transform="translate(69.3,318.6) translate(-69.3,-80.3)">
+			<image id="_a11" xlink:href="trump/6.png" width="198" height="229" preserveAspectRatio="none" transform="translate(69.3,80.1) scale(.7,.7) translate(-99,-114.5)" />
+			<image id="_a12" xlink:href="biden/6.png" width="0" height="229" preserveAspectRatio="none" transform="translate(68.2,79.8) scale(.7,.7) translate(-0.5,-114)" />
+		</g>
+		<g transform="translate(138.6,436.4) translate(-69.3,-80.3)">
+			<image id="_a13" xlink:href="trump/11.png" width="198" height="229" preserveAspectRatio="none" transform="translate(69.3,80.1) scale(.7,.7) translate(-99,-114.5)" />
+			<image id="_a14" xlink:href="biden/11.png" width="0" height="229" preserveAspectRatio="none" transform="translate(69.3,80.1) scale(.7,.7) translate(-0.5,-114)" />
+		</g>
+	</g>
+	<path class="st0" d="M539.1 535v-95.2l-82.4-47.6l-82.5 47.6v95.2l82.5 47.6Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="bevel" stroke-linecap="square" transform="translate(315.8,225.6) translate(-456.5,-527.1)" />
+	<path class="st0" d="M539.1 535v-95.2l-82.4-47.6l-82.5 47.6v95.2l82.5 47.6Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="bevel" stroke-linecap="square" transform="translate(481.1,225.6) translate(-456.5,-527.1)" />
+	<path class="st0" d="M539.1 535v-95.2l-82.4-47.6l-82.5 47.6v95.2l82.5 47.6Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="bevel" stroke-linecap="square" transform="translate(565.3,367.6) translate(-456.5,-527.1)" />
+	<path class="st0" d="M539.1 535v-95.2l-82.4-47.6l-82.5 47.6v95.2l82.5 47.6Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="bevel" stroke-linecap="square" transform="translate(399.4,368.9) translate(-456.5,-527.1)" />
+	<path class="st0" d="M539.1 535v-95.2l-82.4-47.6l-82.5 47.6v95.2l82.5 47.6Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="bevel" stroke-linecap="square" transform="translate(234.5,368.9) translate(-456.5,-527.1)" />
+	<path class="st0" d="M539.1 535v-95.2l-82.4-47.6l-82.5 47.6v95.2l82.5 47.6Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="bevel" stroke-linecap="square" transform="translate(151.8,511.7) translate(-456.5,-527.1)" />
+	<path class="st0" d="M539.1 535v-95.2l-82.4-47.6l-82.5 47.6v95.2l82.5 47.6Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="bevel" stroke-linecap="square" transform="translate(316.5,511.7) translate(-456.5,-527.1)" />
+	<path class="st0" d="M539.1 535v-95.2l-82.4-47.6l-82.5 47.6v95.2l82.5 47.6Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="bevel" stroke-linecap="square" transform="translate(482.5,510.8) translate(-456.5,-527.1)" />
+	<path class="st0" d="M539.1 535v-95.2l-82.4-47.6l-82.5 47.6v95.2l82.5 47.6Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="bevel" stroke-linecap="square" transform="translate(565.8,654.6) translate(-456.5,-527.1)" />
+	<path class="st0" d="M539.1 535v-95.2l-82.4-47.6l-82.5 47.6v95.2l82.5 47.6Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="bevel" stroke-linecap="square" transform="translate(402,654.6) translate(-456.5,-527.1)" />
+	<path class="st0" d="M539.1 535v-95.2l-82.4-47.6l-82.5 47.6v95.2l82.5 47.6Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="bevel" stroke-linecap="square" transform="translate(233.3,654.6) translate(-456.5,-527.1)" />
+	<path class="st0" d="M539.1 535v-95.2l-82.4-47.6l-82.5 47.6v95.2l82.5 47.6Z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="bevel" stroke-linecap="square" transform="translate(647.4,511.7) translate(-456.5,-527.1)" />
+	<script xlink:href="keyshapejs.min.js">
+	</script>
+	<script>
+		<![CDATA[
+		if(KeyshapeJS.version.indexOf('1.')!=0)throw Error('Expected KeyshapeJS v1.*.*');window.ks=document.ks=KeyshapeJS;(function(ks){
+		ks.animate("#trump1-2",[{p:'anchorX',t:[0,373,748,2377,2810,3243],v:[-99.2,-3.4,-99,-99,-3.4,-99],e:[[0],[0],[0],[0],[0],[0]]},{p:'anchorY',t:[0,373,748,2377,2810,3243],v:[-114.5,-114.5,-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0],[0],[0]]},{p:'width',t:[0,373,748,2377,2810,3243],v:[199.7,0,198,198,0,198],e:[[0],[0],[0],[0],[0],[0]]}],
+		"#biden-1-2",[{p:'anchorX',t:[373,748,2377,2810],v:[-0.5,-98.5,-98.5,-0.5],e:[[0],[0],[0],[0]]},{p:'anchorY',t:[373,748,2377,2810],v:[-114,-114,-114,-114],e:[[0],[0],[0],[0]]},{p:'width',t:[373,748,2377,2810],v:[0,197,197,0],e:[[0],[0],[0],[0]]}],
+		"#trump3-2",[{p:'anchorX',t:[0,373,748,2377,2810,3243],v:[-99,-3.4,-99,-99,-3.4,-99],e:[[0],[0],[0],[0],[0],[0]]},{p:'anchorY',t:[0,373,748,2377,2810,3243],v:[-114.5,-114.5,-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0],[0],[0]]},{p:'width',t:[0,373,748,2377,2810,3243],v:[198,0,198,198,0,198],e:[[0],[0],[0],[0],[0],[0]]}],
+		"#biden-3-2",[{p:'anchorX',t:[373,748,2377,2810],v:[95.1,-3.9,-3.9,92.6],e:[[0],[0],[0],[0]]},{p:'anchorY',t:[373,748,2377,2810],v:[-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0]]},{p:'width',t:[373,748,2377,2810],v:[0,199,199,0],e:[[0],[0],[0],[0]]}],
+		"#_a0",[{p:'anchorX',t:[0,373,748,2377,2810,3243],v:[-99,-3.4,-99,-99,-3.4,-99],e:[[0],[0],[0],[0],[0],[0]]},{p:'anchorY',t:[0,373,748,2377,2810,3243],v:[-114.5,-114.5,-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0],[0],[0]]},{p:'width',t:[0,373,748,2377,2810,3243],v:[198,0,198,198,0,198],e:[[0],[0],[0],[0],[0],[0]]}],
+		"#_a1",[{p:'anchorX',t:[373,748,2377,2810],v:[-0.5,-98.5,-99,-3.4],e:[[0],[0],[0],[0]]},{p:'anchorY',t:[373,748,2377,2810],v:[-114,-114,-114.5,-114.5],e:[[0],[0],[0],[0]]},{p:'width',t:[373,748,2377,2810],v:[0,197,198,0],e:[[0],[0],[0],[0]]}],
+		"#trump2-2",[{p:'anchorX',t:[182,556,930,2594,3026,3459],v:[-99,-3.4,-99,-99,-3.4,-99],e:[[0],[0],[0],[0],[0],[0]]},{p:'anchorY',t:[182,556,930,2594,3026,3459],v:[-114.5,-114.5,-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0],[0],[0]]},{p:'width',t:[182,556,930,2594,3026,3459],v:[198,0,198,198,0,198],e:[[0],[0],[0],[0],[0],[0]]}],
+		"#biden2-2",[{p:'anchorX',t:[556,930,2594,3026],v:[95.1,-3.9,-3.9,95.4],e:[[0],[0],[0],[0]]},{p:'anchorY',t:[556,930,2594,3026],v:[-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0]]},{p:'width',t:[556,930,2594,3026],v:[0,199,199,0],e:[[0],[0],[0],[0]]}],
+		"#trump4-2",[{p:'anchorX',t:[182,556,930,2594,3026,3459],v:[-99,-3.4,-99,-99,-3.4,-99],e:[[0],[0],[0],[0],[0],[0]]},{p:'anchorY',t:[182,556,930,2594,3026,3459],v:[-114.5,-114.5,-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0],[0],[0]]},{p:'width',t:[182,556,930,2594,3026,3459],v:[198,0,198,198,0,198],e:[[0],[0],[0],[0],[0],[0]]}],
+		"#biden-4-2",[{p:'anchorX',t:[556,930,2594,3026],v:[-0.5,-98.5,-98.5,-0.5],e:[[0],[0],[0],[0]]},{p:'anchorY',t:[556,930,2594,3026],v:[-114,-114,-114,-114],e:[[0],[0],[0],[0]]},{p:'width',t:[556,930,2594,3026],v:[0,197,197,0],e:[[0],[0],[0],[0]]}],
+		"#_a2",[{p:'anchorX',t:[182,556,930,2594,3026,3459],v:[-99,-3.4,-99,-99,-3.4,-99],e:[[0],[0],[0],[0],[0],[0]]},{p:'anchorY',t:[182,556,930,2594,3026,3459],v:[-114.5,-114.5,-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0],[0],[0]]},{p:'width',t:[182,556,930,2594,3026,3459],v:[198,0,198,198,0,198],e:[[0],[0],[0],[0],[0],[0]]}],
+		"#_a3",[{p:'anchorX',t:[556,930,2594,3026],v:[-0.5,-98.5,-98.5,-0.5],e:[[0],[0],[0],[0]]},{p:'anchorY',t:[556,930,2594,3026],v:[-114,-114,-114,-114],e:[[0],[0],[0],[0]]},{p:'width',t:[556,930,2594,3026],v:[0,197,197,0],e:[[0],[0],[0],[0]]}],
+		"#_a4",[{p:'anchorX',t:[182,556,930,2594,3026,3459],v:[-99,-3.4,-99,-99,-3.4,-99],e:[[0],[0],[0],[0],[0],[0]]},{p:'anchorY',t:[182,556,930,2594,3026,3459],v:[-114.5,-114.5,-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0],[0],[0]]},{p:'width',t:[182,556,930,2594,3026,3459],v:[198,0,198,198,0,198],e:[[0],[0],[0],[0],[0],[0]]}],
+		"#biden-13-2",[{p:'anchorX',t:[556,930,2594,3026],v:[-0.5,-98.5,-98.5,-0.5],e:[[0],[0],[0],[0]]},{p:'anchorY',t:[556,930,2594,3026],v:[-114,-114,-114,-114],e:[[0],[0],[0],[0]]},{p:'width',t:[556,930,2594,3026],v:[0,197,197,0],e:[[0],[0],[0],[0]]}],
+		"#_a5",[{p:'anchorX',t:[472,864,1221,2810,3243,3675],v:[-99,-3.4,-99,-99,-3.4,-99],e:[[0],[0],[0],[0],[0],[0]]},{p:'anchorY',t:[472,864,1221,2810,3243,3675],v:[-114.5,-114.5,-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0],[0],[0]]},{p:'width',t:[472,864,1221,2810,3243,3675],v:[198,0,198,198,0,198],e:[[0],[0],[0],[0],[0],[0]]}],
+		"#_a6",[{p:'anchorX',t:[847,1221,2810,3243],v:[-0.5,-98.5,-98.5,-0.5],e:[[0],[0],[0],[0]]},{p:'anchorY',t:[847,1221,2810,3243],v:[-114,-114,-114,-114],e:[[0],[0],[0],[0]]},{p:'width',t:[847,1221,2810,3243],v:[0,197,197,0],e:[[0],[0],[0],[0]]}],
+		"#_a7",[{p:'anchorX',t:[472,847,1221,2810,3243,3675],v:[-99,-3.4,-99,-99,-3.4,-99],e:[[0],[0],[0],[0],[0],[0]]},{p:'anchorY',t:[472,847,1221,2810,3243,3675],v:[-114.5,-114.5,-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0],[0],[0]]},{p:'width',t:[472,847,1221,2810,3243,3675],v:[198,0,198,198,0,198],e:[[0],[0],[0],[0],[0],[0]]}],
+		"#_a8",[{p:'anchorX',t:[847,1221,2810,3243],v:[-0.5,-98.5,-98.5,-0.5],e:[[0],[0],[0],[0]]},{p:'anchorY',t:[847,1221,2810,3243],v:[-114,-114,-114,-114],e:[[0],[0],[0],[0]]},{p:'width',t:[847,1221,2810,3243],v:[0,197,197,0],e:[[0],[0],[0],[0]]}],
+		"#_a9",[{p:'anchorX',t:[472,847,1221,2810,3243,3675],v:[-99,-3.4,-99,-99,-3.4,-99],e:[[0],[0],[0],[0],[0],[0]]},{p:'anchorY',t:[472,847,1221,2810,3243,3675],v:[-114.5,-114.5,-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0],[0],[0]]},{p:'width',t:[472,847,1221,2810,3243,3675],v:[198,0,198,198,0,198],e:[[0],[0],[0],[0],[0],[0]]}],
+		"#_a10",[{p:'anchorX',t:[847,1221,2810,3243],v:[-0.5,-98.5,-98.5,-0.5],e:[[0],[0],[0],[0]]},{p:'anchorY',t:[847,1221,2810,3243],v:[-114,-114,-114,-114],e:[[0],[0],[0],[0]]},{p:'width',t:[847,1221,2810,3243],v:[0,197,197,0],e:[[0],[0],[0],[0]]}],
+		"#_a11",[{p:'anchorX',t:[764,1137,1512,3134,3567,4000],v:[-99,-3.4,-99,-99,-3.4,-99],e:[[0],[0],[0],[0],[0],[0]]},{p:'anchorY',t:[764,1137,1512,3134,3567,4000],v:[-114.5,-114.5,-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0],[0],[0]]},{p:'width',t:[764,1137,1512,3134,3567,4000],v:[198,0,198,198,0,198],e:[[0],[0],[0],[0],[0],[0]]}],
+		"#_a12",[{p:'anchorX',t:[1137,1512,3134,3567],v:[-0.5,-98.5,-98.5,-0.5],e:[[0],[0],[0],[0]]},{p:'anchorY',t:[1137,1512,3134,3567],v:[-114,-114,-114,-114],e:[[0],[0],[0],[0]]},{p:'width',t:[1137,1512,3134,3567],v:[0,197,197,0],e:[[0],[0],[0],[0]]}],
+		"#_a13",[{p:'anchorX',t:[764,1137,1512,3134,3567,4000],v:[-99,-3.4,-99,-99,-3.4,-99],e:[[0],[0],[0],[0],[0],[0]]},{p:'anchorY',t:[764,1137,1512,3134,3567,4000],v:[-114.5,-114.5,-114.5,-114.5,-114.5,-114.5],e:[[0],[0],[0],[0],[0],[0]]},{p:'width',t:[764,1137,1512,3134,3567,4000],v:[198,0,198,198,0,198],e:[[0],[0],[0],[0],[0],[0]]}],
+		"#_a14",[{p:'anchorX',t:[1137,1512,3134,3567],v:[-0.5,-98.5,-98.5,-0.5],e:[[0],[0],[0],[0]]},{p:'anchorY',t:[1137,1512,3134,3567],v:[-114,-114,-114,-114],e:[[0],[0],[0],[0]]},{p:'width',t:[1137,1512,3134,3567],v:[0,197,197,0],e:[[0],[0],[0],[0]]}],
+		{autoremove:false}).range(0,4000);
+		if(document.location.search.substr(1).split('&').indexOf('global=paused')>=0)ks.globalPause()})(KeyshapeJS);
+		]]>
+	</script>
+</svg>

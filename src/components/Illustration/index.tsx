@@ -3,6 +3,8 @@ import styles from './styles.scss';
 
 export enum IllustrationName {
   Preview = 'preview',
+  TrumpWin = 'trumpwin',
+  BidenWin = 'bidenwin',
   Tossup = 'tossup'
 }
 
