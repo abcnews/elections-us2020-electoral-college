@@ -242,13 +242,17 @@ const Tilegram: React.FC<TilegramProps> = props => {
           </g>
           <g className={styles.labels}>
             {Object.keys(STATES_LABELS).map(stateID => {
-              const [, , isOutlineRequired] = STATES_LABELS[stateID];
+              const [, , isOutlineRequiredOnSmallDevices] = STATES_LABELS[stateID];
               const key = generateKey(componentID, 'label', stateID);
               const focus = focuses ? focuses[stateID] : Focus.No;
               const stateAllocations = allocations && getStateAllocations(stateID, allocations);
               const stateMainAllocation = stateAllocations && stateAllocations[0];
               const stateRelativeMainAllocation =
                 relativeAllocations && getStateAllocations(stateID, relativeAllocations)[0];
+              const isPartiallyAllocated =
+                stateAllocations &&
+                stateMainAllocation !== Allocation.None &&
+                stateAllocations.some(allocation => allocation !== Allocation.Dem && allocation !== Allocation.GOP);
 
               return (
                 <g
@@ -258,8 +262,11 @@ const Tilegram: React.FC<TilegramProps> = props => {
                   data-state={stateID}
                   data-main-allocation={stateMainAllocation || undefined}
                   data-relative-main-allocation={stateRelativeMainAllocation || undefined}
+                  data-is-partially-allocated={isPartiallyAllocated ? '' : undefined}
                 >
-                  {isOutlineRequired && <use xlinkHref={`#${key}`} className={styles.labelOutline}></use>}
+                  {(isOutlineRequiredOnSmallDevices || isPartiallyAllocated) && (
+                    <use xlinkHref={`#${key}`} className={styles.labelOutline}></use>
+                  )}
                   <use xlinkHref={`#${key}`} className={styles.labelText}></use>
                 </g>
               );

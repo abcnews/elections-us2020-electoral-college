@@ -14,7 +14,8 @@ import {
   FOCUSES,
   INITIAL_ALLOCATIONS,
   ELECTION_YEARS,
-  DEFAULT_ELECTION_YEAR
+  DEFAULT_ELECTION_YEAR,
+  DEFAULT_RELATIVE_ELECTION_YEAR
 } from './constants';
 
 export const votesForGroups = (groups: Group[]) => {
@@ -269,6 +270,6 @@ export const liveResultsToGraphicProps = data =>
     {
       allocations: { ...INITIAL_ALLOCATIONS },
       year: DEFAULT_ELECTION_YEAR,
-      relative: 2016
+      relative: DEFAULT_RELATIVE_ELECTION_YEAR
     }
   );

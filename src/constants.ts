@@ -168,12 +168,14 @@ export const GROUPS: Group[] = [
   },
   {
     id: GroupID.ME_1,
-    name: 'Maine (District 1)',
+    // name: 'Maine (District 1)',
+    name: 'Maine (District)',
     votes: 1
   },
   {
     id: GroupID.ME_2,
-    name: 'Maine (District 2)',
+    // name: 'Maine (District 2)',
+    name: 'Maine (District)',
     votes: 1
   },
   {
@@ -218,17 +220,20 @@ export const GROUPS: Group[] = [
   },
   {
     id: GroupID.NE_1,
-    name: 'Nebraska (District 1)',
+    // name: 'Nebraska (District 1)',
+    name: 'Nebraska (District)',
     votes: 1
   },
   {
     id: GroupID.NE_2,
-    name: 'Nebraska (District 2)',
+    // name: 'Nebraska (District 2)',
+    name: 'Nebraska (District)',
     votes: 1
   },
   {
     id: GroupID.NE_3,
-    name: 'Nebraska (District 3)',
+    // name: 'Nebraska (District 3)',
+    name: 'Nebraska (District)',
     votes: 1
   },
   {
@@ -696,4 +701,4 @@ export const ELECTION_YEARS = Object.keys(ELECTION_YEARS_ALLOCATIONS_CANDIDATES)
   .reverse()
   .map(x => +x as ElectionYear);
 
-export const DEFAULT_ELECTION_YEAR = ELECTION_YEARS[0];
+export const [DEFAULT_ELECTION_YEAR, DEFAULT_RELATIVE_ELECTION_YEAR] = ELECTION_YEARS;

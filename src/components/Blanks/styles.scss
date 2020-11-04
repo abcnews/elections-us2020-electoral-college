@@ -1,0 +1,11 @@
+@import '../../constants.scss';
+
+.root {
+  width: 100%;
+}
+
+.graphic {
+  [data-focus='#{$Focus_No}'] * {
+    cursor: default !important;
+  }
+}

@@ -419,6 +419,12 @@ $focusChangeTransitionDuration: 0.5s;
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: $swHeavy_SM;
+
+  .label[data-is-partially-allocated] & {
+    @media (min-width: 668px) {
+      stroke-width: $swHeavy;
+    }
+  }
 }
 
 .label[data-main-allocation='#{$Allocation_Dem}'] > .labelOutline,
@@ -428,7 +434,7 @@ $focusChangeTransitionDuration: 0.5s;
   stroke: $color_Text;
 }
 
-.labelOutline {
+.label:not([data-is-partially-allocated]) .labelOutline {
   @media (min-width: 668px) {
     stroke: none !important;
   }

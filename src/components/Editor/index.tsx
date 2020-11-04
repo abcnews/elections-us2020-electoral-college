@@ -44,6 +44,7 @@ const INITIAL_GRAPHIC_PROPS = {
 
 const STORY_MARKERS = [
   { label: 'Standalone graphic', prefix: 'ecgraphic' },
+  { label: 'Fill-in-the-blanks graphic', prefix: 'ecblanks' },
   {
     label: 'Scrollyteller opener',
     note: `If you're placing multiple scrollytellers in a single story, each must have a unique NAME.`,
