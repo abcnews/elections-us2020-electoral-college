@@ -2,10 +2,10 @@ import React, { useEffect, useMemo, useState } from 'react';
 import {
   Allocation,
   Allocations,
-  ALLOCATIONS,
   DEFAULT_ELECTION_YEAR,
   DEFAULT_RELATIVE_ELECTION_YEAR,
-  Focus
+  Focus,
+  PRESETS
 } from '../../constants';
 import { loadData } from '../../data';
 import { getStateIDForGroupID, liveResultsToGraphicProps } from '../../utils';
@@ -40,15 +40,40 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, initialGraphicProps }) => {
     }
 
     const allocation = audienceAllocations[groupID] || Allocation.None;
-    const allocationIndex = ALLOCATIONS.indexOf(allocation);
     const nextAudienceAllocations = {
       ...audienceAllocations
     };
 
+    // Strategy 1)
     // Cycle to the next Allocation in the enum (or the first if we don't recognise it)
-    nextAudienceAllocations[groupID] = ALLOCATIONS[
-      allocationIndex === ALLOCATIONS.length - 1 ? 0 : allocationIndex + 1
-    ] as Allocation;
+    // const allocationIndex = ALLOCATIONS.indexOf(allocation);
+    // nextAudienceAllocations[groupID] = ALLOCATIONS[
+    //   allocationIndex === ALLOCATIONS.length - 1 ? 0 : allocationIndex + 1
+    // ] as Allocation;
+
+    // Strategy 2)
+    // If not allocated to either party, allocate to the incumbent (if we have a relative year) or Dem.
+    // If alloated to a party, allocate to the other.
+    // const relativeAllocation = PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupID] || Allocation.Dem
+    // nextAudienceAllocations[groupID] =
+    //   allocation === Allocation.Dem
+    //     ? Allocation.GOP
+    //     : allocation === Allocation.GOP
+    //     ? Allocation.Dem
+    //     : relativeAllocation;
+
+    // Strategy 3)
+    // Same as Strategy 2, but allocates Likely{X} instead
+    const relativeAllocation =
+      PRESETS[fixedGraphicProps.relative || DEFAULT_RELATIVE_ELECTION_YEAR].allocations[groupID] || Allocation.Dem;
+    nextAudienceAllocations[groupID] =
+      allocation === Allocation.LikelyDem
+        ? Allocation.LikelyGOP
+        : allocation === Allocation.LikelyGOP
+        ? Allocation.LikelyDem
+        : relativeAllocation === Allocation.Dem
+        ? Allocation.LikelyDem
+        : Allocation.LikelyGOP;
 
     setAudienceAllocations(nextAudienceAllocations);
   };
