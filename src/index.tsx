@@ -122,19 +122,20 @@ whenOdysseyLoaded.then(() => {
       return;
     }
 
+    const { name } = acto(getMountValue(mount));
+
+    if (name && !Object.values(IllustrationName).includes(name)) {
+      return;
+    }
+
     const titleEl = parentEl.querySelector('h1');
 
     if (titleEl) {
-      const { name } = acto(getMountValue(mount));
-
-      if (name && !Object.values(IllustrationName).includes(name)) {
-        return;
-      }
-
       mount.removeAttribute('class');
       parentEl.insertBefore(mount, titleEl);
-      render(<Illustration name={name} />, mount);
     }
+
+    render(<Illustration name={name} />, mount);
   });
 
   const standaloneGraphicMounts = selectMounts('ecgraphic');

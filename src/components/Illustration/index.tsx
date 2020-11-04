@@ -5,7 +5,8 @@ export enum IllustrationName {
   Preview = 'preview',
   TrumpWin = 'trumpwin',
   BidenWin = 'bidenwin',
-  Tossup = 'tossup'
+  Tossup = 'tossup',
+  Hand = 'hand'
 }
 
 export type IllustrationProps = {
