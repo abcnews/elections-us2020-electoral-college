@@ -50,8 +50,6 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, initialGraphicProps }) => {
       allocationIndex === ALLOCATIONS.length - 1 ? 0 : allocationIndex + 1
     ] as Allocation;
 
-    console.log(allocation, nextAudienceAllocations[groupID]);
-
     setAudienceAllocations(nextAudienceAllocations);
   };
 

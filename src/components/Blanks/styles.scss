@@ -1,7 +1,14 @@
 @import '../../constants.scss';
 
 .root {
-  width: 100%;
+  padding: 0 1rem;
+  margin: 0 auto 2rem;
+  max-width: 59.5rem;
+
+  @media (min-width: 668px) {
+    padding: 0;
+    max-width: 57.5rem;
+  }
 }
 
 .graphic {
