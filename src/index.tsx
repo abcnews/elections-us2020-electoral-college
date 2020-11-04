@@ -7,8 +7,9 @@ import React from 'react';
 import { render } from 'react-dom';
 import { applyColourToPanels } from './panels';
 import { alternatingCaseToGraphicProps, decodeAllocations, decodeFocuses } from './utils';
+import Blanks from './components/Blanks';
 import Block from './components/Block';
-import type { PossiblyEncodedGraphicProps } from './components/Graphic';
+import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Graphic';
 import Graphic from './components/Graphic';
 import Illustration, { IllustrationName } from './components/Illustration';
 import Live from './components/Live';
@@ -143,6 +144,19 @@ whenOdysseyLoaded.then(() => {
 
     mount.classList.add('u-pull');
     render(<Graphic {...graphicProps} />, mount);
+  });
+
+  const blanksMounts = selectMounts('ecblanks');
+
+  blanksMounts.forEach(mount => {
+    const mountValue = getMountValue(mount);
+    const blanksProps =
+      mountValue.indexOf('LIVE') > -1
+        ? { isLive: true }
+        : { initialGraphicProps: alternatingCaseToGraphicProps(mountValue) as GraphicProps };
+
+    mount.classList.add('u-pull');
+    render(<Blanks {...blanksProps} />, mount);
   });
 
   // Fallback exporter
