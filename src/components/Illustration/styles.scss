@@ -10,6 +10,11 @@
   }
 }
 
+main > [data-mount] > .root {
+  margin: 0 auto;
+  max-width: 7rem;
+}
+
 .graphic {
   position: relative;
   padding-bottom: 100%;
