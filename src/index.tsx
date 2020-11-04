@@ -130,7 +130,7 @@ whenOdysseyLoaded.then(() => {
 
     const titleEl = parentEl.querySelector('h1');
 
-    if (titleEl) {
+    if (titleEl && titleEl.parentElement === parentEl) {
       mount.removeAttribute('class');
       parentEl.insertBefore(mount, titleEl);
     }
