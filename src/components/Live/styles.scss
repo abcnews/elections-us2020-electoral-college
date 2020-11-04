@@ -39,20 +39,6 @@
       margin-bottom: -1.5rem;
     }
   }
-
-  &[data-test]::before {
-    content: 'TEST ' attr(data-test);
-    position: absolute;
-    top: -0.625rem;
-    right: -0.5rem;
-    border-radius: 0.25rem;
-    padding: 0.25rem 0.5rem;
-    background-color: goldenrod;
-    font-family: ABCSans;
-    font-size: 0.75rem;
-    font-weight: bold;
-    line-height: 1;
-  }
 }
 
 .flex {

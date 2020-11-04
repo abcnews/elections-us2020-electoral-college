@@ -10,16 +10,16 @@ type DataPromises = {
 const dataPromises: DataPromises = {};
 
 type LoadDataOptions = {
-  server?: string;
+  server?: 'abc' | 'firebase';
   forceRefresh?: boolean;
   test?: number;
 };
 
 export const loadData = ({ server, forceRefresh, test }: LoadDataOptions) => {
-  const id = typeof test === 'number' && server !== 'firebase' ? `test/${test}` : 'latest';
+  const id = typeof test === 'number' && server === 'abc' ? `test/${test}` : 'latest';
 
   if (!dataPromises[id] || forceRefresh) {
-    dataPromises[id] = fetch(`${server === 'firebase' ? FIREBASE_URL_BASE : ABC_URL_BASE}${id}.json`).then(response =>
+    dataPromises[id] = fetch(`${server === 'abc' ? ABC_URL_BASE : FIREBASE_URL_BASE}${id}.json`).then(response =>
       response.json()
     );
   }

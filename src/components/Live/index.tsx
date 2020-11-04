@@ -41,7 +41,7 @@ const Live: React.FC<LiveProps> = ({ stateCode, test }) => {
   }
 
   useEffect(() => {
-    // loadData({ server: 'firebase', test }).then(data => setResult(data.s[stateCode])); // When Andrew stops updating /dat/
+    // loadData({ server: 'abc', test }).then(data => setResult(data.s[stateCode])); // When Andrew shuts down the Firebase
     loadData({ test }).then(data => setResult(data.s[stateCode]));
   }, []);
 
@@ -55,7 +55,7 @@ const Live: React.FC<LiveProps> = ({ stateCode, test }) => {
   const timeUpdated = result.t !== null ? new Date(result.t) : null;
 
   return (
-    <div className={styles.root} data-test={typeof test === 'number' ? test : undefined}>
+    <div className={styles.root}>
       <div className={styles.flex}>
         <h4 className={styles.title}>{state.name}</h4>
         {timeUpdated && <div>{`Updated ${formatTimeUpdated(timeUpdated)}`}</div>}
