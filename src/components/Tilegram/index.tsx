@@ -5,7 +5,9 @@ import {
   Focus,
   Focuses,
   PRESETS,
-  ELECTION_YEARS_ALLOCATIONS_CANDIDATES
+  ELECTION_YEARS_ALLOCATIONS_CANDIDATES,
+  DEFAULT_ELECTION_YEAR,
+  ElectionYear
 } from '../../constants';
 import {
   determineIfAllocationIsDefinitive,
@@ -25,8 +27,8 @@ export enum TappableLayer {
 export type TilegramProps = {
   allocations?: Allocations;
   focuses?: Focuses;
-  year?: number;
-  relative?: number;
+  year?: ElectionYear;
+  relative?: ElectionYear | null;
   tappableLayer?: TappableLayer;
   onTapGroup?: (groupID: string) => void;
   onTapState?: (stateID: string) => void;
@@ -41,10 +43,9 @@ const Tilegram: React.FC<TilegramProps> = props => {
   const isInteractive = !!onTapGroup;
   const [isInspecting, setIsInspecting] = useState(false);
   const hasFocuses = focuses && Object.keys(focuses).some(key => focuses[key] !== Focus.No);
-  const sideAllocations =
-    year && ELECTION_YEARS_ALLOCATIONS_CANDIDATES[year] && Object.keys(ELECTION_YEARS_ALLOCATIONS_CANDIDATES[year]);
-  const incumbentAllocation = sideAllocations && sideAllocations[0];
-  const challengerAllocation = sideAllocations && sideAllocations[1];
+  const [incumbentAllocation, challengerAllocation] = Object.keys(
+    ELECTION_YEARS_ALLOCATIONS_CANDIDATES[year || DEFAULT_ELECTION_YEAR]
+  );
   const relativeAllocations = relative && PRESETS[relative]?.allocations;
 
   const onTapDelegateHex = (event: React.MouseEvent<SVGElement>) => {
