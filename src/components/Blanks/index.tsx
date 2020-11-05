@@ -195,12 +195,12 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphi
     <div className={styles.root}>
       <div className={styles.graphic} onMouseMove={updateResults} onTouchMove={updateResults}>
         <Graphic {...graphicProps} />
+        {isLive && hasStatesResults && (
+          <div className={styles.live}>
+            <Live stateCode={liveStateCode} />
+          </div>
+        )}
       </div>
-      {isLive && hasStatesResults && (
-        <div className={styles.live}>
-          <Live stateCode={liveStateCode} />
-        </div>
-      )}
     </div>
   );
 };

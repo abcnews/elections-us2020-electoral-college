@@ -1,7 +1,6 @@
 @import '../../constants.scss';
 
 .root {
-  position: relative;
   padding: 0 1rem;
   margin: 0 auto 2rem;
   max-width: 59.5rem;
@@ -13,21 +12,45 @@
 }
 
 .graphic {
+  position: relative;
+}
+
+.graphic {
   [data-focus='#{$Focus_No}'] * {
     cursor: default !important;
   }
 }
 
 .live {
-  position: relative;
   margin-top: 1rem;
   min-height: 5rem;
 
-  > * {
+  @media only screen and (min-width: 1023px) {
     position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    margin: 0 !important;
+    top: 6.75rem;
+    left: 50%;
+    margin-top: 0;
+    transform: translate(-50%, 0);
+  }
+
+  > div {
+    margin: 0 auto !important;
+    padding: 0.625rem 0.75rem !important;
+    max-width: 28rem;
+    font-size: 0.6875rem !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.26);
+
+    @media only screen and (min-width: 1023px) {
+      width: 100%;
+      box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.26);
+    }
+
+    &:empty {
+      box-shadow: none;
+    }
+
+    & > div > h4 {
+      font-size: 1.125rem !important;
+    }
   }
 }
