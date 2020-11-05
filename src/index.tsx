@@ -153,7 +153,7 @@ whenOdysseyLoaded.then(() => {
     const mountValue = getMountValue(mount);
     const blanksProps =
       mountValue.indexOf('LIVE') > -1
-        ? { isLive: true }
+        ? { isLive: true, hasStatesResults: mountValue.indexOf('STATES') > -1 }
         : { initialGraphicProps: alternatingCaseToGraphicProps(mountValue) as GraphicProps };
 
     mount.classList.add('u-pull');
