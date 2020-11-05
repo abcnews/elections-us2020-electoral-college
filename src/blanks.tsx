@@ -3,7 +3,7 @@ import { getMountValue, selectMounts } from '@abcnews/mount-utils';
 import React from 'react';
 import { render } from 'react-dom';
 import Blanks from './components/Blanks';
-import { GraphicProps } from './components/Graphic';
+import type { GraphicProps } from './components/Graphic';
 import { alternatingCaseToGraphicProps } from './utils';
 
 whenDOMReady.then(() => {
@@ -13,7 +13,7 @@ whenDOMReady.then(() => {
     const mountValue = getMountValue(mount);
     const blanksProps =
       mountValue.indexOf('LIVE') > -1
-        ? { isLive: true }
+        ? { isLive: true, hasStatesResults: mountValue.indexOf('STATES') > -1 }
         : { initialGraphicProps: alternatingCaseToGraphicProps(mountValue) as GraphicProps };
 
     mount.classList.add('u-pull');

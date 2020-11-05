@@ -1,5 +1,5 @@
-import type { Combined, PartyId } from 'elections-us2020-results-data';
-import React, { useEffect, useState } from 'react';
+import type { Combined } from 'elections-us2020-results-data';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Allocation,
   State,
@@ -34,19 +34,19 @@ const isToday = (date: Date) => {
 };
 
 const Live: React.FC<LiveProps> = ({ stateCode, test }) => {
-  const stateID: number | undefined = StateID[stateCode];
+  const stateID: number | undefined = useMemo(() => StateID[stateCode], [stateCode]);
+  const [result, setResult] = useState<Combined.Result>();
+
+  useEffect(() => {
+    // loadData({ server: 'abc', test }).then(data => setResult(data.s[stateCode])); // When Andrew shuts down the Firebase
+    loadData({ test }).then(data => setResult(data.s[stateCode]));
+  }, [stateCode]);
 
   if (typeof stateID !== 'number') {
     return <div data-unrecognised-state={stateCode}></div>;
   }
 
-  useEffect(() => {
-    // loadData({ server: 'abc', test }).then(data => setResult(data.s[stateCode])); // When Andrew shuts down the Firebase
-    loadData({ test }).then(data => setResult(data.s[stateCode]));
-  }, []);
-
   const state: State = STATES.find(({ id }) => stateID === id) as State; // We can assume stateID will match
-  const [result, setResult] = useState<Combined.Result>();
 
   if (!result || !result.cp) {
     return <div data-loading={stateCode}></div>;

@@ -10,11 +10,13 @@ import {
 import { loadData } from '../../data';
 import { getStateIDForGroupID, liveResultsToGraphicProps } from '../../utils';
 import Graphic, { GraphicProps } from '../Graphic';
+import Live from '../Live';
 import { TappableLayer } from '../Tilegram';
 import styles from './styles.scss';
 
 export type BlanksProps = {
   isLive?: boolean;
+  hasStatesResults?: boolean;
   initialGraphicProps?: GraphicProps;
 };
 
@@ -23,9 +25,40 @@ const defaultGraphicProps = {
   relative: DEFAULT_RELATIVE_ELECTION_YEAR
 };
 
-const Blanks: React.FC<BlanksProps> = ({ isLive, initialGraphicProps }) => {
+const Blanks: React.FC<BlanksProps> = ({ isLive, hasStatesResults, initialGraphicProps }) => {
   const [fixedGraphicProps, setFixedGraphicProps] = useState<GraphicProps>(defaultGraphicProps);
   const [audienceAllocations, setAudienceAllocations] = useState<Allocations>({});
+  const [liveStateCode, setLiveStateCode] = useState('');
+
+  const updateResults = useMemo(
+    () => event => {
+      if (!fixedGraphicProps || !fixedGraphicProps.allocations) {
+        return;
+      }
+
+      const groupID = event.target.getAttribute('data-group');
+
+      if (!groupID) {
+        return;
+      }
+
+      if (
+        fixedGraphicProps.allocations[groupID] === Allocation.Dem ||
+        fixedGraphicProps.allocations[groupID] === Allocation.GOP
+      ) {
+        return;
+      }
+
+      const stateID = getStateIDForGroupID(groupID);
+
+      if (!stateID) {
+        return;
+      }
+
+      setLiveStateCode(stateID);
+    },
+    [hasStatesResults, fixedGraphicProps]
+  );
 
   const onTapGroup = (groupID: string) => {
     if (!fixedGraphicProps || !fixedGraphicProps.allocations) {
@@ -160,9 +193,14 @@ const Blanks: React.FC<BlanksProps> = ({ isLive, initialGraphicProps }) => {
 
   return (
     <div className={styles.root}>
-      <div className={styles.graphic}>
+      <div className={styles.graphic} onMouseMove={updateResults} onTouchMove={updateResults}>
         <Graphic {...graphicProps} />
       </div>
+      {isLive && hasStatesResults && (
+        <div className={styles.live}>
+          <Live stateCode={liveStateCode} />
+        </div>
+      )}
     </div>
   );
 };
