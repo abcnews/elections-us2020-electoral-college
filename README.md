@@ -1,6 +1,6 @@
 # elections-us2020-electoral-college
 
-This repository contains the source code for the graphical and interactive components of the Story Lab's reporting on the US 2020 election, as well as tools used to build and support those stories.
+This repository contains the source code for the graphical and interactive components of the Story Lab's reporting on the US 2020 election, as well as tools used to help produce those stories.
 
 The latest release should be accessible via:
 
@@ -27,8 +27,8 @@ Under the hood, webpack is building multiple source entry points into many distr
 
 | output             | entry / `import()`      | description                                                                                                                                                                     | example                                                |
 |--------------------|-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------|
-| `index.js`         | `src/index.tsx`         | Odyssey plugin for running all components inside our stories (in all known mount points)                                                                                        | see [Stories](#stories)                                |
-| `editor.js`        | `src/editor.tsx`        | An editor used for building graphics for standalone embeds / scrollytellers / fill-in-the-blanks widgets. Will generate mount points and fallback graphics                      | [/editor/](https://localhost:8000/editor/)             |
+| `index.js`         | `src/index.tsx`         | Loads standalone graphics / scrollytellers / fill-in-the-blanks / live results / illustrations into mount points in [Odyssey](https://github.com/abcnews/odyssey) stories       | see [Stories](#stories)                                |
+| `editor.js`        | `src/editor.tsx`        | An editor used for building graphics for standalone / scrollyteller / fill-in-the-blanks usage in stories. Will generate mount points, as well as raster images for syndication | [/editor/](https://localhost:8000/editor/)             |
 | `standalone.js`    | `src/standalone.tsx`    | Loads graphics into `#ecgraphic` mount points                                                                                                                                   | [/standalone/](https://localhost:8000/standalone/)     |
 | `blanks.js`        | `src/blanks.tsx`        | Loads fill-in-the-blanks graphics (with or without live results) into `#ecblanks` mount points                                                                                  | [/blanks/](https://localhost:8000/blanks/)             |
 | `live.js`          | `src/live.tsx`          | Loads a live results dashboard (graphic + all state results modules) into an  `#ecalllive`  mount point                                                                         | [/live/](https://localhost:8000/live/)                 |
