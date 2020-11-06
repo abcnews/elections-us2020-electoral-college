@@ -15,8 +15,8 @@ const Article = () => (
     <h1>Illustrations</h1>
     <div>
       {Object.values(IllustrationName).map((name, index) => (
-        <div key={name} style={{ margin: '0 0 2rem' }}>
-          <div style={{ margin: '0 0 1rem', maxWidth: '20rem' }}>
+        <div key={name} style={{ margin: '0 0 3rem' }}>
+          <div style={{ margin: '0 0 2.5rem', maxWidth: '28rem' }}>
             <Illustration name={name} />
           </div>
           <MarkerText text={`#ecillustrationNAME${name}`}></MarkerText>
