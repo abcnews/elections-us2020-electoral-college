@@ -21,7 +21,7 @@ Here's a list of stories based on this code:
 
 This project was generated from [aunty](https://github.com/abcnews/aunty)'s `react` project template. Instructions for Story Lab's development & deployment process are documented there.
 
-For those who are unfamilial with `aunty`, running `npm install` and `npm start` should get you a development server up and running at [`https://localhost:8000/`](https://localhost:8000/).
+For those who are unfamiliar with aunty, running `npm install` and `npm start` should get you a development server up and running at [`https://localhost:8000/`](https://localhost:8000/).
 
 Under the hood, webpack is building multiple source entry points into many distributable scripts. Here's a quick mapping of outputs to inputs, and what they're for:
 
