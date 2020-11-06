@@ -1,17 +1,23 @@
 .root {
-  margin: -1rem auto -1.5rem;
+  margin: 1rem auto;
   width: 100%;
   max-width: 17.5rem;
+
+  &[data-aspect='1:1'] {
+    margin: -1rem auto -1.5rem;
+  }
 
   &[data-aspect='4:3'],
   &[data-aspect='3:2'] {
     max-width: 28rem;
   }
-}
 
-@media (min-width: 61.25rem) {
-  .root {
-    margin: 0 auto -1.5rem;
+  @media (min-width: 61.25rem) {
+    margin: 2rem auto;
+
+    &[data-aspect='1:1'] {
+      margin: 0 auto -1.5rem;
+    }
   }
 }
 
