@@ -3,19 +3,22 @@ import styles from './styles.scss';
 
 export enum IllustrationName {
   Preview = 'preview',
-  TrumpWin = 'trumpwin',
+  Tossup = 'tossup',
+  TrumpFlip = 'trumpflip',
+  BidenFlip = 'bidenflip',
   BidenAhead = 'bidenahead',
   BidenWin = 'bidenwin',
-  Tossup = 'tossup',
   Hand = 'hand'
 }
 
 const ASPECT_OVERRIDES = {
-  [IllustrationName.BidenAhead]: '3:2'
+  [IllustrationName.BidenAhead]: '3:2',
+  [IllustrationName.BidenWin]: '3:2'
 };
 
 const EXTENSION_OVERRIDES = {
-  [IllustrationName.BidenAhead]: 'jpg'
+  [IllustrationName.BidenAhead]: 'jpg',
+  [IllustrationName.BidenWin]: 'jpg'
 };
 
 export type IllustrationProps = {
