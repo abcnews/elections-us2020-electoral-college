@@ -17,7 +17,7 @@ Here's a list of stories based on this code:
 | 2020/11/05 | [Your very own US election touchscreen](https://www.abc.net.au/news/2020-11-05/trump-biden-us-election-touchscreen-interactive-paths-to-victory/12843474)   | fill-in-the-blanks; live results; illustration |
 | 2020/11/05 | [Biden has the edge, but Trump still has a path to victory](https://www.abc.net.au/news/2020-11-05/us-election-trump-biden-results-map-explained/12853338)  | scrollyteller; live results; illustration      |
 | 2020/11/06 | [Your simple guide to Trump and Biden’s chances from here](https://www.abc.net.au/news/2020-11-06/trump-biden-election-results-path-to-victory/12857296)    | scrollyteller; live results; illustration      |
-| 2020/11/08 | [How Trump’s ‘beautiful map’ turned against him](https://www.abc.net.au/news/2020-11-08/us-election-results-map-biden-trump/12861122)                       | scrollyteller; live results; illustration      |
+| 2020/11/08 | [How Trump’s ‘beautiful map’ turned against him](https://www.abc.net.au/news/2020-11-08/us-election-results-map-biden-trump-president/12861122)             | scrollyteller; live results; illustration      |
 
 ## Development & deployment
 
