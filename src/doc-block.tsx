@@ -5,7 +5,7 @@ import type { PanelDefinition } from '@abcnews/scrollyteller';
 import React from 'react';
 import { render } from 'react-dom';
 import Block from './components/Block';
-import DocBlock from './components/DocBlock';
+import GoogleDocScrollyteller from './components/GoogleDocScrollyteller';
 import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Graphic';
 import Live from './components/Live';
 import { applyColourToPanels } from './panels';
@@ -40,7 +40,7 @@ const MARKER_WITH_PROPS_PATTERN = /#(scrollyteller|mark)/;
 
 whenDOMReady.then(() =>
   render(
-    <DocBlock<PossiblyEncodedGraphicProps>
+    <GoogleDocScrollyteller<PossiblyEncodedGraphicProps>
       preprocessCoreEl={el => {
         const text = String(el.textContent).trim();
         const linkEl: HTMLAnchorElement | null = el.querySelector('a[href]');

@@ -7,7 +7,7 @@ const URL_LOCALSTORAGE_KEY = 'last-successfully-loaded-google-doc-url';
 
 const IDENTITY = x => x;
 
-type DocBlockProps<T> = {
+type GoogleDocScrollytellerProps<T> = {
   loadScrollytellerArgs?: {
     name?: string;
     className?: string;
@@ -21,7 +21,7 @@ type DocBlockProps<T> = {
   renderFallbackImagesButton?: (scrollytellerDefinition: ScrollytellerDefinition<T>) => React.ReactElement;
 };
 
-function DocBlock<T>({
+function GoogleDocScrollyteller<T>({
   loadScrollytellerArgs = {
     className: 'u-full',
     markerName: 'mark'
@@ -30,7 +30,7 @@ function DocBlock<T>({
   postprocessScrollytellerDefinition,
   renderPreview,
   renderFallbackImagesButton
-}: DocBlockProps<T>): React.ReactElement {
+}: GoogleDocScrollytellerProps<T>): React.ReactElement {
   const { name, className, markerName } = loadScrollytellerArgs;
   const inputRef = useRef<HTMLInputElement>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -211,4 +211,4 @@ function mountTextToMountEl(mountText) {
   return mountEl;
 }
 
-export default DocBlock;
+export default GoogleDocScrollyteller;
