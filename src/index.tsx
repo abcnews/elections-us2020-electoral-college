@@ -107,7 +107,7 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
 );
 
 whenScrollytellersLoaded.then(scrollytellerDefinitions => {
-  (scrollytellerDefinitions as ScrollytellerDefinition<any>[]).forEach(scrollytellerDefinition =>
+  (scrollytellerDefinitions as ScrollytellerDefinition<GraphicProps>[]).forEach(scrollytellerDefinition =>
     render(<Block panels={scrollytellerDefinition.panels} />, scrollytellerDefinition.mountNode)
   );
 });
