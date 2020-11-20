@@ -2,7 +2,11 @@
   font-family: ABCSans, sans-serif;
 }
 
-.block {
+.tempContainer {
+  display: none;
+}
+
+.preview {
   margin-bottom: 3.5rem;
   min-height: calc(100vh - 3rem);
   font-family: ABCSerif, sans-serif;
@@ -35,12 +39,12 @@
   justify-content: stretch;
 
   @media (max-width: 36rem) {
-    .block:not(:empty) + & {
+    .preview:not(:empty) + & {
       height: 7.5rem;
     }
   }
 
-  .block:empty + & {
+  .preview:empty + & {
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
