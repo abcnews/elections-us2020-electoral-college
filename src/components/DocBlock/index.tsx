@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { PanelDefinition, ScrollytellerDefinition } from '@abcnews/scrollyteller';
+import type { ScrollytellerDefinition } from '@abcnews/scrollyteller';
 import { loadScrollyteller } from '@abcnews/scrollyteller';
 import styles from './styles.scss';
 
@@ -100,15 +100,6 @@ function DocBlock<T>({
               return memo;
             }
 
-            function textToMountEl(text) {
-              const mountEl = document.createElement('div');
-
-              mountEl.setAttribute('data-mount', '');
-              mountEl.setAttribute('id', text.slice(1));
-
-              return mountEl;
-            }
-
             const text = String(el.textContent).trim();
 
             if (text.indexOf('#remove') === 0) {
@@ -122,7 +113,7 @@ function DocBlock<T>({
                 memo.hasEnded = true;
               }
 
-              memo.scrollytellingEls.push(textToMountEl(text));
+              memo.scrollytellingEls.push(mountTextToMountEl(text));
             } else if (!memo.hasBegun || memo.isRemoving || text === '') {
               // skip
             } else {
@@ -209,6 +200,15 @@ function DocBlock<T>({
       </div>
     </div>
   );
+}
+
+function mountTextToMountEl(mountText) {
+  const mountEl = document.createElement('div');
+
+  mountEl.setAttribute('data-mount', '');
+  mountEl.setAttribute('id', mountText.slice(1));
+
+  return mountEl;
 }
 
 export default DocBlock;
