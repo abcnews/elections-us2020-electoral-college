@@ -113,6 +113,7 @@ $focusChangeTransitionDuration: 0.5s;
 
 .delegates {
   pointer-events: none;
+  shape-rendering: crispEdges;
 }
 
 .root[data-tappable='#{$TappableLayer_Delegates}'] .delegates {
