@@ -1,44 +1,44 @@
 {
-	"name": "elections-us2020-electoral-college",
-	"version": "1.14.1",
-	"description": "A project generated from aunty's react project template.",
-	"license": "MIT",
-	"private": true,
-	"contributors": [
-		"Colin Gourlay <gourlay.colin@abc.net.au>"
-	],
-	"scripts": {
-		"start": "aunty serve",
-		"test": "aunty test"
-	},
-	"abc": {
-		"css": {
-			"libraryDir": "./node_modules/@abcaustralia/nucleus/css",
-			"logVariables": "false"
-		}
-	},
-	"devDependencies": {
-		"@abcnews/aunty": "^11.1.1",
-		"@types/jest": "^26.0.14",
-		"@types/react": "^16.9.52",
-		"@types/react-dom": "^16.9.8",
-		"@types/react-test-renderer": "^16.9.3",
-		"@types/webpack-env": "^1.15.3",
-		"elections-us2020-results-data": "git+ssh://git@stash.abc-dev.net.au:7999/news/elections-us2020-results-data.git",
-		"react-test-renderer": "^16.13.1"
-	},
-	"dependencies": {
-		"@abcnews/alternating-case-to-object": "^2.0.1",
-		"@abcnews/base-36-props": "^1.2.0",
-		"@abcnews/env-utils": "^2.0.0",
-		"@abcnews/google-doc-scrollyteller": "^1.0.1",
-		"@abcnews/mount-utils": "^2.0.0",
-		"@abcnews/scrollyteller": "^4.0.0",
-		"@next/polyfill-nomodule": "^9.5.5",
-		"core-js": "^3.6.5",
-		"file-saver": "^2.0.2",
-		"jszip": "^3.5.0",
-		"react": "^16.14.0",
-		"react-dom": "^16.14.0"
-	}
+  "name": "elections-us2020-electoral-college",
+  "version": "1.14.1",
+  "description": "A project generated from aunty's react project template.",
+  "license": "MIT",
+  "private": true,
+  "contributors": [
+    "Colin Gourlay <gourlay.colin@abc.net.au>"
+  ],
+  "scripts": {
+    "start": "aunty serve",
+    "test": "aunty test"
+  },
+  "abc": {
+    "css": {
+      "libraryDir": "./node_modules/@abcaustralia/nucleus/css",
+      "logVariables": "false"
+    }
+  },
+  "devDependencies": {
+    "@abcnews/aunty": "^11.1.1",
+    "@types/jest": "^26.0.14",
+    "@types/react": "^16.9.52",
+    "@types/react-dom": "^16.9.8",
+    "@types/react-test-renderer": "^16.9.3",
+    "@types/webpack-env": "^1.15.3",
+    "elections-us2020-results-data": "git+ssh://git@github.com:abcnews/elections-us2020-results-data.git",
+    "react-test-renderer": "^16.13.1"
+  },
+  "dependencies": {
+    "@abcnews/alternating-case-to-object": "^2.0.1",
+    "@abcnews/base-36-props": "^1.2.0",
+    "@abcnews/env-utils": "^2.0.0",
+    "@abcnews/google-doc-scrollyteller": "^1.0.1",
+    "@abcnews/mount-utils": "^2.0.0",
+    "@abcnews/scrollyteller": "^4.0.0",
+    "@next/polyfill-nomodule": "^9.5.5",
+    "core-js": "^3.6.5",
+    "file-saver": "^2.0.2",
+    "jszip": "^3.5.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
+  }
 }

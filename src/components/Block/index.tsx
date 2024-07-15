@@ -11,6 +11,7 @@ interface BlockProps {
 }
 
 const Block: React.FC<BlockProps> = ({ panels }) => {
+  // @ts-ignore
   const { subscribe, unsubscribe } = window.__ODYSSEY__.scheduler;
   const graphicRef = useRef<HTMLDivElement>(null);
   const [graphicProps, setGraphicProps] = useState(panels[0].data);

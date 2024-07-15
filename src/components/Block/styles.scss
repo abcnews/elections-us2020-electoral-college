@@ -7,25 +7,24 @@
 
 // Override Scrollyteller's internal snapping behaviour
 
-.scrollyteller > :first-child {
+.scrollyteller> :first-child {
   position: fixed !important;
   top: 0 !important;
   bottom: auto !important;
   left: 0 !important;
-  z-index: -1 !important;
   will-change: transform;
 }
 
-.scrollyteller > :first-child[data-ie] {
+.scrollyteller> :first-child[data-ie] {
   z-index: 0 !important;
 }
 
-.scrollyteller > :first-child[data-stage='above'],
-.scrollyteller > :first-child[data-stage='below'] {
+.scrollyteller> :first-child[data-stage='above'],
+.scrollyteller> :first-child[data-stage='below'] {
   position: absolute !important;
 }
 
-.scrollyteller > :first-child[data-stage='below'] {
+.scrollyteller> :first-child[data-stage='below'] {
   top: auto !important;
   bottom: 0 !important;
 }
@@ -77,7 +76,7 @@
   }
 }
 
-.panel > :not(p) {
+.panel> :not(p) {
   margin-left: auto !important;
   margin-right: auto !important;
   margin-top: 0;
@@ -90,41 +89,41 @@
 }
 
 @media only screen and (max-width: 667px) {
-  .panel > :not(p) {
+  .panel> :not(p) {
     width: 83.333333%;
     font-size: 1.125rem;
     line-height: 1.555555556;
   }
 }
 
-.panel > :not(:last-child) {
+.panel> :not(:last-child) {
   margin-bottom: 1.5rem;
 }
 
-.panel > h2,
-.panel > h3 {
+.panel>h2,
+.panel>h3 {
   max-width: 30rem;
   line-height: 1.25;
   text-align: center;
   text-transform: none;
 }
 
-.panel > h2 {
+.panel>h2 {
   font-size: 2.25rem;
 }
 
 @media only screen and (max-width: 667px) {
-  .panel > h2 {
+  .panel>h2 {
     font-size: 1.75rem;
   }
 }
 
-.panel > h3 {
+.panel>h3 {
   font-size: 1.75rem;
 }
 
 @media only screen and (max-width: 667px) {
-  .panel > h3 {
+  .panel>h3 {
     font-size: 1.5rem;
   }
 }
@@ -155,7 +154,7 @@
   text-decoration-color: #fff !important;
 }
 
-.panel > :last-child {
+.panel> :last-child {
   margin-bottom: 0;
 }
 
@@ -220,7 +219,7 @@
 
 /* Environment hacks */
 
-[class*='u-richtext'][class*='u-richtext'] > h3 {
+[class*='u-richtext'][class*='u-richtext']>h3 {
   padding-top: 2rem;
   font-family: 'ABCSerif', sans-serif;
   text-align: center;

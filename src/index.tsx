@@ -33,12 +33,6 @@ type OdysseyAPI = {
   };
 };
 
-declare global {
-  interface Window {
-    __ODYSSEY__: OdysseyAPI;
-  }
-}
-
 const whenEnvReady = new Promise<void>(resolve =>
   getGeneration() !== GENERATIONS.P1
     ? resolve()
