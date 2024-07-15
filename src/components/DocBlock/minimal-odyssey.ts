@@ -1,4 +1,4 @@
-import type { OdysseySchedulerClient, OdysseySchedulerSubscriber } from '../..';
+import type { OdysseySchedulerClient, OdysseySchedulerSubscriber } from '../../utils/getOdyssey.js';
 
 const subscribers = new Set<OdysseySchedulerSubscriber>();
 
@@ -18,7 +18,7 @@ window.__ODYSSEY__ = {
   },
   utils: {
     dom: {
-      detach: () => {}
+      detach: () => { }
     }
   }
 };

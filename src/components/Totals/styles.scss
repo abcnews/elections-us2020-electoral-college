@@ -62,7 +62,7 @@ $heightBigBar: 2rem;
 
 .track {
   position: relative;
-  margin: 0 auto $heightBar / 4 auto;
+  margin: 0 auto calc($heightBar / 4) auto;
   width: 100%;
   height: $heightBar;
   background-color: rgba(0, 0, 0, 0.025);
@@ -70,7 +70,7 @@ $heightBigBar: 2rem;
 
 @media (min-width: 668px) and (min-height: 480px) {
   .track {
-    margin: 0 auto $heightBigBar / 4 auto;
+    margin: 0 auto calc($heightBigBar / 4) auto;
     height: $heightBigBar;
   }
 }
@@ -121,17 +121,17 @@ $heightBigBar: 2rem;
 
 .midpoint {
   position: absolute;
-  bottom: $heightBar / -4;
+  bottom: calc($heightBar / -4);
   left: calc(50% - 0.03125rem);
   border-left: 0.0625rem dashed currentColor;
   width: 0;
-  height: calc(100% + #{$heightBar / 2});
+  height: calc(100% + #{calc($heightBar / 2)});
 }
 
 @media (min-width: 668px) and (min-height: 480px) {
   .midpoint {
-    bottom: $heightBigBar / -4;
-    height: calc(100% + #{$heightBigBar / 2});
+    bottom: calc($heightBigBar / -4);
+    height: calc(100% + #{calc($heightBigBar / 2)});
   }
 }
 

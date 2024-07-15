@@ -16,7 +16,9 @@ import {
   ELECTION_YEARS,
   DEFAULT_ELECTION_YEAR,
   DEFAULT_RELATIVE_ELECTION_YEAR
-} from './constants';
+} from '../constants';
+
+
 
 export const votesForGroups = (groups: Group[]) => {
   return groups.reduce((memo, group) => {

@@ -78,7 +78,7 @@ export function applyColourToPanels(panels: PanelDefinition<PossiblyEncodedGraph
 
 function textNodesUnder(node: Node) {
   const textNodes: Node[] = [];
-  const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null, false);
+  const walk = document.createTreeWalker(node, NodeFilter.SHOW_TEXT, null);
   let textNode: Node | null;
 
   while ((textNode = walk.nextNode())) {
