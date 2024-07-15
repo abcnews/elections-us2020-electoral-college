@@ -1,4 +1,4 @@
-import * as acto from '@abcnews/alternating-case-to-object';
+import acto from '@abcnews/alternating-case-to-object';
 import { getTier, TIERS } from '@abcnews/env-utils';
 import { getMountValue, isMount, selectMounts } from '@abcnews/mount-utils';
 import type { ScrollytellerDefinition } from '@abcnews/scrollyteller';
@@ -13,9 +13,7 @@ import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Gra
 import Graphic from './components/Graphic';
 import Illustration, { IllustrationName } from './components/Illustration';
 import Live from './components/Live';
-import { getOdyssey, whenOdysseyLoaded } from './utils/getOdyssey';
-
-
+import { whenOdysseyLoaded } from './utils/getOdyssey';
 
 const whenScrollytellersLoaded = new Promise((resolve, reject) =>
   whenOdysseyLoaded.then(odyssey => {
@@ -62,7 +60,7 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
         return (((mount as unknown) as HTMLElement).style.display = 'none');
       }
 
-      render(<Live stateCode={state.toUpperCase()} />, mount);
+      render(<Live stateCode={String(state).toUpperCase()} />, mount);
     });
 
     // Return scrollyteller definitions
@@ -87,8 +85,8 @@ whenOdysseyLoaded.then(() => {
     }
 
     const { name } = acto(getMountValue(mount));
-
-    if (name && !Object.values(IllustrationName).includes(name)) {
+    const isIllustrationName = (name: any): name is IllustrationName => name && Object.values(IllustrationName).includes(name);
+    if (!isIllustrationName(name)) {
       return;
     }
 
@@ -118,7 +116,7 @@ whenOdysseyLoaded.then(() => {
     const blanksProps =
       mountValue.indexOf('LIVE') > -1
         ? { isLive: true, hasStatesResults: mountValue.indexOf('STATES') > -1 }
-        : { initialGraphicProps: alternatingCaseToGraphicProps(mountValue) as GraphicProps };
+        : { initialGraphicProps: alternatingCaseToGraphicProps(mountValue) };
 
     mount.classList.add('u-pull');
     render(<Blanks {...blanksProps} />, mount);

@@ -1,5 +1,5 @@
 import type { PartyId } from 'elections-us2020-results-data';
-import * as acto from '@abcnews/alternating-case-to-object';
+import acto from '@abcnews/alternating-case-to-object';
 import {
   Allocation,
   Allocations,
@@ -17,6 +17,7 @@ import {
   DEFAULT_ELECTION_YEAR,
   DEFAULT_RELATIVE_ELECTION_YEAR
 } from '../constants';
+import { GraphicProps } from '../components/Graphic';
 
 
 
@@ -121,8 +122,8 @@ export const decodeFocuses = (code: string): Focuses => decode<Focuses>(code, ST
 
 export const encodeFocuses = (focuses: Focuses): string => encode<Focuses>(focuses, STATE_IDS, FOCUSES, Focus.No);
 
-export const alternatingCaseToGraphicProps = (alternatingCase: string) => {
-  const graphicProps = acto(alternatingCase);
+export const alternatingCaseToGraphicProps = (alternatingCase: string): GraphicProps => {
+  const graphicProps = acto(alternatingCase) as any;
 
   graphicProps.allocations = decodeAllocations(graphicProps.allocations);
   graphicProps.focuses = decodeFocuses(graphicProps.focuses);
@@ -132,7 +133,7 @@ export const alternatingCaseToGraphicProps = (alternatingCase: string) => {
     graphicProps.relative = null;
   }
 
-  return graphicProps;
+  return graphicProps as GraphicProps;
 };
 
 export const graphicPropsToAlternatingCase = (graphicProps, defaultGraphicProps?): string =>
