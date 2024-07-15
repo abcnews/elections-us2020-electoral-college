@@ -1,18 +1,17 @@
 import type { PanelDefinition } from '@abcnews/scrollyteller';
 import Scrollyteller from '@abcnews/scrollyteller';
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
-import type { OdysseySchedulerSubscriber } from '../../index';
 import type { GraphicProps } from '../Graphic';
 import Graphic from '../Graphic';
 import styles from './styles.scss';
+import { getOdyssey } from '../../utils/getOdyssey';
 
 interface BlockProps {
   panels: PanelDefinition<GraphicProps>[];
 }
 
 const Block: React.FC<BlockProps> = ({ panels }) => {
-  // @ts-ignore
-  const { subscribe, unsubscribe } = window.__ODYSSEY__.scheduler;
+  const { subscribe, unsubscribe } = getOdyssey().scheduler;
   const graphicRef = useRef<HTMLDivElement>(null);
   const [graphicProps, setGraphicProps] = useState(panels[0].data);
   const onMarker = useCallback(graphicProps => {
@@ -46,7 +45,7 @@ const Block: React.FC<BlockProps> = ({ panels }) => {
     let lastUpdateTime: number = 0;
     let prevStage: string = 'initial';
 
-    const onUpdate: OdysseySchedulerSubscriber = ({ fixedHeight }) => {
+    const onUpdate = ({ fixedHeight }) => {
       const updateTime = Date.now();
       const { top, bottom } = blockEl.getBoundingClientRect();
       const stage = top > 0 ? 'above' : bottom < fixedHeight ? 'below' : 'during';

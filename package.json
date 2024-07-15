@@ -34,7 +34,6 @@
     "@abcnews/google-doc-scrollyteller": "^1.0.1",
     "@abcnews/mount-utils": "^2.0.0",
     "@abcnews/scrollyteller": "^4.0.0",
-    "@next/polyfill-nomodule": "^9.5.5",
     "core-js": "^3.6.5",
     "file-saver": "^2.0.2",
     "jszip": "^3.5.0",

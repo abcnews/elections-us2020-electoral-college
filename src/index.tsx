@@ -1,5 +1,5 @@
 import * as acto from '@abcnews/alternating-case-to-object';
-import { getGeneration, GENERATIONS, getTier, TIERS } from '@abcnews/env-utils';
+import { getTier, TIERS } from '@abcnews/env-utils';
 import { getMountValue, isMount, selectMounts } from '@abcnews/mount-utils';
 import type { ScrollytellerDefinition } from '@abcnews/scrollyteller';
 import { loadScrollyteller } from '@abcnews/scrollyteller';
@@ -13,39 +13,9 @@ import type { GraphicProps, PossiblyEncodedGraphicProps } from './components/Gra
 import Graphic from './components/Graphic';
 import Illustration, { IllustrationName } from './components/Illustration';
 import Live from './components/Live';
+import { getOdyssey, whenOdysseyLoaded } from './utils/getOdyssey';
 
-export type OdysseySchedulerClient = {
-  hasChanged: boolean;
-  fixedHeight: number;
-};
 
-export type OdysseySchedulerSubscriber = (client: OdysseySchedulerClient) => void;
-
-type OdysseyAPI = {
-  scheduler: {
-    subscribe: (subscriber: OdysseySchedulerSubscriber) => void;
-    unsubscribe: (subscriber: OdysseySchedulerSubscriber) => void;
-  };
-  utils: {
-    dom: {
-      detach: (el: Element) => void;
-    };
-  };
-};
-
-const whenEnvReady = new Promise<void>(resolve =>
-  getGeneration() !== GENERATIONS.P1
-    ? resolve()
-    : import(/* webpackChunkName: "env" */ './polyfills').then(() => resolve())
-);
-
-const whenOdysseyLoaded = new Promise(resolve =>
-  whenEnvReady.then(() =>
-    window.__ODYSSEY__
-      ? resolve(window.__ODYSSEY__)
-      : window.addEventListener('odyssey:api', () => resolve(window.__ODYSSEY__))
-  )
-);
 
 const whenScrollytellersLoaded = new Promise((resolve, reject) =>
   whenOdysseyLoaded.then(odyssey => {
@@ -77,7 +47,7 @@ const whenScrollytellersLoaded = new Promise((resolve, reject) =>
       // Keep the DOM tidy.
       if (scrollytellerDefinition && scrollytellerDefinition.mountNode) {
         while (isMount(scrollytellerDefinition.mountNode.nextElementSibling)) {
-          (odyssey as OdysseyAPI).utils.dom.detach(scrollytellerDefinition.mountNode.nextElementSibling);
+          odyssey.utils.dom.detach(scrollytellerDefinition.mountNode.nextElementSibling);
         }
       }
 
