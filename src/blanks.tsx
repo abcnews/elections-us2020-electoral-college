@@ -14,7 +14,7 @@ whenDOMReady.then(() => {
     const blanksProps =
       mountValue.indexOf('LIVE') > -1
         ? { isLive: true, hasStatesResults: mountValue.indexOf('STATES') > -1 }
-        : { initialGraphicProps: alternatingCaseToGraphicProps(mountValue) as GraphicProps };
+        : { initialGraphicProps: alternatingCaseToGraphicProps(mountValue) };
 
     mount.classList.add('u-pull');
     render(<Blanks {...blanksProps} />, mount);

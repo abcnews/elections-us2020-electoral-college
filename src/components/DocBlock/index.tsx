@@ -1,4 +1,4 @@
-import * as acto from '@abcnews/alternating-case-to-object';
+import acto from '@abcnews/alternating-case-to-object';
 import GoogleDocScrollyteller from '@abcnews/google-doc-scrollyteller';
 import { isMount } from '@abcnews/mount-utils';
 import type { PanelDefinition } from '@abcnews/scrollyteller';
@@ -46,7 +46,7 @@ const postprocessScrollytellerDefinition = scrollytellerDefinition => {
         const { state, test, hide } = acto(el.id || '');
 
         if (typeof hide !== 'boolean' || !hide) {
-          render(<Live stateCode={state.toUpperCase()} test={test} />, el);
+          render(<Live stateCode={String(state).toUpperCase()} test={Number(test)} />, el);
         }
       }
     });
